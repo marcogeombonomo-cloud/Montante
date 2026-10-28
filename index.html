@@ -407,6 +407,11 @@ details.fix[open] summary::before { content: "－ "; }
 nav.tabs .in { grid-template-columns: repeat(5, 1fr); max-width: 480px; }
 nav.tabs a { font-size: .64rem; }
 .btn svg { flex: none; }
+/* 1.2: immagini delle specie incluse, pesce intero su fondo chiaro */
+.fimg.has { background: #F7F9F8; }
+.fimg.has img { object-fit: contain; padding: 6px; }
+.fimg.big.has img { padding: 10px; }
+.credits { gap: 6px; }
 
 </style>
 </head>
@@ -1136,7 +1141,7 @@ if (!window.PE || !window.SunCalc) {
   return;
 }
 const { MIN, HOUR, DAY } = PE;
-const APP_VERSION = '1.1';
+const APP_VERSION = '1.2';
 
 /* ---------- formattazione ---------- */
 const TZ = { hour: '2-digit', minute: '2-digit' };
@@ -1407,33 +1412,32 @@ function reasons(s) {
 /* ---------- guida ai pesci: misure minime e riconoscimento ---------- */
 // Misure minime: Reg. (UE) 2019/1241 all. IX (stessi valori del Reg. CE 1967/2006) e D.P.R. 1639/1968.
 // foto: nome scientifico usato per cercare la foto su iNaturalist; stag: id della specie nel calendario stagionale.
-const RICONOSCI_URL = 'https://claude.ai/artifact/FoKxCQ856Hg2P5xpzp3Yq5';
 const GUIDE = [
-  { id: 'orata', nome: 'Orata', lat: 'Sparus aurata', min: 20, stag: 'orata',
+  { id: 'orata', nome: 'Orata', lat: 'Sparus aurata', min: 20, fonte: 'ue', stag: 'orata',
     riconosci: 'Corpo alto e ovale, fascia dorata tra gli occhi, macchia scura in alto sull\'opercolo; denti robusti per rompere conchiglie e granchi.',
     simili: 'Il sarago ha fasce verticali e la macchia nera sulla coda; il pagro è rosato.', dove: 'Spiaggia, dighe e bocche di porto, soprattutto in autunno.' },
-  { id: 'spigola', nome: 'Spigola (branzino)', lat: 'Dicentrarchus labrax', min: 25, stag: 'spigola',
+  { id: 'spigola', nome: 'Spigola (branzino)', lat: 'Dicentrarchus labrax', min: 25, fonte: 'ue', stag: 'spigola',
     riconosci: 'Corpo allungato e argenteo con dorso grigio, due pinne dorsali separate, spina sull\'opercolo con una macchia scura, bocca grande.',
     simili: 'La spigola maculata ha puntini neri sui fianchi; il cefalo ha bocca piccola e testa larga.', dove: 'Foci, testate delle dighe, spiaggia con mare in scaduta.' },
-  { id: 'mormora', nome: 'Mormora', lat: 'Lithognathus mormyrus', min: 20, stag: 'mormora',
+  { id: 'mormora', nome: 'Mormora', lat: 'Lithognathus mormyrus', min: 20, fonte: 'ue', stag: 'mormora',
     riconosci: 'Argentea con 14-15 sottili fasce verticali scure tutte uguali, muso allungato e appuntito.',
     simili: 'Il sarago maggiore ha una grande macchia nera sulla coda e fasce meno regolari.', dove: 'Spiaggia sabbiosa, prima e seconda buca, con mare calmo.' },
-  { id: 'sarago', nome: 'Sarago maggiore', lat: 'Diplodus sargus', min: 23, stag: 'sarago',
+  { id: 'sarago', nome: 'Sarago maggiore', lat: 'Diplodus sargus', min: 23, fonte: 'ue', stag: 'sarago',
     riconosci: 'Fasce verticali sottili scure alternate, grande macchia nera sul peduncolo della coda, bordo della coda scuro.',
     simili: 'Il sarago fasciato ha solo due fasce nere larghe; il pizzuto ha il muso appuntito.', dove: 'Dighe e scogliere, nella schiuma sotto i massi.' },
-  { id: 'pizzuto', nome: 'Sarago pizzuto', lat: 'Diplodus puntazzo', min: 18,
+  { id: 'pizzuto', nome: 'Sarago pizzuto', lat: 'Diplodus puntazzo', min: 18, fonte: 'ue',
     riconosci: 'Muso lungo e appuntito, 6-7 fasce verticali scure e larghe, macchia nera sulla coda.',
     simili: 'Il sarago maggiore ha il muso più corto e fasce sottili.', dove: 'Scogliere e dighe.' },
-  { id: 'fasciato', nome: 'Sarago fasciato (testa nera)', lat: 'Diplodus vulgaris', min: 18,
+  { id: 'fasciato', nome: 'Sarago fasciato (testa nera)', lat: 'Diplodus vulgaris', min: 18, fonte: 'ue',
     riconosci: 'Due larghe fasce nere: una subito dietro la testa e una sul peduncolo della coda.',
     simili: 'Lo sparaglione ha un solo anello nero sulla coda e pinne ventrali gialle.', dove: 'Scogliere, dighe e porti.' },
-  { id: 'sparaglione', nome: 'Sparaglione', lat: 'Diplodus annularis', min: 12,
+  { id: 'sparaglione', nome: 'Sparaglione', lat: 'Diplodus annularis', min: 12, fonte: 'ue',
     riconosci: 'Piccolo, con riflessi gialli, anello nero sul peduncolo della coda, pinne ventrali gialle.',
     simili: 'I giovani di sarago hanno fasce verticali.', dove: 'Porti, dighe e fondali con alghe.' },
-  { id: 'sogliola', nome: 'Sogliola', lat: 'Solea solea', min: 20, stag: 'sogliola',
+  { id: 'sogliola', nome: 'Sogliola', lat: 'Solea solea', min: 20, fonte: 'ue', stag: 'sogliola',
     riconosci: 'Pesce piatto ovale con gli occhi sul lato destro, macchia nera sulla punta della pinna pettorale.',
     simili: 'La passera è più romboidale e ruvida al tatto.', dove: 'Spiaggia su fondo sabbioso-fangoso, di notte.' },
-  { id: 'passera', nome: 'Passera', lat: 'Platichthys flesus', min: 15,
+  { id: 'passera', nome: 'Passera', lat: 'Platichthys flesus', min: 15, fonte: 'dpr',
     riconosci: 'Pesce piatto romboidale, tubercoli ruvidi alla base delle pinne e lungo la linea laterale, spesso con macchie arancio.',
     simili: 'La sogliola è ovale, liscia e ha la macchia nera sulla pettorale.', dove: 'Foci e laguna, fondali fangosi.' },
   { id: 'rombo', nome: 'Rombo chiodato', lat: 'Scophthalmus maximus', min: null, stag: 'rombo',
@@ -1455,28 +1459,28 @@ const GUIDE = [
   { id: 'amia', nome: 'Leccia amia', lat: 'Lichia amia', min: null,
     riconosci: 'Grande e argentea, linea laterale che disegna una curva a S, dorso grigio scuro.',
     simili: 'Il pesce serra ha denti aguzzi e linea laterale dritta.', dove: 'Foci e porti, a caccia di cefali.' },
-  { id: 'sgombro', nome: 'Sgombro', lat: 'Scomber scombrus', min: 18, stag: 'sgombro',
+  { id: 'sgombro', nome: 'Sgombro', lat: 'Scomber scombrus', min: 18, fonte: 'ue', stag: 'sgombro',
     riconosci: 'Dorso blu-verde con bande ondulate nere, ventre argenteo senza macchie, piccole pinnule dietro dorsale e anale.',
     simili: 'Il lanzardo ha l\'occhio più grande e macchiette scure sul ventre.', dove: 'Testate delle dighe, in primavera e autunno.' },
-  { id: 'lanzardo', nome: 'Lanzardo', lat: 'Scomber colias', min: 18,
+  { id: 'lanzardo', nome: 'Lanzardo', lat: 'Scomber colias', min: 18, fonte: 'ue',
     riconosci: 'Come lo sgombro ma con l\'occhio più grande e piccole macchie scure sul ventre argenteo.',
     simili: 'Lo sgombro ha il ventre pulito, senza macchie.', dove: 'Testate delle dighe, in branco.' },
-  { id: 'sugarello', nome: 'Sugarello (suro)', lat: 'Trachurus trachurus', min: 15,
+  { id: 'sugarello', nome: 'Sugarello (suro)', lat: 'Trachurus trachurus', min: 15, fonte: 'ue',
     riconosci: 'Linea laterale coperta per tutta la lunghezza da scudetti ossei a carena, macchia scura sul bordo dell\'opercolo.',
     simili: 'Lo sgombro non ha gli scudetti sulla linea laterale.', dove: 'Porti e dighe, di sera sotto le luci.' },
-  { id: 'cefalo', nome: 'Cefalo (muggine)', lat: 'Mugil cephalus', min: 20, alias: 'muggine bosega lotregano verzelata calamita',
+  { id: 'cefalo', nome: 'Cefalo (muggine)', lat: 'Mugil cephalus', min: 20, fonte: 'dpr', alias: 'muggine bosega lotregano verzelata calamita',
     riconosci: 'Testa larga e appiattita, bocca piccola senza denti evidenti, scaglie grandi, due pinne dorsali ben separate.',
-    simili: 'In laguna ci sono più specie di cefali (bosega, lotregano, verzelata): la misura minima vale per tutti.', dove: 'Porti, foci, canali e laguna.' },
-  { id: 'fragolino', nome: 'Pagello fragolino', lat: 'Pagellus erythrinus', min: 15,
+    simili: 'In laguna ci sono altre specie di cefalo molto simili (bosega, lotregano, verzelata). La norma indica la misura per i cefali del genere Mugil: nel dubbio rispetta i 20 cm anche per le altre.', dove: 'Porti, foci, canali e laguna.' },
+  { id: 'fragolino', nome: 'Pagello fragolino', lat: 'Pagellus erythrinus', min: 15, fonte: 'ue',
     riconosci: 'Rosa intenso con piccoli punti azzurri sul dorso, muso appuntito, occhio grande.',
     simili: 'L\'orata ha la fascia dorata tra gli occhi e corpo più alto.', dove: 'Fondali misti al largo delle dighe.' },
-  { id: 'palamita', nome: 'Palamita', lat: 'Sarda sarda', min: 25,
+  { id: 'palamita', nome: 'Palamita', lat: 'Sarda sarda', min: 25, fonte: 'dpr',
     riconosci: 'Dorso blu con strisce oblique scure che scendono verso il basso, ventre argenteo, denti robusti.',
     simili: 'Il tonnetto alletterato ha disegni ondulati sul dorso e macchie scure sotto la pettorale.', dove: 'Si avvicina alle dighe a fine estate.' },
-  { id: 'triglia', nome: 'Triglia di fango', lat: 'Mullus barbatus', min: 11,
+  { id: 'triglia', nome: 'Triglia di fango', lat: 'Mullus barbatus', min: 11, fonte: 'ue',
     riconosci: 'Rosa-rossa, due lunghi barbigli sotto il mento, profilo della testa quasi verticale.',
     simili: 'La gallinella ha la testa ossea e grandi pinne pettorali blu.', dove: 'Fondali fangosi e sabbiosi.' },
-  { id: 'go', nome: 'Gò', lat: 'Zosterisessor ophiocephalus', min: 12, alias: 'ghiozzo',
+  { id: 'go', nome: 'Gò', lat: 'Zosterisessor ophiocephalus', min: 12, fonte: 'dpr', alias: 'ghiozzo',
     riconosci: 'Ghiozzo grande con testa larga e appiattita, colore bruno-verde marmorizzato, due pinne dorsali.',
     simili: 'Gli altri ghiozzi sono più piccoli e chiari.', dove: 'Laguna e canali, su fondo fangoso con alghe.' },
   { id: 'gallinella', nome: 'Gallinella (capone)', lat: 'Chelidonichthys lucerna', min: null,
@@ -1492,61 +1496,36 @@ const GUIDE = [
   { id: 'calamaro', nome: 'Calamaro', lat: 'Loligo vulgaris', min: null, stag: 'calamaro',
     riconosci: 'Mantello allungato e affusolato, pinne a forma di rombo nella parte finale, penna interna trasparente.',
     simili: 'Il totano ha pinne più piccole e corte.', dove: 'Testate delle dighe illuminate, di notte, in inverno.' },
+  { id: 'alletterato', nome: 'Tonnetto alletterato', lat: 'Euthynnus alletteratus', min: 30, fonte: 'dpr',
+    riconosci: 'Dorso blu-verde con disegni scuri ondulati solo nella metà posteriore, alcune macchie scure sotto la pinna pettorale, ventre argenteo.',
+    simili: 'La palamita ha strisce oblique regolari su tutto il dorso.', dove: 'Insegue le mangianze vicino alle dighe tra fine estate e autunno.' },
+  { id: 'mafrone', nome: 'Pagello mafrone', lat: 'Pagellus acarne', min: 17, fonte: 'ue',
+    riconosci: 'Rosato e argenteo, con una macchia scura alla base della pinna pettorale e l\'interno della bocca arancione.',
+    simili: 'Il fragolino è rosa intenso con punti azzurri e non ha la macchia alla pettorale.', dove: 'Fondali sabbiosi e misti.' },
+  { id: 'pagro', nome: 'Pagro', lat: 'Pagrus pagrus', min: 18, fonte: 'ue',
+    riconosci: 'Rosato con piccoli punti azzurri, profilo della testa ripido, punte della coda chiare.',
+    simili: 'L\'orata ha la fascia dorata tra gli occhi; il fragolino ha il muso più appuntito.', dove: 'Fondali rocciosi più profondi; da riva è raro.' },
 ];
 const GUIDE_BY_ID = Object.fromEntries(GUIDE.map(g => [g.id, g]));
 
-/* --- foto delle specie da iNaturalist, salvate sul telefono --- */
-const FISH_PH = '<svg class="ph" width="56" height="56" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.5 12c3-4.2 7.8-6 12.5-4.2L21.5 4v16l-6.5-3.8C10.3 18 5.5 16.2 2.5 12z"/></svg>';
-const Taxa = {
-  KEY: 'montante:taxa', map: {}, queue: [], busy: false,
-  load() { try { this.map = JSON.parse(localStorage.getItem(this.KEY) || '{}') || {}; } catch (e) { this.map = {}; } },
-  save() { try { localStorage.setItem(this.KEY, JSON.stringify(this.map)); } catch (e) { /* senza cache */ } },
-  get(latin) { const t = this.map[latin]; return t && t.url ? t : null; },
-  want(latin, first) {
-    const t = this.map[latin];
-    if ((t && t.url) || (t && t.none && Date.now() - t.at < 7 * DAY)) return;
-    const i = this.queue.indexOf(latin);
-    if (i >= 0) { if (!first) return; this.queue.splice(i, 1); }
-    if (first) this.queue.unshift(latin); else this.queue.push(latin);
-    this.pump();
-  },
-  async pump() {
-    if (this.busy || !navigator.onLine) return;
-    this.busy = true;
-    while (this.queue.length) {
-      const latin = this.queue.shift();
-      try {
-        const r = await fetch(`https://api.inaturalist.org/v1/taxa?q=${encodeURIComponent(latin)}&per_page=5&locale=it`);
-        if (r.ok) {
-          const list = (await r.json()).results || [];
-          const t = list.find(x => String(x.name || '').toLowerCase() === latin.toLowerCase()) || list.find(x => x.rank === 'species') || list[0];
-          const p = t && t.default_photo;
-          this.map[latin] = p && (p.medium_url || p.url) ? { url: p.medium_url || p.url, attr: p.attribution || '', id: t.id } : { none: true, at: Date.now() };
-          this.save();
-          fillTaxon(latin);
-        }
-      } catch (e) { /* senza rete: riprova alla prossima apertura */ }
-      await new Promise(res => setTimeout(res, 1000)); // iNaturalist chiede al massimo una richiesta al secondo
-    }
-    this.busy = false;
-  },
+/* --- immagini delle specie: incluse nell'app, scelte a mano da Wikimedia Commons --- */
+const FOTO = {"orata": {"page": "https://commons.wikimedia.org/wiki/File:Sparus_aurata_(Alarconmaria3).png", "lic": "CC BY-SA 4.0", "artist": "Alarconmaria3"}, "spigola": {"page": "https://commons.wikimedia.org/wiki/File:FMIB_46071_Bass.jpeg", "lic": "Public domain", "artist": "Jonathan Couch"}, "mormora": {"page": "https://commons.wikimedia.org/wiki/File:Sand_steenbras.jpg", "lic": "CC BY-SA 4.0", "artist": "Nickthegreek82"}, "sarago": {"page": "https://commons.wikimedia.org/wiki/File:Histoire_naturelle_des_poissons_(10438454414).jpg", "lic": "Public domain", "artist": "Buffon, Georges Louis Leclerc; Cuvier, Georges; Valenciennes"}, "pizzuto": {"page": "https://commons.wikimedia.org/wiki/File:Histoire_naturelle_des_poissons_(10438634853).jpg", "lic": "Public domain", "artist": "Buffon, Georges Louis Leclerc; Cuvier, Georges; Valenciennes"}, "fasciato": {"page": "https://commons.wikimedia.org/wiki/File:Mojarra_(Diplodus_vulgaris),_Cabo_de_Palos,_Espa%C3%B1a,_2022-07-17,_DD_80.jpg", "lic": "CC BY-SA 4.0", "artist": "Diego Delso"}, "sparaglione": {"page": "https://commons.wikimedia.org/wiki/File:Histoire_naturelle_des_poissons_(10438468276).jpg", "lic": "Public domain", "artist": "Buffon, Georges Louis Leclerc; Cuvier, Georges; Valenciennes"}, "sogliola": {"page": "https://commons.wikimedia.org/wiki/File:FMIB_43989_Solea_vulgaris_-_Drawing_on_the_day_after_its_death.jpeg", "lic": "Public domain", "artist": "Joseph Thomas Cunningham"}, "passera": {"page": "https://commons.wikimedia.org/wiki/File:Platichthys_flesus2.jpg", "lic": "Public domain", "artist": "Krüger"}, "rombo": {"page": "https://commons.wikimedia.org/wiki/File:Psetta_maxima1.jpg", "lic": "Public domain", "artist": "Krüger"}, "ombrina": {"page": "https://commons.wikimedia.org/wiki/File:Umbrina_cirrosa_ro.jpg", "lic": "CC BY-SA 3.0", "artist": "Rvalette"}, "corvina": {"page": "https://commons.wikimedia.org/wiki/File:2017-07-02_AT_Wien_13_Hietzing,_Tiergarten_Sch%C3%B6nbrunn,_Sciaena_umbra_(49995706977).jpg", "lic": "CC BY-SA 2.0", "artist": "Paul Korecky"}, "serra": {"page": "https://commons.wikimedia.org/wiki/File:FMIB_43170_Bluefish_(Pomatomus_saltatrix).jpeg", "lic": "Public domain", "artist": "State of New York Forest, Fish, and Game Commission"}, "leccia": {"page": "https://commons.wikimedia.org/wiki/File:FMIB_46160_Derbio.jpeg", "lic": "Public domain", "artist": "Jonathan Couch"}, "amia": {"page": "https://commons.wikimedia.org/wiki/File:Lichia_amia00.jpg", "lic": "CC BY-SA 3.0", "artist": "Sally-Jean Rush"}, "sgombro": {"page": "https://commons.wikimedia.org/wiki/File:FMIB_41562_Common_Mackerel_(Scomber_scombrus).jpeg", "lic": "Public domain", "artist": "autore sconosciuto"}, "lanzardo": {"page": "https://commons.wikimedia.org/wiki/File:FMIB_46901_Maquereau_colias.jpeg", "lic": "Public domain", "artist": "Charles d'Orbigny"}, "sugarello": {"page": "https://commons.wikimedia.org/wiki/File:FMIB_46159_Scad.jpeg", "lic": "Public domain", "artist": "Jonathan Couch"}, "cefalo": {"page": "https://commons.wikimedia.org/wiki/File:FMIB_46911_Muge_cephale.jpeg", "lic": "Public domain", "artist": "Charles d'Orbigny"}, "fragolino": {"page": "https://commons.wikimedia.org/wiki/File:FMIB_46898_Pagel.jpeg", "lic": "Public domain", "artist": "Charles d'Orbigny"}, "palamita": {"page": "https://commons.wikimedia.org/wiki/File:FMIB_43251_Bonito_(Sarda_sarda).jpeg", "lic": "Public domain", "artist": "State of New York Forest, Fish, and Game Commission"}, "triglia": {"page": "https://commons.wikimedia.org/wiki/File:Mullus_barbatus_-_Gervais.jpg", "lic": "Public domain", "artist": "autore sconosciuto"}, "go": {"page": "https://commons.wikimedia.org/wiki/File:Zosterisessor_ophiocephalus_Tunisia.jpg", "lic": "CC BY 3.0", "artist": "Jeanne Zaouali"}, "gallinella": {"page": "https://commons.wikimedia.org/wiki/File:FMIB_46128_Tubfish.jpeg", "lic": "Public domain", "artist": "Jonathan Couch"}, "tracina": {"page": "https://commons.wikimedia.org/wiki/File:Ichthyologie;_ou,_Histoire_naturelle_des_poissons_(Plate_61)_(6918345830).jpg", "lic": "Public domain", "artist": "Bloch, Marcus Elieser"}, "seppia": {"page": "https://commons.wikimedia.org/wiki/File:Sepia_officinalis1.jpg", "lic": "Public domain", "artist": "autore sconosciuto"}, "calamaro": {"page": "https://commons.wikimedia.org/wiki/File:Loligo_vulgaris1.jpg", "lic": "Public domain", "artist": "autore sconosciuto"}, "alletterato": {"page": "https://commons.wikimedia.org/wiki/File:XRF-Euthynnus_alletteratus.png", "lic": "CC BY-SA 3.0", "artist": "Xavier Romero-Frias"}, "mafrone": {"page": "https://commons.wikimedia.org/wiki/File:Aligote_(Pagellus_acarne).JPG", "lic": "CC BY-SA 3.0", "artist": "Foundling"}, "pagro": {"page": "https://commons.wikimedia.org/wiki/File:Pagrus_pagrus1.jpg", "lic": "Public domain", "artist": "Werner"}};
+const FONTI = {
+  ue: 'Reg. (UE) 2019/1241, allegato IX (Mediterraneo)',
+  dpr: 'D.P.R. 1639/1968, art. 87',
 };
+const FISH_PH = '<svg class="ph" width="56" height="56" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.5 12c3-4.2 7.8-6 12.5-4.2L21.5 4v16l-6.5-3.8C10.3 18 5.5 16.2 2.5 12z"/></svg>';
+const LAT_TO_ID = Object.fromEntries(GUIDE.map(g => [g.lat, g.id]));
+// la vecchia ricerca automatica delle foto è stata tolta: cancello quello che aveva salvato
+const Taxa = { load() { try { localStorage.removeItem('montante:taxa'); } catch (e) { /* niente */ } }, pump() {} };
 function taxonImg(latin, cls) {
-  const t = Taxa.get(latin);
-  if (!t) Taxa.want(latin, cls === 'big');
-  return `<span class="fimg ${cls || ''}" data-taxon="${esc(latin)}">${t ? `<img src="${esc(t.url)}" alt="" loading="lazy">` : FISH_PH}</span>`;
+  const id = LAT_TO_ID[latin], f = id && FOTO[id];
+  return `<span class="fimg ${cls || ''}${f ? ' has' : ''}">${f ? `<img src="foto/${esc(id)}.jpg" alt="${esc(GUIDE_BY_ID[id].nome)}" loading="lazy">` : FISH_PH}</span>`;
 }
 function taxonCredit(latin) {
-  const t = Taxa.get(latin);
-  return t ? `<p class="credit">Foto: ${esc(t.attr || 'iNaturalist')} · <a href="https://www.inaturalist.org/taxa/${encodeURIComponent(t.id)}" target="_blank" rel="noopener">iNaturalist ↗</a></p>` : '';
-}
-function fillTaxon(latin) {
-  const t = Taxa.get(latin); if (!t) return;
-  for (const el of document.querySelectorAll('.fimg[data-taxon]')) {
-    if (el.dataset.taxon !== latin || el.querySelector('img')) continue;
-    el.innerHTML = `<img src="${esc(t.url)}" alt="" loading="lazy">`;
-    if (el.classList.contains('big') && !(el.nextElementSibling && el.nextElementSibling.classList.contains('credit'))) el.insertAdjacentHTML('afterend', taxonCredit(latin));
-  }
+  const id = LAT_TO_ID[latin], f = id && FOTO[id];
+  if (!f) return '';
+  return `<p class="credit">Immagine: ${esc(f.artist || 'autore su Wikimedia Commons')}${f.lic ? ' · ' + esc(f.lic) : ''} · <a href="${esc(f.page)}" target="_blank" rel="noopener">Wikimedia Commons ↗</a></p>`;
 }
 
 /* ---------- elementi grafici ---------- */
@@ -2005,18 +1984,17 @@ function renderSpecie() {
 }
 
 /* ---------- vista: Catture (riconoscimento e misure minime) ---------- */
-const CAMERA = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.6"/></svg>';
 const fmtCm = n => String(Math.round(n * 10) / 10).replace('.', ',');
 function verdictHTML(g, cmTxt) {
   const n = Number(String(cmTxt || '').replace(',', '.'));
   if (!g) return '';
-  if (!g.min) return `<div class="verdict"><div class="big">—<small>misura</small></div><div><b>Nessuna misura minima nazionale</b><p>Verifica eventuali ordinanze locali e rilascia gli esemplari piccoli.</p></div></div>`;
-  if (!cmTxt || !isFinite(n) || n <= 0) return `<div class="verdict"><div class="big">${g.min}<small>cm minimi</small></div><div><b>${esc(g.nome)}</b><p>Lunghezza totale, dalla punta del muso alla fine della coda.</p></div></div>`;
+  if (!g.min) return `<div class="verdict"><div class="big">—<small>misura</small></div><div><b>Nessuna misura minima di legge</b><p>Né il Reg. (UE) 2019/1241 né il D.P.R. 1639/1968 fissano una misura per questa specie. Rilascia comunque gli esemplari piccoli.</p></div></div>`;
+  if (!cmTxt || !isFinite(n) || n <= 0) return `<div class="verdict"><div class="big">${g.min}<small>cm minimi</small></div><div><b>${esc(g.nome)}</b><p>Lunghezza totale, dalla punta del muso alla fine della coda. Fonte: ${esc(FONTI[g.fonte] || '')}.</p></div></div>`;
   const ok = n >= g.min;
   return `<div class="verdict ${ok ? 'ok' : 'bad'}"><div class="big">${g.min}<small>cm minimi</small></div><div><b>${ok ? 'Sopra misura' : 'Sotto misura: rilascialo'}</b><p>${esc(g.nome)} di ${fmtCm(n)} cm${ok ? '' : `, mancano ${fmtCm(g.min - n)} cm`}.</p></div></div>`;
 }
 function guideCardHTML(g) {
-  return `<button class="gcard" data-act="guide" data-id="${g.id}">${taxonImg(g.lat)}<span class="gtx"><span class="nm">${esc(g.nome)}</span><span class="lat">${esc(g.lat)}</span><span>${g.min ? `<span class="minb">min ${g.min} cm</span>` : '<span class="minb none">nessuna minima</span>'}${g.pericolo && g.id === 'tracina' ? '<span class="minb danger">velenosa</span>' : ''}</span></span></button>`;
+  return `<button class="gcard" data-act="guide" data-id="${g.id}">${taxonImg(g.lat)}<span class="gtx"><span class="nm">${esc(g.nome)}</span><span class="lat">${esc(g.lat)}</span><span>${g.min ? `<span class="minb">min ${g.min} cm</span>` : '<span class="minb none">nessuna di legge</span>'}${g.pericolo && g.id === 'tracina' ? '<span class="minb danger">velenosa</span>' : ''}</span></span></button>`;
 }
 function guideMatch(q) {
   q = q.trim().toLowerCase();
@@ -2026,13 +2004,8 @@ function renderCatture() {
   const conMin = GUIDE.filter(g => g.min).sort((a, b) => a.nome.localeCompare(b.nome));
   if (!S.mqSp) S.mqSp = 'orata';
   const list = guideMatch(S.cq || '');
-  app.innerHTML = heroSmall('Catture', 'Riconosci i pesci e controlla le misure minime') + `
+  app.innerHTML = heroSmall('Catture', 'Guida ai pesci e misure minime') + `
   <div class="wrap gut">
-  <section class="card recog">
-    <div class="recog-in"><span class="ric-ic">${CAMERA}</span><div style="min-width:0"><h2>Riconosci da foto</h2><p class="small muted" style="margin:3px 0 0;font-weight:600">Scatta o scegli una foto: Claude ti dice che pesce è e se è sopra misura.</p></div></div>
-    <a class="btn pri block" href="${RICONOSCI_URL}" target="_blank" rel="noopener">${CAMERA} Apri il riconoscimento</a>
-    <p class="hint">Si apre in Claude con il tuo account e serve la rete.</p>
-  </section>
   <section class="card">
     <h2>È sopra misura?</h2>
     <div class="row2">
@@ -2047,8 +2020,9 @@ function renderCatture() {
     <h2>Regole da ricordare</h2>
     <p>La misura è la lunghezza totale, dalla punta del muso all'estremità della coda.</p>
     <p>Pesca sportiva in mare: al massimo 5 kg di pescato al giorno a persona, salvo un singolo pesce più pesante, e una sola cernia al giorno.</p>
-    <p>Controlla sempre anche le ordinanze della Capitaneria di porto di Chioggia per zone e periodi vietati.</p>
-    <p class="hint">Misure minime dal Reg. (UE) 2019/1241, allegato IX, e dal D.P.R. 1639/1968. Foto delle specie da iNaturalist.</p>
+    <p>In laguna vale il Regolamento regionale del Veneto n. 1/2023: per le specie marine rimanda alle stesse misure nazionali ed europee. Controlla anche le ordinanze della Capitaneria di porto di Chioggia per zone e periodi vietati.</p>
+    <p class="hint">Misure minime dal Reg. (UE) 2019/1241, allegato IX, e dal D.P.R. 1639/1968, art. 87 (per le specie che l'UE non regola). Dove non c'è scritto un numero, nessuna delle due norme ne fissa uno.</p>
+    <details class="fix"><summary>Crediti delle immagini</summary><div class="fixin credits">${GUIDE.filter(g => FOTO[g.id]).map(g => `<p class="credit" style="margin:0"><b>${esc(g.nome)}</b>: ${esc(FOTO[g.id].artist || 'autore su Wikimedia Commons')}${FOTO[g.id].lic ? ' · ' + esc(FOTO[g.id].lic) : ''} · <a href="${esc(FOTO[g.id].page)}" target="_blank" rel="noopener">fonte ↗</a></p>`).join('')}</div></details>
   </section>
   </div>`;
   const out = $('#mq-out');
@@ -2072,7 +2046,7 @@ function openGuide(id) {
     ${st ? `<div class="cgroup"><span class="flabel">Stagione</span><div class="calwrap"><table class="cal"><thead><tr>${MESI.map((m, i) => `<th class="${i === mo ? 'now' : ''}">${m}</th>`).join('')}</tr></thead><tbody><tr>${st.mesi.map((v, i) => `<td class="c ${i === mo ? 'now' : ''}" style="background:${v ? ['', 'var(--q2)', 'var(--q3)', 'var(--q5)'][v] : 'var(--surface-2)'};opacity:${v ? 1 : .6}"></td>`).join('')}</tr></tbody></table></div></div>
     <div class="kv"><span class="k">Esche</span><span>${esc(st.esche)}</span></div>
     <div><p class="flabel" style="margin:0 0 2px">Con la tua attrezzatura</p>${tec}</div>` : ''}
-    <a class="btn block" href="${RICONOSCI_URL}" target="_blank" rel="noopener">${CAMERA} Riconosci da foto</a>`);
+`);
 }
 
 /* ---------- fogli ---------- */
