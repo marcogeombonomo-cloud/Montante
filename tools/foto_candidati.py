@@ -72,6 +72,19 @@ def sheet(items, path):
             except Exception: pass
         d.rectangle([x, y + H, x + W - 1, y + H + 25], fill=(20, 40, 50)); d.text((x + 6, y + H + 3), f'{i}  ' + it['lic'][:22], fill='white', font=f)
     im.save(path, quality=82)
+def trim(img, tol=28):
+    """Toglie i bordi uniformi (carta o fondo bianco) lasciando un piccolo margine."""
+    from PIL import ImageChops
+    w, h = img.size
+    corners = [img.getpixel((0, 0)), img.getpixel((w - 1, 0)), img.getpixel((0, h - 1)), img.getpixel((w - 1, h - 1))]
+    bg = tuple(sorted(c[i] for c in corners)[1] for i in range(3))
+    diff = ImageChops.difference(img, Image.new('RGB', img.size, bg)).convert('L').point(lambda v: 255 if v > tol else 0)
+    box = diff.getbbox()
+    if not box: return img
+    x0, y0, x1, y1 = box
+    if (x1 - x0) * (y1 - y0) < 0.15 * w * h: return img
+    m = int(0.04 * max(x1 - x0, y1 - y0))
+    return img.crop((max(0, x0 - m), max(0, y0 - m), min(w, x1 + m), min(h, y1 + m)))
 def main():
     specie = json.load(open('tools/specie.json'))
     if os.path.exists('tools/scelte.json'):
@@ -82,7 +95,7 @@ def main():
             it = meta[scelte[sid]]
             src = it['thumb'].replace('/420px-', '/960px-') if '/420px-' in it['thumb'] else it['url']
             b = fetch(src) or fetch(it['url'])
-            img = Image.open(io.BytesIO(b)).convert('RGB'); img.thumbnail((900, 900))
+            img = Image.open(io.BytesIO(b)).convert('RGB'); img = trim(img); img.thumbnail((900, 900))
             img.save(f'foto/{sid}.jpg', quality=84, optimize=True, progressive=True)
             crediti[sid] = {'title': it['title'], 'page': it['page'], 'lic': it['lic'], 'artist': it['artist']}
             time.sleep(.5)
