@@ -1,6 +1,7 @@
 """Raccoglie da Wikimedia Commons le immagini candidate per ogni specie e crea un foglio di anteprime numerato.
 Fase 1 (senza scelte.json): fogli/<id>.jpg + fogli/<id>.json. Fase 2 (con scelte.json): foto/<id>.jpg + foto/crediti.json."""
 import json, os, re, io, sys, time, html, urllib.parse, urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from PIL import Image, ImageDraw, ImageFont
 UA = 'MontanteFishGuide/1.0 (https://github.com/marcogeombonomo-cloud/Montante; personal fishing app)'
 API = 'https://commons.wikimedia.org/w/api.php'
@@ -60,9 +61,11 @@ def sheet(items, path):
     im = Image.new('RGB', (cols * W, rows * (H + 26)), 'white'); d = ImageDraw.Draw(im)
     try: f = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 18)
     except Exception: f = ImageFont.load_default()
+    with ThreadPoolExecutor(4) as ex:
+        blobs = list(ex.map(lambda it: fetch(it['thumb']), items))
     for i, it in enumerate(items):
         x, y = (i % cols) * W, (i // cols) * (H + 26)
-        b = fetch(it['thumb']); time.sleep(.3)
+        b = blobs[i]
         if b:
             try:
                 t = Image.open(io.BytesIO(b)).convert('RGB'); t.thumbnail((W - 8, H - 8)); im.paste(t, (x + (W - t.width) // 2, y + (H - t.height) // 2))
