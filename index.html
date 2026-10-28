@@ -1,0 +1,2237 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Montante</title>
+<meta name="description" content="Indice di pescosità, marea, meteo-mare, spot e diario per la pesca a Chioggia e Sottomarina.">
+<meta name="theme-color" content="#031B25">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Montante">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="preload" href="manrope-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="unbounded-700.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 500; font-display: swap; src: url('manrope-500.woff2') format('woff2'); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 600; font-display: swap; src: url('manrope-600.woff2') format('woff2'); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 700; font-display: swap; src: url('manrope-700.woff2') format('woff2'); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 800; font-display: swap; src: url('manrope-800.woff2') format('woff2'); }
+@font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 600; font-display: swap; src: url('unbounded-600.woff2') format('woff2'); }
+@font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 700; font-display: swap; src: url('unbounded-700.woff2') format('woff2'); }
+
+/* Layout: testata a tutta larghezza color mare profondo con l'indice ad anello, contenuti in schede che risalgono sull'onda, barra di navigazione flottante */
+:root {
+  --bg: #EDF2F4; --surface: #FFFFFF; --surface-2: #E7EEF1; --ink: #0A1E27; --muted: #5A6F79; --line: #DCE6EA; --card-line: transparent;
+  --accent: #F2552C; --accent-ink: #FFFFFF; --accent-soft: rgba(242, 85, 44, .11);
+  --tide: #1385C4; --night: rgba(10, 30, 39, .055);
+  --sea: #CBE1EA; --land: #F4EFE0; --land-edge: #CDBF98; --grid: rgba(19, 133, 196, .13);
+  --q1: #93A3AC; --q2: #4A8ED6; --q3: #13A9C2; --q4: #10A87C; --q5: #5FAE1C;
+  --qt1: #0A1E27; --qt2: #FFFFFF; --qt3: #04232B; --qt4: #03231A; --qt5: #102600;
+  --sol1: rgba(19, 133, 196, .15); --sol2: rgba(19, 133, 196, .06);
+  --danger: #C62C22;
+  --shadow: 0 1px 2px rgba(10, 30, 39, .05), 0 12px 32px -14px rgba(10, 30, 39, .22);
+  --nav-bg: rgba(255, 255, 255, .84);
+  /* testata: sempre mare notturno, in entrambi i temi */
+  --hero-a: #031B25; --hero-b: #08485A; --hero-c: #0C7480; --on-hero: #F1FAFC; --on-hero-2: rgba(241, 250, 252, .7);
+  --glass: rgba(255, 255, 255, .1); --glass-2: rgba(255, 255, 255, .18); --glass-line: rgba(255, 255, 255, .16);
+  --hq1: #9DB2BC; --hq2: #6CB1F6; --hq3: #35D2E8; --hq4: #37E2A4; --hq5: #B6F15A;
+  --f-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r: 22px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #05111A; --surface: #0C1C25; --surface-2: #132A35; --ink: #E5F0F4; --muted: #89A1AC; --line: #1A3240; --card-line: #16303C;
+    --accent: #FF7A4F; --accent-ink: #1C0800; --accent-soft: rgba(255, 122, 79, .15);
+    --tide: #5EC3F3; --night: rgba(0, 0, 0, .32);
+    --sea: #092431; --land: #1C2520; --land-edge: #3B4A3E; --grid: rgba(94, 195, 243, .11);
+    --q1: #6C808B; --q2: #5AA3EF; --q3: #2CCBE1; --q4: #2FDA9C; --q5: #A9E64D;
+    --qt1: #03121A; --qt2: #03121A; --qt3: #03121A; --qt4: #03121A; --qt5: #03121A;
+    --sol1: rgba(94, 195, 243, .17); --sol2: rgba(94, 195, 243, .07);
+    --danger: #FF8A80;
+    --shadow: 0 12px 32px -16px rgba(0, 0, 0, .7);
+    --nav-bg: rgba(12, 28, 37, .86);
+    --hero-a: #020D13; --hero-b: #05313F; --hero-c: #09596A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #05111A; --surface: #0C1C25; --surface-2: #132A35; --ink: #E5F0F4; --muted: #89A1AC; --line: #1A3240; --card-line: #16303C;
+  --accent: #FF7A4F; --accent-ink: #1C0800; --accent-soft: rgba(255, 122, 79, .15);
+  --tide: #5EC3F3; --night: rgba(0, 0, 0, .32);
+  --sea: #092431; --land: #1C2520; --land-edge: #3B4A3E; --grid: rgba(94, 195, 243, .11);
+  --q1: #6C808B; --q2: #5AA3EF; --q3: #2CCBE1; --q4: #2FDA9C; --q5: #A9E64D;
+  --qt1: #03121A; --qt2: #03121A; --qt3: #03121A; --qt4: #03121A; --qt5: #03121A;
+  --sol1: rgba(94, 195, 243, .17); --sol2: rgba(94, 195, 243, .07);
+  --danger: #FF8A80;
+  --shadow: 0 12px 32px -16px rgba(0, 0, 0, .7);
+  --nav-bg: rgba(12, 28, 37, .86);
+  --hero-a: #020D13; --hero-b: #05313F; --hero-c: #09596A;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.45; font-weight: 500;
+  padding-block: 0 calc(104px + env(safe-area-inset-bottom, 0px));
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--hero-a); }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+h1, h2, h3 { margin: 0; text-wrap: balance; line-height: 1.1; }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: 1.75rem; letter-spacing: -.02em; }
+h2 { font-family: var(--f-display); font-weight: 600; font-size: 1.02rem; letter-spacing: -.01em; }
+h3 { font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.eyebrow { font-weight: 800; text-transform: uppercase; letter-spacing: .12em; font-size: .68rem; color: var(--muted); }
+.muted { color: var(--muted); }
+.small { font-size: .86rem; }
+a { color: var(--tide); }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 600px; margin: -26px auto 0; display: grid; gap: 14px; position: relative; z-index: 2; }
+
+/* ===== testata ===== */
+.hero { position: relative; color: var(--on-hero); background:
+  radial-gradient(120% 80% at 85% 0%, var(--hero-c) 0%, transparent 60%),
+  radial-gradient(90% 70% at 0% 100%, var(--hero-b) 0%, transparent 70%),
+  linear-gradient(180deg, var(--hero-a), var(--hero-b)); overflow: hidden; }
+.hero-in { max-width: 600px; margin: 0 auto; padding-block: calc(14px + env(safe-area-inset-top, 0px)) 58px; display: grid; gap: 16px; position: relative; z-index: 1; }
+.hero.small .hero-in { padding-block: calc(16px + env(safe-area-inset-top, 0px)) 52px; gap: 6px; }
+.hero .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.brand { display: grid; gap: 1px; min-width: 0; }
+.brand b { font-family: var(--f-display); font-weight: 700; font-size: 1.25rem; letter-spacing: -.02em; }
+.brand span { color: var(--on-hero-2); font-size: .8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.glassbtn { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--glass-line); background: var(--glass); color: var(--on-hero); border-radius: 999px; padding: 8px 14px 8px 11px; font-weight: 800; font-size: .88rem; max-width: 62%; min-width: 0; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.glassbtn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.glassbtn svg { flex: none; }
+.hero .act { border: 0; background: var(--accent); color: var(--accent-ink); border-radius: 999px; padding: 10px 16px; font-weight: 800; font-size: .9rem; box-shadow: 0 8px 20px -8px rgba(242, 85, 44, .7); white-space: nowrap; }
+.hero-title { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.hero-title p { margin: 4px 0 0; color: var(--on-hero-2); font-size: .9rem; font-weight: 600; }
+.wave { position: absolute; left: 0; right: 0; bottom: -1px; height: 54px; pointer-events: none; }
+.wave svg { position: absolute; bottom: 0; width: 200%; height: 54px; }
+.wave .w1 { animation: drift 16s linear infinite; opacity: .35; }
+.wave .w2 { animation: drift 24s linear infinite reverse; }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.day { border: 1px solid var(--glass-line); background: var(--glass); color: var(--on-hero); border-radius: 16px; padding: 7px 0 8px; display: grid; justify-items: center; gap: 2px; min-width: 0; }
+.day .dw { font-size: .62rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--on-hero-2); }
+.day .dn { font-family: var(--f-display); font-weight: 600; font-size: 1.02rem; line-height: 1.15; }
+.day .dot { width: 18px; height: 4px; border-radius: 4px; }
+.day[aria-pressed="true"] { background: var(--on-hero); color: var(--hero-a); border-color: transparent; }
+.day[aria-pressed="true"] .dw { color: var(--hero-b); }
+
+.gaugebox { display: grid; justify-items: center; gap: 10px; }
+.gauge { position: relative; width: 236px; height: 200px; }
+.gauge svg { width: 236px; height: 200px; display: block; overflow: visible; }
+.gauge .gv { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; padding-top: 6px; }
+.gauge .gv b { font-family: var(--f-display); font-weight: 700; font-size: 4.2rem; line-height: .95; letter-spacing: -.04em; }
+.gauge .gv .ql { font-family: var(--f-display); font-weight: 600; font-size: 1rem; margin-top: 6px; }
+.gauge .gv .gs { font-size: .72rem; color: var(--on-hero-2); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-top: 2px; }
+.hchips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.hchip { font-size: .78rem; font-weight: 700; border-radius: 999px; padding: 5px 11px; background: var(--glass); border: 1px solid var(--glass-line); color: var(--on-hero); white-space: nowrap; }
+.hchip.hot { background: var(--accent); border-color: transparent; color: #fff; }
+.nextwin { margin: 0; text-align: center; font-weight: 700; font-size: .92rem; color: var(--on-hero); }
+.nextwin span { color: var(--on-hero-2); font-weight: 600; }
+
+/* ===== schede ===== */
+.card { background: var(--surface); border: 1px solid var(--card-line); border-radius: var(--r); padding: 18px; display: grid; gap: 14px; min-width: 0; box-shadow: var(--shadow); }
+.card-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: .78rem; font-weight: 700; border-radius: 999px; padding: 4px 10px; background: var(--surface-2); color: var(--ink); white-space: nowrap; }
+.chip.acc { background: var(--accent-soft); color: var(--accent); }
+.banner { font-size: .86rem; padding: 12px 14px; border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); border: 1px solid var(--card-line); font-weight: 600; }
+
+/* finestre */
+.wins { display: grid; gap: 8px; }
+.win { display: grid; grid-template-columns: 46px 1fr; gap: 12px; align-items: center; padding: 10px 12px 10px 10px; border-radius: 16px; background: var(--surface-2); }
+.win .wt { font-weight: 800; font-size: 1.12rem; letter-spacing: -.01em; }
+.win .wr { font-size: .8rem; color: var(--muted); font-weight: 600; }
+.ring { position: relative; width: 46px; height: 46px; display: grid; place-items: center; flex: none; }
+.ring svg { position: absolute; inset: 0; }
+.ring b { position: relative; font-weight: 800; font-size: .95rem; }
+
+/* grafico */
+.chart svg { width: 100%; height: auto; display: block; touch-action: pan-y; }
+.readout { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font-size: .84rem; color: var(--muted); font-weight: 600; min-height: 1.6em; }
+.readout b { font-weight: 800; font-size: 1.05rem; color: var(--ink); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .76rem; color: var(--muted); font-weight: 600; }
+.legend i { display: inline-block; width: 14px; height: 8px; border-radius: 3px; margin-right: 5px; vertical-align: middle; }
+.seglabel { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--surface-2); gap: 2px; }
+
+/* marea */
+.tides { display: grid; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap: 8px; }
+.tide { border-radius: 16px; background: var(--surface-2); padding: 10px; display: grid; gap: 2px; justify-items: start; }
+.tide .k { display: flex; align-items: center; gap: 4px; font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 800; }
+.tide .t { font-weight: 800; font-size: 1.15rem; }
+.tide .h { font-size: .8rem; color: var(--tide); font-weight: 800; }
+.tidenow { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 16px; background: linear-gradient(90deg, var(--sol1), transparent); font-size: .9rem; font-weight: 600; }
+.tidenow b { font-weight: 800; font-size: 1.05rem; }
+.hint { font-size: .8rem; color: var(--muted); margin: 0; font-weight: 500; }
+
+/* sole e luna */
+.sky { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
+.moon { width: 64px; height: 64px; }
+.skyarc svg { width: 100%; height: auto; display: block; }
+.kvs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.kv { display: grid; gap: 1px; padding: 10px 12px; border-radius: 14px; background: var(--surface-2); }
+.kv .k { font-size: .66rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; font-weight: 800; }
+.kv .v { font-weight: 800; font-size: 1.08rem; }
+.sols { display: flex; flex-wrap: wrap; gap: 6px; }
+.sol { display: inline-flex; align-items: baseline; gap: 6px; border-radius: 12px; padding: 6px 10px; background: var(--sol1); font-weight: 800; font-size: .92rem; }
+.sol.m { background: var(--sol2); }
+.sol span { font-weight: 600; font-size: .74rem; color: var(--muted); }
+
+/* condizioni */
+.cgroup { display: grid; gap: 7px; }
+.flabel { font-size: .72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 13px; font-size: .86rem; font-weight: 700; transition: background .15s, color .15s, border-color .15s; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.links { display: flex; flex-wrap: wrap; gap: 8px; }
+.links a { display: inline-flex; align-items: center; gap: 6px; font-size: .84rem; font-weight: 700; border-radius: 999px; padding: 8px 13px; text-decoration: none; color: var(--ink); background: var(--surface-2); }
+
+/* specie */
+.splist { display: grid; gap: 4px; }
+.sprow { display: grid; grid-template-columns: 46px 1fr auto; gap: 12px; align-items: center; padding: 8px 4px; border: 0; background: none; text-align: left; border-radius: 14px; width: 100%; }
+.sprow:hover { background: var(--surface-2); }
+.sprow .nm { font-weight: 800; font-size: 1rem; }
+.sprow .ds { font-size: .8rem; color: var(--muted); font-weight: 600; display: block; }
+.sprow .go { color: var(--muted); }
+.linkbtn { border: 0; background: none; padding: 0; color: var(--tide); font-weight: 800; font-size: .88rem; text-align: left; }
+
+details.how:not([open]) { gap: 0; }
+details.how summary { cursor: pointer; font-weight: 800; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+details.how summary::-webkit-details-marker { display: none; }
+details.how summary::after { content: "+"; font-size: 1.3rem; color: var(--muted); }
+details.how[open] summary::after { content: "−"; }
+details.how table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+details.how td { padding: 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+details.how td:last-child { text-align: right; font-weight: 800; padding-left: 10px; }
+
+/* mappa */
+.mapbox { position: relative; border-radius: var(--r); overflow: hidden; background: var(--sea); box-shadow: var(--shadow); }
+.mapbox svg { display: block; width: 100%; height: min(60vh, 460px); touch-action: none; user-select: none; -webkit-user-select: none; }
+.mapctl { position: absolute; right: 12px; top: 12px; display: grid; gap: 8px; }
+.mapctl button { border: 0; background: var(--nav-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 50%; width: 40px; height: 40px; font-size: 1.25rem; font-weight: 800; box-shadow: var(--shadow); color: var(--ink); }
+.maptip { position: absolute; left: 12px; right: 64px; top: 12px; padding: 10px 14px; border-radius: 14px; font-size: .86rem; font-weight: 800; background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); }
+.spotcard { display: grid; gap: 10px; }
+.spotrow { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+.spotrow h3 { min-width: 0; overflow-wrap: anywhere; font-size: 1.1rem; }
+.acts { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* bottoni */
+.btn { border: 0; background: var(--surface-2); border-radius: 999px; padding: 10px 16px; font-weight: 800; font-size: .88rem; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; color: var(--ink); }
+.btn.pri { background: var(--accent); color: var(--accent-ink); box-shadow: 0 8px 20px -10px var(--accent); }
+.btn.danger { color: var(--danger); background: transparent; border: 1.5px solid var(--line); }
+.btn.block { width: 100%; padding: 14px; font-size: 1rem; border-radius: 16px; }
+.btn[disabled] { opacity: .5; }
+.pill { font-weight: 800; font-size: .95rem; border-radius: 999px; padding: 3px 10px; min-width: 40px; text-align: center; }
+
+/* diario */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stat { background: var(--surface-2); border-radius: 16px; padding: 12px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.stat b { font-family: var(--f-display); font-weight: 600; font-size: 1.6rem; line-height: 1; letter-spacing: -.03em; overflow-wrap: anywhere; }
+.stat span { font-size: .72rem; color: var(--muted); font-weight: 700; }
+.lift { display: grid; gap: 7px; }
+.lift .row { display: grid; grid-template-columns: 96px 1fr 40px; gap: 10px; align-items: center; font-size: .84rem; font-weight: 600; }
+.lift .track { position: relative; height: 10px; background: var(--surface-2); border-radius: 6px; }
+.lift .track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; background: linear-gradient(90deg, var(--q3), var(--q4)); }
+.lift .track u { position: absolute; top: -3px; bottom: -3px; width: 2px; border-radius: 2px; background: var(--ink); opacity: .5; }
+.entry { display: grid; gap: 8px; text-align: left; border: 1px solid var(--card-line); background: var(--surface); border-radius: var(--r); padding: 16px 18px; width: 100%; box-shadow: var(--shadow); }
+.entry .eh { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.thumbs { display: flex; gap: 6px; overflow-x: auto; }
+.thumbs img { width: 68px; height: 68px; object-fit: cover; border-radius: 12px; flex: none; background: var(--surface-2); }
+.empty { text-align: center; padding: 28px 18px; justify-items: center; }
+.empty .ic { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); }
+
+/* calendario */
+.calwrap { overflow-x: auto; }
+table.cal { border-collapse: separate; border-spacing: 3px; font-size: .78rem; width: 100%; table-layout: fixed; }
+table.cal col.nc { width: 34%; }
+table.cal th { font-weight: 800; color: var(--muted); font-size: .72rem; text-align: center; }
+table.cal th.now { color: var(--accent); }
+table.cal td.n { padding-right: 4px; line-height: 1.15; }
+table.cal td.n button { border: 0; background: none; padding: 3px 0; font-weight: 800; text-align: left; font-size: .82rem; }
+table.cal td.c { height: 22px; border-radius: 6px; }
+table.cal td.c.now { box-shadow: inset 0 0 0 2px var(--accent); }
+.gearlist { display: grid; gap: 8px; }
+.gear { display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 16px; background: var(--surface-2); }
+.gear .gi { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--surface); color: var(--tide); }
+.gear b { font-weight: 800; font-size: .94rem; display: block; }
+.gear span { font-size: .78rem; color: var(--muted); font-weight: 600; }
+
+/* foglio modale */
+.sheet-bg { position: fixed; inset: 0; background: rgba(2, 10, 14, .5); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); z-index: 40; display: flex; align-items: flex-end; justify-content: center; animation: fade .18s ease-out; }
+.sheet { background: var(--surface); width: 100%; max-width: 620px; max-height: calc(100% - 36px - env(safe-area-inset-top, 0px)); overflow-y: auto; border-radius: 28px 28px 0 0; padding: 10px max(18px, env(safe-area-inset-right, 0px)) calc(22px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px)); display: grid; gap: 14px; align-content: start; animation: up .22s cubic-bezier(.2, .8, .2, 1); }
+.sheet::before { content: ""; justify-self: center; width: 40px; height: 5px; border-radius: 5px; background: var(--line); }
+@keyframes up { from { transform: translateY(24px); opacity: .6; } to { transform: none; opacity: 1; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; position: sticky; top: -10px; background: var(--surface); padding: 6px 0; z-index: 1; }
+.sheet-top h2 { font-size: 1.2rem; }
+.x { border: 0; background: var(--surface-2); width: 36px; height: 36px; border-radius: 50%; font-size: 1rem; flex: none; font-weight: 800; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label { font-size: .72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.field input, .field select, .field textarea { width: 100%; border: 1.5px solid transparent; background: var(--surface-2); border-radius: 14px; padding: 11px 13px; min-height: 46px; font-size: 16px; font-weight: 600; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); outline: none; background: var(--surface); }
+.field textarea { min-height: 76px; resize: vertical; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.row3 { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 8px; }
+.catch { border-radius: 16px; padding: 12px 14px; display: grid; gap: 4px; background: var(--surface-2); }
+.catch .ch { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.subform { border: 1.5px dashed var(--line); border-radius: 18px; padding: 14px; display: grid; gap: 12px; }
+.check { display: flex; align-items: center; gap: 10px; font-size: .94rem; font-weight: 700; }
+.check input { width: 22px; height: 22px; accent-color: var(--accent); }
+.confirm { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 14px; border-radius: 16px; background: var(--accent-soft); font-size: .9rem; font-weight: 600; }
+
+/* navigazione flottante */
+nav.tabs { position: fixed; z-index: 30; left: max(12px, env(safe-area-inset-left, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); display: flex; justify-content: center; pointer-events: none; }
+nav.tabs .in { pointer-events: auto; width: 100%; max-width: 440px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 6px; border-radius: 26px; background: var(--nav-bg); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); box-shadow: 0 14px 34px -12px rgba(2, 10, 14, .45); border: 1px solid var(--card-line); }
+nav.tabs a { display: grid; justify-items: center; gap: 1px; padding: 7px 0 6px; border-radius: 20px; text-decoration: none; color: var(--muted); font-size: .7rem; font-weight: 800; transition: background .15s, color .15s; }
+nav.tabs a[aria-current="page"] { color: var(--accent-ink); background: var(--accent); }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(92px + env(safe-area-inset-bottom, 0px)); z-index: 60; background: var(--ink); color: var(--bg); padding: 11px 18px; border-radius: 999px; font-size: .9rem; font-weight: 800; max-width: calc(100% - 32px); box-shadow: var(--shadow); animation: up .2s ease-out; }
+
+/* ===== app installata ===== */
+html { background: var(--bg); overscroll-behavior-y: none; }
+html, body { margin: 0; }
+body { min-height: 100vh; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+input, textarea, select, .selectable { -webkit-user-select: text; user-select: text; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+a, button, label { touch-action: manipulation; }
+.vh { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; clip: rect(0 0 0 0); }
+:root { --cloud: #DCE6EC; --cloud-d: #9FB2BE; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --cloud: #B8C7D0; --cloud-d: #7F95A3; } }
+:root[data-theme="dark"] { --cloud: #B8C7D0; --cloud-d: #7F95A3; }
+
+.toprow-r { display: flex; gap: 8px; align-items: center; justify-content: flex-end; min-width: 0; max-width: 72%; }
+.toprow-r .glassbtn { max-width: 100%; }
+.glassbtn.round { padding: 0; width: 40px; height: 40px; justify-content: center; flex: none; }
+
+.banner.install { display: grid; gap: 4px; background: var(--accent-soft); border-color: transparent; box-shadow: none; }
+.banner.install b { font-weight: 800; }
+.welcome { background: linear-gradient(135deg, var(--accent-soft), var(--surface) 60%); }
+
+.hstat { display: inline-flex; align-items: center; gap: 8px; }
+.ibtn { border: 0; background: var(--surface-2); width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: var(--ink); flex: none; }
+.ibtn.spin svg { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.wx { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: .92rem; }
+.wx svg { flex: none; }
+.meteo { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mt { border-radius: 16px; background: var(--surface-2); padding: 11px 12px; display: grid; gap: 2px; align-content: start; min-width: 0; }
+.mt .k { display: flex; align-items: center; gap: 5px; font-size: .66rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 800; }
+.mt .v { font-family: var(--f-display); font-weight: 600; font-size: 1.3rem; letter-spacing: -.02em; line-height: 1.2; }
+.mt .v small { font-family: var(--f-body); font-size: .8rem; font-weight: 700; color: var(--muted); letter-spacing: 0; }
+.mt .s { font-size: .76rem; color: var(--muted); font-weight: 600; }
+.arr { display: inline-grid; place-items: center; color: var(--tide); vertical-align: -2px; }
+.strip { display: flex; gap: 6px; overflow-x: auto; margin: 0 -4px; padding: 0 4px 2px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.strip::-webkit-scrollbar { display: none; }
+.hr { flex: none; width: 60px; border-radius: 14px; background: var(--surface-2); padding: 8px 4px; display: grid; justify-items: center; gap: 4px; font-size: .78rem; font-weight: 800; }
+.hr .h { color: var(--muted); font-size: .72rem; }
+.hr .w { color: var(--tide); font-size: .72rem; }
+details.fix { border-radius: 14px; }
+details.fix summary { cursor: pointer; font-weight: 800; font-size: .86rem; color: var(--tide); list-style: none; }
+details.fix summary::-webkit-details-marker { display: none; }
+details.fix summary::before { content: "＋ "; }
+details.fix[open] summary::before { content: "－ "; }
+.fixin { display: grid; gap: 12px; padding-top: 12px; }
+
+.sp { display: grid; gap: 2px; padding: 10px 12px; border-radius: 14px; background: var(--surface-2); margin-top: 6px; }
+.sp p { margin: 0; font-size: .84rem; color: var(--muted); font-weight: 600; }
+.sgroup { display: grid; gap: 10px; padding: 14px; border-radius: 18px; background: var(--surface-2); }
+.sgroup .btn:not(.pri) { background: var(--surface); }
+.filebtn { cursor: pointer; }
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<nav class="tabs" aria-label="Sezioni">
+  <div class="in">
+    <a href="#oggi" data-tab="oggi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 16c2.5 0 2.5-2.5 5-2.5s2.5 2.5 5 2.5 2.5-2.5 5-2.5 2.5 2.5 5 2.5"/><path d="M2 20c2.5 0 2.5-2.5 5-2.5s2.5 2.5 5 2.5 2.5-2.5 5-2.5 2.5 2.5 5 2.5"/><path d="M8 10a4 4 0 0 1 8 0"/><path d="M12 3v2M5.6 5.6l1.4 1.4M18.4 5.6 17 7"/></svg>Oggi</a>
+    <a href="#spot" data-tab="spot"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 1 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>Spot</a>
+    <a href="#diario" data-tab="diario"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h11a1.5 1.5 0 0 1 1.5 1.5v15H7.5A2.5 2.5 0 0 1 5 17.5V4.5a1 1 0 0 1 1-1z"/><path d="M5 17.5A2.5 2.5 0 0 1 7.5 15h11"/><path d="M9 7.5h6M9 10.5h4"/></svg>Diario</a>
+    <a href="#specie" data-tab="specie"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12c3-4.2 7.8-6 12.5-4.2L21.5 4v16l-6.5-3.8C10.3 18 5.5 16.2 2.5 12z"/><circle cx="8" cy="11" r=".9" fill="currentColor"/></svg>Specie</a>
+  </div>
+</nav>
+<div id="sheet-root"></div>
+<div id="toast-root"></div>
+<script>
+/*
+ (c) 2011-2015, Vladimir Agafonkin
+ SunCalc is a JavaScript library for calculating sun/moon position and light phases.
+ https://github.com/mourner/suncalc
+*/
+
+(function () { 'use strict';
+
+// shortcuts for easier to read formulas
+
+var PI   = Math.PI,
+    sin  = Math.sin,
+    cos  = Math.cos,
+    tan  = Math.tan,
+    asin = Math.asin,
+    atan = Math.atan2,
+    acos = Math.acos,
+    rad  = PI / 180;
+
+// sun calculations are based on http://aa.quae.nl/en/reken/zonpositie.html formulas
+
+
+// date/time constants and conversions
+
+var dayMs = 1000 * 60 * 60 * 24,
+    J1970 = 2440588,
+    J2000 = 2451545;
+
+function toJulian(date) { return date.valueOf() / dayMs - 0.5 + J1970; }
+function fromJulian(j)  { return new Date((j + 0.5 - J1970) * dayMs); }
+function toDays(date)   { return toJulian(date) - J2000; }
+
+
+// general calculations for position
+
+var e = rad * 23.4397; // obliquity of the Earth
+
+function rightAscension(l, b) { return atan(sin(l) * cos(e) - tan(b) * sin(e), cos(l)); }
+function declination(l, b)    { return asin(sin(b) * cos(e) + cos(b) * sin(e) * sin(l)); }
+
+function azimuth(H, phi, dec)  { return atan(sin(H), cos(H) * sin(phi) - tan(dec) * cos(phi)); }
+function altitude(H, phi, dec) { return asin(sin(phi) * sin(dec) + cos(phi) * cos(dec) * cos(H)); }
+
+function siderealTime(d, lw) { return rad * (280.16 + 360.9856235 * d) - lw; }
+
+function astroRefraction(h) {
+    if (h < 0) // the following formula works for positive altitudes only.
+        h = 0; // if h = -0.08901179 a div/0 would occur.
+
+    // formula 16.4 of "Astronomical Algorithms" 2nd edition by Jean Meeus (Willmann-Bell, Richmond) 1998.
+    // 1.02 / tan(h + 10.26 / (h + 5.10)) h in degrees, result in arc minutes -> converted to rad:
+    return 0.0002967 / Math.tan(h + 0.00312536 / (h + 0.08901179));
+}
+
+// general sun calculations
+
+function solarMeanAnomaly(d) { return rad * (357.5291 + 0.98560028 * d); }
+
+function eclipticLongitude(M) {
+
+    var C = rad * (1.9148 * sin(M) + 0.02 * sin(2 * M) + 0.0003 * sin(3 * M)), // equation of center
+        P = rad * 102.9372; // perihelion of the Earth
+
+    return M + C + P + PI;
+}
+
+function sunCoords(d) {
+
+    var M = solarMeanAnomaly(d),
+        L = eclipticLongitude(M);
+
+    return {
+        dec: declination(L, 0),
+        ra: rightAscension(L, 0)
+    };
+}
+
+
+var SunCalc = {};
+
+
+// calculates sun position for a given date and latitude/longitude
+
+SunCalc.getPosition = function (date, lat, lng) {
+
+    var lw  = rad * -lng,
+        phi = rad * lat,
+        d   = toDays(date),
+
+        c  = sunCoords(d),
+        H  = siderealTime(d, lw) - c.ra;
+
+    return {
+        azimuth: azimuth(H, phi, c.dec),
+        altitude: altitude(H, phi, c.dec)
+    };
+};
+
+
+// sun times configuration (angle, morning name, evening name)
+
+var times = SunCalc.times = [
+    [-0.833, 'sunrise',       'sunset'      ],
+    [  -0.3, 'sunriseEnd',    'sunsetStart' ],
+    [    -6, 'dawn',          'dusk'        ],
+    [   -12, 'nauticalDawn',  'nauticalDusk'],
+    [   -18, 'nightEnd',      'night'       ],
+    [     6, 'goldenHourEnd', 'goldenHour'  ]
+];
+
+// adds a custom time to the times config
+
+SunCalc.addTime = function (angle, riseName, setName) {
+    times.push([angle, riseName, setName]);
+};
+
+
+// calculations for sun times
+
+var J0 = 0.0009;
+
+function julianCycle(d, lw) { return Math.round(d - J0 - lw / (2 * PI)); }
+
+function approxTransit(Ht, lw, n) { return J0 + (Ht + lw) / (2 * PI) + n; }
+function solarTransitJ(ds, M, L)  { return J2000 + ds + 0.0053 * sin(M) - 0.0069 * sin(2 * L); }
+
+function hourAngle(h, phi, d) { return acos((sin(h) - sin(phi) * sin(d)) / (cos(phi) * cos(d))); }
+function observerAngle(height) { return -2.076 * Math.sqrt(height) / 60; }
+
+// returns set time for the given sun altitude
+function getSetJ(h, lw, phi, dec, n, M, L) {
+
+    var w = hourAngle(h, phi, dec),
+        a = approxTransit(w, lw, n);
+    return solarTransitJ(a, M, L);
+}
+
+
+// calculates sun times for a given date, latitude/longitude, and, optionally,
+// the observer height (in meters) relative to the horizon
+
+SunCalc.getTimes = function (date, lat, lng, height) {
+
+    height = height || 0;
+
+    var lw = rad * -lng,
+        phi = rad * lat,
+
+        dh = observerAngle(height),
+
+        d = toDays(date),
+        n = julianCycle(d, lw),
+        ds = approxTransit(0, lw, n),
+
+        M = solarMeanAnomaly(ds),
+        L = eclipticLongitude(M),
+        dec = declination(L, 0),
+
+        Jnoon = solarTransitJ(ds, M, L),
+
+        i, len, time, h0, Jset, Jrise;
+
+
+    var result = {
+        solarNoon: fromJulian(Jnoon),
+        nadir: fromJulian(Jnoon - 0.5)
+    };
+
+    for (i = 0, len = times.length; i < len; i += 1) {
+        time = times[i];
+        h0 = (time[0] + dh) * rad;
+
+        Jset = getSetJ(h0, lw, phi, dec, n, M, L);
+        Jrise = Jnoon - (Jset - Jnoon);
+
+        result[time[1]] = fromJulian(Jrise);
+        result[time[2]] = fromJulian(Jset);
+    }
+
+    return result;
+};
+
+
+// moon calculations, based on http://aa.quae.nl/en/reken/hemelpositie.html formulas
+
+function moonCoords(d) { // geocentric ecliptic coordinates of the moon
+
+    var L = rad * (218.316 + 13.176396 * d), // ecliptic longitude
+        M = rad * (134.963 + 13.064993 * d), // mean anomaly
+        F = rad * (93.272 + 13.229350 * d),  // mean distance
+
+        l  = L + rad * 6.289 * sin(M), // longitude
+        b  = rad * 5.128 * sin(F),     // latitude
+        dt = 385001 - 20905 * cos(M);  // distance to the moon in km
+
+    return {
+        ra: rightAscension(l, b),
+        dec: declination(l, b),
+        dist: dt
+    };
+}
+
+SunCalc.getMoonPosition = function (date, lat, lng) {
+
+    var lw  = rad * -lng,
+        phi = rad * lat,
+        d   = toDays(date),
+
+        c = moonCoords(d),
+        H = siderealTime(d, lw) - c.ra,
+        h = altitude(H, phi, c.dec),
+        // formula 14.1 of "Astronomical Algorithms" 2nd edition by Jean Meeus (Willmann-Bell, Richmond) 1998.
+        pa = atan(sin(H), tan(phi) * cos(c.dec) - sin(c.dec) * cos(H));
+
+    h = h + astroRefraction(h); // altitude correction for refraction
+
+    return {
+        azimuth: azimuth(H, phi, c.dec),
+        altitude: h,
+        distance: c.dist,
+        parallacticAngle: pa
+    };
+};
+
+
+// calculations for illumination parameters of the moon,
+// based on http://idlastro.gsfc.nasa.gov/ftp/pro/astro/mphase.pro formulas and
+// Chapter 48 of "Astronomical Algorithms" 2nd edition by Jean Meeus (Willmann-Bell, Richmond) 1998.
+
+SunCalc.getMoonIllumination = function (date) {
+
+    var d = toDays(date || new Date()),
+        s = sunCoords(d),
+        m = moonCoords(d),
+
+        sdist = 149598000, // distance from Earth to Sun in km
+
+        phi = acos(sin(s.dec) * sin(m.dec) + cos(s.dec) * cos(m.dec) * cos(s.ra - m.ra)),
+        inc = atan(sdist * sin(phi), m.dist - sdist * cos(phi)),
+        angle = atan(cos(s.dec) * sin(s.ra - m.ra), sin(s.dec) * cos(m.dec) -
+                cos(s.dec) * sin(m.dec) * cos(s.ra - m.ra));
+
+    return {
+        fraction: (1 + cos(inc)) / 2,
+        phase: 0.5 + 0.5 * inc * (angle < 0 ? -1 : 1) / Math.PI,
+        angle: angle
+    };
+};
+
+
+function hoursLater(date, h) {
+    return new Date(date.valueOf() + h * dayMs / 24);
+}
+
+// calculations for moon rise/set times are based on http://www.stargazing.net/kepler/moonrise.html article
+
+SunCalc.getMoonTimes = function (date, lat, lng, inUTC) {
+    var t = new Date(date);
+    if (inUTC) t.setUTCHours(0, 0, 0, 0);
+    else t.setHours(0, 0, 0, 0);
+
+    var hc = 0.133 * rad,
+        h0 = SunCalc.getMoonPosition(t, lat, lng).altitude - hc,
+        h1, h2, rise, set, a, b, xe, ye, d, roots, x1, x2, dx;
+
+    // go in 2-hour chunks, each time seeing if a 3-point quadratic curve crosses zero (which means rise or set)
+    for (var i = 1; i <= 24; i += 2) {
+        h1 = SunCalc.getMoonPosition(hoursLater(t, i), lat, lng).altitude - hc;
+        h2 = SunCalc.getMoonPosition(hoursLater(t, i + 1), lat, lng).altitude - hc;
+
+        a = (h0 + h2) / 2 - h1;
+        b = (h2 - h0) / 2;
+        xe = -b / (2 * a);
+        ye = (a * xe + b) * xe + h1;
+        d = b * b - 4 * a * h1;
+        roots = 0;
+
+        if (d >= 0) {
+            dx = Math.sqrt(d) / (Math.abs(a) * 2);
+            x1 = xe - dx;
+            x2 = xe + dx;
+            if (Math.abs(x1) <= 1) roots++;
+            if (Math.abs(x2) <= 1) roots++;
+            if (x1 < -1) x1 = x2;
+        }
+
+        if (roots === 1) {
+            if (h0 < 0) rise = i + x1;
+            else set = i + x1;
+
+        } else if (roots === 2) {
+            rise = i + (ye < 0 ? x2 : x1);
+            set = i + (ye < 0 ? x1 : x2);
+        }
+
+        if (rise && set) break;
+
+        h0 = h2;
+    }
+
+    var result = {};
+
+    if (rise) result.rise = hoursLater(t, rise);
+    if (set) result.set = hoursLater(t, set);
+
+    if (!rise && !set) result[ye > 0 ? 'alwaysUp' : 'alwaysDown'] = true;
+
+    return result;
+};
+
+
+// export as Node module / AMD module / browser variable
+if (typeof exports === 'object' && typeof module !== 'undefined') module.exports = SunCalc;
+else if (typeof define === 'function' && define.amd) define(SunCalc);
+else window.SunCalc = SunCalc;
+
+}());
+
+</script>
+<script>
+/* ===== Motore: marea astronomica, sole/luna, indice di pescosità, specie ===== */
+(function (root) {
+  'use strict';
+  const SC = root.SunCalc || (typeof require === 'function' ? require('./npmchk/package/suncalc.js') : null);
+  const D2R = Math.PI / 180;
+  const norm = a => ((a % 360) + 360) % 360;
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  const MIN = 60000, HOUR = 3600000, DAY = 86400000;
+
+  /* --- Marea: costanti armoniche Punta della Salute (Centro Maree Venezia, 2004-2018) --- */
+  const TIDE = {
+    Z0: 33, // livello medio sullo zero mareografico di Punta Salute (ZMPS), cm
+    L: -(12 + 20 / 60 + 15 / 3600), // longitudine (positiva a ovest)
+    C: [
+      ['M2', 23.6, 310, 2], ['S2', 13.7, 319, 2], ['N2', 3.8, 309, 2], ['K2', 4.1, 313, 2],
+      ['K1', 17.3, 87, 1], ['O1', 5.2, 78, 1], ['P1', 5.5, 85, 1], ['S1', 1.4, 278, 1],
+    ],
+  };
+  function astroArgs(ms) {
+    const D = (ms - Date.UTC(2000, 0, 1, 12)) / DAY;
+    const ut = ((ms / HOUR) % 24 + 24) % 24;
+    return {
+      s: norm(218.3164 + 13.17639648 * D), h: norm(280.4661 + 0.98564736 * D),
+      p: norm(83.3535 + 0.11140353 * D), N: norm(125.0445 - 0.05295377 * D), T: norm(180 + 15 * ut),
+    };
+  }
+  function V(n, a) {
+    const { s, h, p, T } = a;
+    switch (n) {
+      case 'M2': return 2 * T - 2 * s + 2 * h;
+      case 'S2': return 2 * T;
+      case 'N2': return 2 * T - 3 * s + 2 * h + p;
+      case 'K2': return 2 * T + 2 * h;
+      case 'K1': return T + h - 90;
+      case 'O1': return T - 2 * s + h + 90;
+      case 'P1': return T - h + 90;
+      case 'S1': return T + 180;
+    }
+  }
+  function nodal(n, N) {
+    const c = k => Math.cos(k * N * D2R), s = k => Math.sin(k * N * D2R);
+    switch (n) {
+      case 'M2': case 'N2': return [1.0004 - 0.0373 * c(1) + 0.0002 * c(2), -2.14 * s(1)];
+      case 'K2': return [1.0241 + 0.2863 * c(1) + 0.0083 * c(2) - 0.0015 * c(3), -17.74 * s(1) + 0.68 * s(2) - 0.04 * s(3)];
+      case 'K1': return [1.006 + 0.115 * c(1) - 0.0088 * c(2) + 0.0006 * c(3), -8.86 * s(1) + 0.68 * s(2) - 0.07 * s(3)];
+      case 'O1': return [1.0089 + 0.1871 * c(1) - 0.0147 * c(2) + 0.0014 * c(3), 10.8 * s(1) - 1.34 * s(2) + 0.19 * s(3)];
+      default: return [1, 0];
+    }
+  }
+  // livello a Punta della Salute, cm sullo ZMPS
+  function saluteLevel(ms) {
+    const a = astroArgs(ms);
+    let h = TIDE.Z0;
+    for (const [n, A, k, p] of TIDE.C) {
+      const [f, u] = nodal(n, a.N);
+      h += f * A * Math.cos((V(n, a) + u - (k + p * TIDE.L)) * D2R);
+    }
+    return h;
+  }
+  // livello in uno spot: la marea arriva "anticipo" minuti prima che a Punta Salute
+  const tideAt = (ms, spot) => saluteLevel(ms + (spot && spot.anticipo != null ? spot.anticipo : 47) * MIN);
+  const tideRate = (ms, spot) => (tideAt(ms + 15 * MIN, spot) - tideAt(ms - 15 * MIN, spot)) * 2; // cm/h
+
+  function tideExtremes(fromMs, toMs, spot) {
+    const step = 6 * MIN, out = [];
+    let t0 = fromMs - step, h0 = tideAt(t0, spot), t1 = fromMs, h1 = tideAt(t1, spot);
+    for (let t2 = fromMs + step; t2 <= toMs + step; t2 += step) {
+      const h2 = tideAt(t2, spot);
+      if ((h1 > h0 && h1 >= h2) || (h1 < h0 && h1 <= h2)) {
+        const den = h0 - 2 * h1 + h2; // vertice della parabola
+        const dt = den !== 0 ? 0.5 * (h0 - h2) / den : 0;
+        const t = t1 + dt * step;
+        if (t >= fromMs && t < toMs) out.push({ t, h: tideAt(t, spot), alta: h1 > h0 });
+      }
+      t0 = t1; h0 = h1; t1 = t2; h1 = h2;
+    }
+    return out;
+  }
+  function tidePhase(ms, spot) {
+    const r = tideRate(ms, spot);
+    if (Math.abs(r) < 2.5) return 'stanca';
+    return r > 0 ? 'montante' : 'calante';
+  }
+
+  /* --- Sole e luna (SunCalc) --- */
+  function dayStart(ms) { const d = new Date(ms); d.setHours(0, 0, 0, 0); return d.getTime(); }
+  const dayCache = new Map();
+  function dayAstro(ms, lat, lon) {
+    const d0 = dayStart(ms), key = d0 + '|' + lat.toFixed(3) + '|' + lon.toFixed(3);
+    if (dayCache.has(key)) return dayCache.get(key);
+    const mid = new Date(d0 + 12 * HOUR);
+    const st = SC.getTimes(mid, lat, lon);
+    const mt = SC.getMoonTimes(new Date(d0), lat, lon);
+    // transiti lunari (superiore e inferiore) da campionamento dell'altezza, finestra allargata
+    const trans = [];
+    const step = 10 * MIN;
+    let a0 = SC.getMoonPosition(new Date(d0 - 13 * HOUR - step), lat, lon).altitude;
+    let a1 = SC.getMoonPosition(new Date(d0 - 13 * HOUR), lat, lon).altitude;
+    for (let t = d0 - 13 * HOUR + step; t <= d0 + 37 * HOUR; t += step) {
+      const a2 = SC.getMoonPosition(new Date(t), lat, lon).altitude;
+      if (a1 > a0 && a1 >= a2) trans.push({ t: t - step, tipo: 'sup' });
+      if (a1 < a0 && a1 <= a2) trans.push({ t: t - step, tipo: 'inf' });
+      a0 = a1; a1 = a2;
+    }
+    const ill = SC.getMoonIllumination(mid);
+    const rs = [];
+    // sorgere/tramonto della luna anche dei giorni adiacenti per i periodi minori a cavallo della mezzanotte
+    for (const off of [-1, 0, 1]) {
+      const m = off === 0 ? mt : SC.getMoonTimes(new Date(d0 + off * DAY), lat, lon);
+      if (m.rise) rs.push({ t: m.rise.getTime(), tipo: 'sorge' });
+      if (m.set) rs.push({ t: m.set.getTime(), tipo: 'tramonta' });
+    }
+    const r = {
+      d0, sunrise: st.sunrise.getTime(), sunset: st.sunset.getTime(), dawn: st.dawn.getTime(), dusk: st.dusk.getTime(),
+      moonrise: mt.rise ? mt.rise.getTime() : null, moonset: mt.set ? mt.set.getTime() : null,
+      transits: trans, moonEvents: rs, phase: ill.phase, fraction: ill.fraction,
+    };
+    // periodi solunari del giorno
+    r.maggiori = trans.filter(x => x.t >= d0 - HOUR && x.t < d0 + DAY + HOUR).map(x => ({ da: x.t - HOUR, a: x.t + HOUR, centro: x.t, tipo: x.tipo }));
+    r.minori = rs.filter(x => x.t >= d0 - 30 * MIN && x.t < d0 + DAY + 30 * MIN).map(x => ({ da: x.t - 40 * MIN, a: x.t + 40 * MIN, centro: x.t, tipo: x.tipo }));
+    dayCache.set(key, r);
+    return r;
+  }
+  function moonPhaseName(phase) {
+    if (phase < 0.03 || phase > 0.97) return 'Luna nuova';
+    if (phase < 0.22) return 'Falce crescente';
+    if (phase < 0.28) return 'Primo quarto';
+    if (phase < 0.47) return 'Gibbosa crescente';
+    if (phase < 0.53) return 'Luna piena';
+    if (phase < 0.72) return 'Gibbosa calante';
+    if (phase < 0.78) return 'Ultimo quarto';
+    return 'Falce calante';
+  }
+  function moonBucket(phase) {
+    if (phase < 0.125 || phase >= 0.875) return 'nuova';
+    if (phase < 0.375) return 'crescente';
+    if (phase < 0.625) return 'piena';
+    return 'calante';
+  }
+  function lightBucket(ms, da) {
+    if (Math.abs(ms - da.sunrise) <= 75 * MIN) return 'alba';
+    if (Math.abs(ms - da.sunset) <= 75 * MIN) return 'tramonto';
+    if (ms > da.sunrise && ms < da.sunset) return 'giorno';
+    return 'notte';
+  }
+  function solunarAt(ms, lat, lon) {
+    let best = 0, kind = 'fuori';
+    for (const off of [0, -DAY, DAY]) {
+      const da = dayAstro(ms + off, lat, lon);
+      for (const p of da.maggiori) {
+        const d = Math.abs(ms - p.centro) / HOUR; // ore
+        const v = d <= 1 ? 1 - 0.25 * d * d : Math.max(0, 0.75 - (d - 1) * 0.75);
+        if (v > best) { best = v; kind = d <= 1 ? 'maggiore' : kind; }
+      }
+      for (const p of da.minori) {
+        const d = Math.abs(ms - p.centro) / HOUR;
+        const v = 0.7 * (d <= 0.67 ? 1 - 0.3 * d : Math.max(0, 0.8 - (d - 0.67) * 1.6));
+        if (v > best) { best = v; kind = d <= 0.67 ? 'minore' : kind; }
+      }
+    }
+    return { v: best, kind };
+  }
+
+  /* --- Specie dell'Alto Adriatico da riva --- */
+  // mesi: 0 assente, 1 possibile, 2 buono, 3 ottimo. luce/marea/mare/acqua: affinità 0..1
+  const SPECIE = [
+    { id: 'orata', nome: 'Orata', lat: 'Sparus aurata', min: 20,
+      mesi: [0, 0, 1, 1, 2, 2, 2, 2, 3, 3, 2, 1], dove: 'Spiaggia e dighe, soprattutto vicino alle bocche e alle foci',
+      tecniche: ['surf-leggero', 'surf-medio'], esche: 'Granchio, cannolicchio, cozza, bibi, arenicola',
+      consiglio: 'In autunno escono dalla laguna: cerca la montante e il mare appena formato, finali robusti e ami forti.',
+      luce: { alba: 1, giorno: .8, tramonto: 1, notte: .6 }, marea: { montante: 1, calante: .7, stanca: .3 },
+      mare: { calmo: .6, pocomosso: 1, mosso: .5, scaduta: .9 }, acqua: { limpida: .7, velata: 1, torbida: .7 } },
+    { id: 'spigola', nome: 'Spigola', lat: 'Dicentrarchus labrax', min: 25,
+      mesi: [3, 2, 2, 1, 1, 1, 0, 1, 1, 2, 3, 3], dove: 'Foci, testate delle dighe, spiaggia con mare in scaduta',
+      tecniche: ['spinning', 'surf-medio'], esche: 'Minnow e siliconi a spinning; arenicola, coreano, sardina a fondo',
+      consiglio: 'Il momento classico è la scaduta dopo una mareggiata con acqua torbida, all\'alba o di notte.',
+      luce: { alba: 1, giorno: .3, tramonto: 1, notte: .9 }, marea: { montante: 1, calante: .8, stanca: .3 },
+      mare: { calmo: .4, pocomosso: .8, mosso: .7, scaduta: 1 }, acqua: { limpida: .4, velata: .9, torbida: 1 } },
+    { id: 'mormora', nome: 'Mormora', lat: 'Lithognathus mormyrus', min: 20,
+      mesi: [0, 0, 0, 1, 2, 3, 3, 3, 2, 1, 0, 0], dove: 'Spiaggia sabbiosa, prima e seconda buca',
+      tecniche: ['surf-leggero'], esche: 'Arenicola, americano, bibi, cannolicchio',
+      consiglio: 'Mare calmo e acqua chiara, meglio al buio. Finali lunghi e sottili, ami piccoli.',
+      luce: { alba: .9, giorno: .4, tramonto: .9, notte: 1 }, marea: { montante: .9, calante: .8, stanca: .4 },
+      mare: { calmo: 1, pocomosso: .8, mosso: .3, scaduta: .5 }, acqua: { limpida: 1, velata: .8, torbida: .4 } },
+    { id: 'sogliola', nome: 'Sogliola', lat: 'Solea solea', min: 20,
+      mesi: [2, 2, 2, 1, 0, 0, 0, 0, 1, 2, 3, 3], dove: 'Spiaggia, fondale sabbioso-fangoso vicino a riva',
+      tecniche: ['surf-leggero', 'surf-medio'], esche: 'Arenicola, coreano, americano',
+      consiglio: 'Pesca notturna con mare leggermente mosso o in scaduta e acqua torbida; esca bassa sul fondo.',
+      luce: { alba: .4, giorno: .1, tramonto: .7, notte: 1 }, marea: { montante: .9, calante: .8, stanca: .4 },
+      mare: { calmo: .5, pocomosso: 1, mosso: .6, scaduta: .9 }, acqua: { limpida: .4, velata: .8, torbida: 1 } },
+    { id: 'sarago', nome: 'Sarago maggiore', lat: 'Diplodus sargus', min: 23,
+      mesi: [2, 2, 2, 1, 1, 1, 1, 1, 2, 3, 3, 2], dove: 'Dighe e scogliere, schiuma ai piedi dei massi',
+      tecniche: ['surf-leggero', 'surf-medio'], esche: 'Cannolicchio, granchio, cozza, americano',
+      consiglio: 'Dopo la mareggiata, con il mare in scaduta e l\'acqua bianca sotto la diga.',
+      luce: { alba: 1, giorno: .6, tramonto: 1, notte: .7 }, marea: { montante: 1, calante: .7, stanca: .3 },
+      mare: { calmo: .4, pocomosso: .8, mosso: .7, scaduta: 1 }, acqua: { limpida: .5, velata: 1, torbida: .8 } },
+    { id: 'ombrina', nome: 'Ombrina', lat: 'Umbrina cirrosa', min: null,
+      mesi: [0, 0, 0, 0, 1, 2, 3, 3, 3, 2, 1, 0], dove: 'Foci, testate delle dighe, canaloni vicino agli scogli',
+      tecniche: ['surf-medio', 'surf-pesante'], esche: 'Granchio, cannolicchio, arenicola',
+      consiglio: 'Pesce notturno: mare in scaduta e acqua velata o torbida, lanci verso le buche profonde.',
+      luce: { alba: .8, giorno: .2, tramonto: .9, notte: 1 }, marea: { montante: 1, calante: .8, stanca: .3 },
+      mare: { calmo: .5, pocomosso: .9, mosso: .6, scaduta: 1 }, acqua: { limpida: .4, velata: .9, torbida: 1 } },
+    { id: 'seppia', nome: 'Seppia', lat: 'Sepia officinalis', min: null,
+      mesi: [0, 1, 2, 3, 3, 1, 0, 0, 1, 2, 2, 1], dove: 'Dighe e moli su fondo sabbioso con alghe',
+      tecniche: ['eging'], esche: 'Totanare 2.5–3.0 dai colori naturali, recupero lento a strappi',
+      consiglio: 'In primavera arrivano sotto costa: acqua limpida, mare calmo, ore di luce.',
+      luce: { alba: 1, giorno: .8, tramonto: 1, notte: .5 }, marea: { montante: .8, calante: .8, stanca: .6 },
+      mare: { calmo: 1, pocomosso: .8, mosso: .2, scaduta: .3 }, acqua: { limpida: 1, velata: .7, torbida: .2 } },
+    { id: 'calamaro', nome: 'Calamaro', lat: 'Loligo vulgaris', min: null,
+      mesi: [2, 2, 1, 0, 0, 0, 0, 0, 0, 2, 3, 3], dove: 'Testate delle dighe e moli illuminati',
+      tecniche: ['eging'], esche: 'Totanare 2.5–3.0 fluo o luminescenti',
+      consiglio: 'Di notte, con mare calmo e acqua chiara; le ore dopo il tramonto sono le migliori.',
+      luce: { alba: .7, giorno: .1, tramonto: .9, notte: 1 }, marea: { montante: .9, calante: .8, stanca: .5 },
+      mare: { calmo: 1, pocomosso: .7, mosso: .2, scaduta: .3 }, acqua: { limpida: 1, velata: .7, torbida: .2 } },
+    { id: 'serra', nome: 'Pesce serra', lat: 'Pomatomus saltatrix', min: null,
+      mesi: [0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 2, 0], dove: 'Foci e testate delle dighe, dove ci sono mangianze',
+      tecniche: ['spinning'], esche: 'Metal jig, WTD, minnow; terminale robusto contro i denti',
+      consiglio: 'Insegui le mangianze all\'alba e al tramonto, recuperi veloci.',
+      luce: { alba: 1, giorno: .6, tramonto: 1, notte: .2 }, marea: { montante: 1, calante: .9, stanca: .3 },
+      mare: { calmo: .6, pocomosso: 1, mosso: .6, scaduta: .7 }, acqua: { limpida: .8, velata: 1, torbida: .6 } },
+    { id: 'leccia', nome: 'Leccia stella', lat: 'Trachinotus ovatus', min: null,
+      mesi: [0, 0, 0, 0, 0, 0, 1, 2, 3, 2, 0, 0], dove: 'Spiaggia e foci, a ridosso della risacca',
+      tecniche: ['spinning'], esche: 'Ondulanti e minnow piccoli, recupero veloce',
+      consiglio: 'Branchi sotto riva a fine estate, nelle prime ore del mattino.',
+      luce: { alba: 1, giorno: .7, tramonto: .9, notte: .1 }, marea: { montante: .9, calante: .8, stanca: .4 },
+      mare: { calmo: .8, pocomosso: 1, mosso: .4, scaduta: .5 }, acqua: { limpida: 1, velata: .8, torbida: .4 } },
+    { id: 'sgombro', nome: 'Sgombro', lat: 'Scomber scombrus', min: 18,
+      mesi: [0, 0, 1, 2, 3, 2, 1, 1, 2, 2, 1, 0], dove: 'Testate delle dighe con acqua profonda',
+      tecniche: ['spinning'], esche: 'Ondulanti piccoli, piumette, sabiki',
+      consiglio: 'Branchi di passo: quando ci sono si prendono a raffica, di giorno con mare poco mosso.',
+      luce: { alba: 1, giorno: .7, tramonto: .9, notte: .1 }, marea: { montante: .9, calante: .8, stanca: .5 },
+      mare: { calmo: .9, pocomosso: 1, mosso: .4, scaduta: .5 }, acqua: { limpida: 1, velata: .8, torbida: .3 } },
+    { id: 'rombo', nome: 'Rombo', lat: 'Scophthalmus maximus', min: null,
+      mesi: [2, 3, 3, 2, 1, 0, 0, 0, 0, 0, 0, 1], dove: 'Spiaggia, canalone tra le secche',
+      tecniche: ['surf-medio', 'surf-pesante'], esche: 'Striscia di sardina, alice, arenicola',
+      consiglio: 'A fine inverno, con mare poco mosso e acqua velata; esca che lavora appoggiata sul fondo.',
+      luce: { alba: .8, giorno: .5, tramonto: .8, notte: .8 }, marea: { montante: .9, calante: .8, stanca: .4 },
+      mare: { calmo: .7, pocomosso: 1, mosso: .5, scaduta: .8 }, acqua: { limpida: .6, velata: 1, torbida: .7 } },
+  ];
+  const TECNICHE = {
+    'surf-leggero': 'Surf leggero', 'surf-medio': 'Surf medio', 'surf-pesante': 'Surf pesante',
+    spinning: 'Spinning', eging: 'Eging',
+  };
+  const seasonMax = (() => { let m = 0; for (let i = 0; i < 12; i++) m = Math.max(m, SPECIE.reduce((s, x) => s + x.mesi[i], 0)); return m; })();
+  const seasonScore = month => SPECIE.reduce((s, x) => s + x.mesi[month], 0) / seasonMax;
+
+  /* --- Condizioni inserite dall'utente --- */
+  const COND = {
+    mare: { calmo: 'Calmo', pocomosso: 'Poco mosso', mosso: 'Mosso', scaduta: 'In scaduta' },
+    acqua: { limpida: 'Limpida', velata: 'Velata', torbida: 'Torbida' },
+    vento: { debole: 'Debole', moderato: 'Moderato', forte: 'Forte' },
+    pressione: { calo: 'In calo', stabile: 'Stabile', salita: 'In salita' },
+  };
+  function condModifier(c) {
+    if (!c) return 0;
+    let m = 0;
+    m += { calmo: -2, pocomosso: 5, mosso: -6, scaduta: 9 }[c.mare] || 0;
+    m += { limpida: -1, velata: 4, torbida: 1 }[c.acqua] || 0;
+    m += { debole: 1, moderato: -3, forte: -14 }[c.vento] || 0;
+    m += { calo: 4, stabile: 1, salita: -3 }[c.pressione] || 0;
+    return m;
+  }
+
+  /* --- Apprendimento dal diario --- */
+  const EXPECT = {
+    marea: { montante: .42, calante: .42, stanca: .16 },
+    luce: { alba: .1, tramonto: .1, giorno: .4, notte: .4 },
+    luna: { nuova: .25, crescente: .25, piena: .25, calante: .25 },
+    solunare: { maggiore: .22, minore: .11, fuori: .67 },
+  };
+  function learnModel(catches) {
+    const n = catches.length;
+    const counts = { marea: {}, luce: {}, luna: {}, solunare: {} };
+    for (const c of catches) for (const k of Object.keys(counts)) if (c[k]) counts[k][c[k]] = (counts[k][c[k]] || 0) + 1;
+    return { n, counts };
+  }
+  function personalModifier(model, b) {
+    if (!model || model.n < 3) return 0;
+    let s = 0, k = 0;
+    for (const dim of Object.keys(EXPECT)) {
+      const share = ((model.counts[dim][b[dim]] || 0) + 0.5) / (model.n + 0.5 * Object.keys(EXPECT[dim]).length);
+      s += Math.log2(share / EXPECT[dim][b[dim]]); k++;
+    }
+    const conf = Math.min(1, model.n / 15);
+    return clamp(5 * (s / k), -10, 10) * conf;
+  }
+
+  /* --- Indice di pescosità --- */
+  const W = { marea: .28, solunare: .2, luce: .2, luna: .12, stagione: .2 };
+  function scoreAt(ms, spot, opts) {
+    opts = opts || {};
+    const lat = spot.lat, lon = spot.lon;
+    const da = dayAstro(ms, lat, lon);
+    const r = tideRate(ms, spot);
+    const mv = clamp(Math.abs(r) / 16, 0, 1);
+    let cMarea = 0.08 + 0.92 * mv + (r > 2.5 ? 0.08 : 0);
+    cMarea = clamp(cMarea, 0, 1);
+    const sol = solunarAt(ms, lat, lon);
+    const cSol = 0.1 + 0.9 * sol.v;
+    const g = (t0, s) => Math.exp(-0.5 * Math.pow((ms - t0) / (s * MIN), 2));
+    const isDay = ms > da.sunrise && ms < da.sunset;
+    const cLuce = Math.max(g(da.sunrise, 55), g(da.sunset, 55), isDay ? 0.22 : 0.5);
+    const ph = SC.getMoonIllumination(new Date(ms)).phase;
+    const cLuna = 0.3 + 0.7 * Math.abs(Math.cos(2 * Math.PI * ph));
+    const month = new Date(ms).getMonth();
+    const cStag = 0.15 + 0.85 * seasonScore(month);
+    const base = 100 * (W.marea * cMarea + W.solunare * cSol + W.luce * cLuce + W.luna * cLuna + W.stagione * cStag);
+    const buckets = { marea: tidePhase(ms, spot), luce: lightBucket(ms, da), luna: moonBucket(ph), solunare: sol.kind };
+    const mCond = opts.cond ? condModifier(opts.cond) : 0;
+    const mPers = personalModifier(opts.model, buckets);
+    const v = clamp(Math.round((base - 12) * 1.18 + mCond + mPers), 0, 100);
+    return { v, base, mCond, mPers, parts: { marea: cMarea, solunare: cSol, luce: cLuce, luna: cLuna, stagione: cStag }, buckets, rate: r, sol };
+  }
+  function label(v) {
+    if (v >= 80) return 'Ottima';
+    if (v >= 65) return 'Buona';
+    if (v >= 50) return 'Discreta';
+    if (v >= 35) return 'Scarsa';
+    return 'Pessima';
+  }
+  // curva dell'indice per un giorno (ogni 15 min) e finestre migliori
+  function dayCurve(d0, spot, opts) {
+    const pts = [];
+    for (let t = d0; t <= d0 + DAY; t += 15 * MIN) pts.push({ t, ...scoreAt(t, spot, opts) });
+    return pts;
+  }
+  function bestWindows(pts, n) {
+    const max = Math.max(...pts.map(p => p.v));
+    const thr = Math.max(55, max - 8);
+    const wins = [];
+    let cur = null;
+    for (const p of pts) {
+      if (p.v >= thr) { if (!cur) cur = { da: p.t, a: p.t, top: p.v, at: p.t }; cur.a = p.t; if (p.v > cur.top) { cur.top = p.v; cur.at = p.t; } }
+      else if (cur) { wins.push(cur); cur = null; }
+    }
+    if (cur) wins.push(cur);
+    return wins.filter(w => w.a - w.da >= 30 * MIN).sort((a, b) => b.top - a.top).slice(0, n || 3).sort((a, b) => a.da - b.da);
+  }
+  // specie del momento
+  function speciesNow(ms, spot, cond, b) {
+    const month = new Date(ms).getMonth();
+    return SPECIE.filter(s => s.mesi[month] > 0).map(s => {
+      let aff = 0.5 * s.luce[b.luce] + 0.5 * s.marea[b.marea];
+      if (cond && cond.mare) aff = aff * 0.75 + 0.25 * s.mare[cond.mare];
+      if (cond && cond.acqua) aff = aff * 0.8 + 0.2 * s.acqua[cond.acqua];
+      return { s, v: Math.round(100 * (s.mesi[month] / 3) * (0.35 + 0.65 * aff)) };
+    }).sort((a, b) => b.v - a.v);
+  }
+
+  const API = {
+    saluteLevel, tideAt, tideRate, tideExtremes, tidePhase, dayAstro, dayStart, moonPhaseName, moonBucket,
+    lightBucket, solunarAt, scoreAt, dayCurve, bestWindows, speciesNow, label, learnModel, personalModifier,
+    SPECIE, TECNICHE, COND, EXPECT, W, condModifier, seasonScore, MIN, HOUR, DAY,
+  };
+  if (typeof module === 'object' && module.exports) module.exports = API; else root.PE = API;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+(function () {
+'use strict';
+const LAND = [[[12.2579,45.42],[12.2574,45.4196],[12.2541,45.4196],[12.2538,45.4191],[12.2538,45.4158],[12.2533,45.4154],[12.2525,45.4162],[12.25,45.4162],[12.2491,45.4171],[12.2483,45.4171],[12.2475,45.4179],[12.2467,45.4179],[12.2462,45.4175],[12.2462,45.4158],[12.2458,45.4154],[12.24,45.4154],[12.2391,45.4162],[12.2375,45.4162],[12.2366,45.4171],[12.2358,45.4171],[12.235,45.4162],[12.2342,45.4162],[12.2333,45.4154],[12.2299,45.4154],[12.2291,45.4162],[12.2267,45.4162],[12.2262,45.4158],[12.2263,45.415],[12.2249,45.4137],[12.2225,45.4137],[12.2212,45.415],[12.2212,45.4183],[12.2199,45.4196],[12.2183,45.4179],[12.2174,45.4179],[12.2158,45.4195],[12.2133,45.4196],[12.2121,45.4183],[12.212,45.4175],[12.2116,45.417],[12.2108,45.4171],[12.2104,45.4175],[12.2104,45.4192],[12.21,45.4196],[12.2092,45.4196],[12.2083,45.4187],[12.2075,45.4188],[12.2063,45.4175],[12.2063,45.4158],[12.2046,45.4141],[12.2046,45.4125],[12.205,45.4121],[12.2284,45.4121],[12.2299,45.4137],[12.2358,45.4137],[12.2374,45.4154],[12.2383,45.4154],[12.2392,45.4146],[12.2416,45.4146],[12.2421,45.4142],[12.242,45.4133],[12.2412,45.4125],[12.2413,45.4116],[12.2416,45.4113],[12.2458,45.4112],[12.2466,45.4121],[12.2483,45.412],[12.2492,45.4113],[12.2574,45.4112],[12.2579,45.4108],[12.2579,45.41],[12.2574,45.4096],[12.2492,45.4096],[12.2483,45.4087],[12.2466,45.4088],[12.2458,45.4096],[12.2424,45.4096],[12.2421,45.4091],[12.2425,45.4087],[12.245,45.4087],[12.2454,45.4083],[12.2446,45.4075],[12.2445,45.4066],[12.2454,45.4058],[12.245,45.4054],[12.24,45.4054],[12.2391,45.4062],[12.2375,45.4062],[12.2366,45.4071],[12.2358,45.4071],[12.235,45.4079],[12.2342,45.4079],[12.2333,45.4088],[12.2308,45.4087],[12.2292,45.4104],[12.2267,45.4104],[12.2258,45.4096],[12.2217,45.4096],[12.2212,45.4092],[12.2216,45.4087],[12.2225,45.4087],[12.2229,45.4083],[12.2221,45.4075],[12.2221,45.4067],[12.2217,45.4062],[12.2208,45.4071],[12.2175,45.4071],[12.2166,45.4079],[12.2158,45.4079],[12.2133,45.4104],[12.205,45.4104],[12.2046,45.41],[12.2046,45.4091],[12.2054,45.4083],[12.2054,45.4074],[12.2062,45.4066],[12.2062,45.405],[12.2058,45.4046],[12.2041,45.4046],[12.2029,45.4033],[12.2045,45.4017],[12.2046,45.3991],[12.2037,45.3983],[12.2038,45.3975],[12.2045,45.3966],[12.2046,45.3925],[12.2053,45.3916],[12.2054,45.3892],[12.205,45.3887],[12.2042,45.3887],[12.2029,45.39],[12.2029,45.3916],[12.2025,45.3921],[12.2021,45.3917],[12.2021,45.3858],[12.2017,45.3854],[12.2,45.3854],[12.1991,45.3846],[12.1966,45.3846],[12.1958,45.3854],[12.1941,45.3854],[12.1937,45.3858],[12.1937,45.3874],[12.1941,45.3879],[12.195,45.3879],[12.1958,45.3871],[12.1971,45.3883],[12.1966,45.3887],[12.1957,45.3887],[12.195,45.3895],[12.1941,45.3887],[12.1933,45.3887],[12.1925,45.3879],[12.192,45.3883],[12.192,45.3934],[12.1913,45.3942],[12.1912,45.4083],[12.1904,45.4091],[12.1904,45.41],[12.19,45.4104],[12.1892,45.4104],[12.1883,45.4096],[12.1875,45.4096],[12.1866,45.4087],[12.1858,45.4088],[12.1841,45.4071],[12.1833,45.4071],[12.1816,45.4054],[12.1808,45.4054],[12.1783,45.4029],[12.1774,45.4029],[12.175,45.4004],[12.1733,45.4004],[12.1729,45.4],[12.1728,45.3992],[12.1724,45.3988],[12.1716,45.3987],[12.1708,45.3979],[12.17,45.3979],[12.1683,45.3963],[12.1674,45.3962],[12.1658,45.3946],[12.165,45.3946],[12.1637,45.3933],[12.1637,45.3908],[12.1666,45.3879],[12.1674,45.3879],[12.1683,45.3871],[12.1691,45.3871],[12.1708,45.3854],[12.1717,45.3854],[12.1741,45.3829],[12.1749,45.3829],[12.1767,45.3812],[12.1775,45.3812],[12.1783,45.3804],[12.1791,45.3804],[12.1808,45.3787],[12.1816,45.3788],[12.1824,45.3779],[12.1833,45.3779],[12.1887,45.3725],[12.1888,45.3708],[12.1883,45.3704],[12.1866,45.3704],[12.1858,45.3696],[12.1791,45.3695],[12.1775,45.3679],[12.175,45.3679],[12.1746,45.3683],[12.1754,45.3692],[12.1754,45.37],[12.175,45.3704],[12.17,45.3704],[12.1691,45.3712],[12.165,45.3712],[12.1641,45.3721],[12.1625,45.3721],[12.162,45.3725],[12.1621,45.3733],[12.1612,45.3741],[12.1612,45.375],[12.1608,45.3754],[12.16,45.3754],[12.1537,45.3817],[12.1554,45.3834],[12.1549,45.3838],[12.1541,45.3837],[12.1533,45.3846],[12.1525,45.3845],[12.1521,45.385],[12.1521,45.3858],[12.1513,45.3867],[12.1512,45.3875],[12.1504,45.3883],[12.1504,45.3891],[12.1491,45.3904],[12.1483,45.3904],[12.1479,45.39],[12.1479,45.3892],[12.1466,45.3879],[12.1441,45.3879],[12.1429,45.3866],[12.1428,45.3858],[12.1438,45.385],[12.1438,45.3841],[12.1449,45.3829],[12.1474,45.3829],[12.1479,45.3825],[12.1479,45.3816],[12.1474,45.3813],[12.1466,45.3812],[12.1462,45.3808],[12.1475,45.3796],[12.1483,45.3796],[12.1487,45.3791],[12.1488,45.3775],[12.1496,45.3766],[12.1496,45.3758],[12.1499,45.3754],[12.1541,45.3754],[12.155,45.3746],[12.1574,45.3746],[12.1579,45.3742],[12.1579,45.3733],[12.1575,45.3729],[12.1533,45.3729],[12.1524,45.3737],[12.1516,45.3737],[12.1508,45.3729],[12.1491,45.3729],[12.1479,45.3717],[12.1479,45.3708],[12.1488,45.37],[12.1487,45.3691],[12.1496,45.3683],[12.1495,45.3675],[12.1508,45.3663],[12.1525,45.3662],[12.1533,45.3671],[12.1575,45.3671],[12.1579,45.3667],[12.1579,45.3642],[12.1592,45.3629],[12.16,45.3629],[12.1608,45.3621],[12.165,45.3621],[12.1654,45.3625],[12.1654,45.3633],[12.1663,45.3641],[12.1663,45.3658],[12.1674,45.3671],[12.1741,45.3671],[12.1763,45.365],[12.1762,45.3641],[12.1758,45.3638],[12.1741,45.3638],[12.1725,45.3654],[12.1716,45.3654],[12.1708,45.3662],[12.1696,45.365],[12.1696,45.3642],[12.1687,45.3633],[12.1687,45.3608],[12.1666,45.3587],[12.1658,45.3587],[12.1646,45.3575],[12.1645,45.3567],[12.1654,45.3558],[12.1654,45.355],[12.1679,45.3525],[12.1679,45.3517],[12.1674,45.3512],[12.1666,45.3512],[12.1658,45.3504],[12.1649,45.3512],[12.1641,45.3512],[12.1629,45.3525],[12.1629,45.3533],[12.162,45.3541],[12.1621,45.3549],[12.1612,45.3558],[12.1612,45.3575],[12.1592,45.3596],[12.1575,45.3596],[12.1566,45.3587],[12.1558,45.3587],[12.1549,45.3579],[12.1541,45.3579],[12.1533,45.3587],[12.1525,45.3587],[12.1512,45.36],[12.1513,45.3608],[12.1508,45.3613],[12.1499,45.3612],[12.1491,45.3621],[12.1483,45.3612],[12.1475,45.3612],[12.147,45.3609],[12.147,45.3591],[12.1454,45.3574],[12.1454,45.3483],[12.1445,45.3475],[12.1446,45.3433],[12.145,45.3429],[12.1459,45.3437],[12.1541,45.3437],[12.155,45.3446],[12.1583,45.3446],[12.1591,45.3454],[12.1604,45.3442],[12.1591,45.3429],[12.1583,45.3429],[12.1574,45.3421],[12.1558,45.342],[12.155,45.3412],[12.1533,45.3412],[12.1524,45.3404],[12.1508,45.3404],[12.1499,45.3412],[12.1492,45.3404],[12.1483,45.3404],[12.1479,45.3399],[12.1483,45.3396],[12.1491,45.3395],[12.1496,45.3391],[12.1495,45.3383],[12.1487,45.3375],[12.1491,45.3371],[12.1575,45.3371],[12.1579,45.3367],[12.1566,45.3354],[12.155,45.3354],[12.1541,45.3346],[12.1508,45.3345],[12.15,45.3337],[12.1466,45.3338],[12.1462,45.3333],[12.1462,45.3325],[12.145,45.3312],[12.1441,45.3312],[12.1433,45.3321],[12.1425,45.3321],[12.1421,45.3316],[12.1437,45.33],[12.1438,45.3292],[12.1433,45.3288],[12.1425,45.3287],[12.1413,45.3275],[12.1412,45.3266],[12.1416,45.3262],[12.1475,45.3262],[12.1483,45.3254],[12.1524,45.3254],[12.1529,45.325],[12.1529,45.3241],[12.1533,45.3237],[12.1567,45.3237],[12.1575,45.3246],[12.1616,45.3246],[12.1621,45.3241],[12.162,45.3233],[12.1625,45.3229],[12.1633,45.3229],[12.1641,45.3221],[12.1658,45.3221],[12.1667,45.3212],[12.1691,45.3212],[12.17,45.3204],[12.1704,45.3208],[12.1703,45.3225],[12.1696,45.3234],[12.1695,45.3241],[12.1687,45.325],[12.1687,45.3258],[12.1679,45.3266],[12.1679,45.3275],[12.1691,45.3287],[12.1717,45.3287],[12.1721,45.3283],[12.172,45.3275],[12.1713,45.3266],[12.172,45.3258],[12.1721,45.325],[12.1741,45.3229],[12.1792,45.3229],[12.18,45.3237],[12.1808,45.3237],[12.1817,45.3246],[12.1825,45.3246],[12.1833,45.3254],[12.1849,45.3254],[12.1858,45.3262],[12.1875,45.3262],[12.1879,45.3258],[12.1841,45.3221],[12.1833,45.322],[12.1816,45.3204],[12.1799,45.3204],[12.1795,45.32],[12.1796,45.3166],[12.18,45.3162],[12.1816,45.3162],[12.1821,45.3158],[12.1821,45.315],[12.1817,45.3146],[12.1783,45.3145],[12.1779,45.315],[12.1779,45.3158],[12.1771,45.3167],[12.1771,45.3175],[12.1762,45.3183],[12.1763,45.3191],[12.1758,45.3196],[12.1741,45.3196],[12.1738,45.3192],[12.1753,45.3175],[12.175,45.317],[12.1717,45.3171],[12.1692,45.3146],[12.1675,45.3146],[12.1666,45.3154],[12.1608,45.3154],[12.1604,45.3149],[12.1604,45.3141],[12.16,45.3137],[12.1591,45.3137],[12.1587,45.3133],[12.1587,45.3125],[12.16,45.3112],[12.1609,45.3112],[12.1612,45.3108],[12.1604,45.31],[12.1604,45.3091],[12.16,45.3087],[12.1591,45.3087],[12.1563,45.3058],[12.1562,45.305],[12.1579,45.3033],[12.1571,45.3025],[12.1571,45.3008],[12.1554,45.2992],[12.1562,45.2983],[12.1562,45.2975],[12.1554,45.2966],[12.1554,45.2925],[12.155,45.2921],[12.1541,45.2921],[12.1534,45.2912],[12.1517,45.2912],[12.1503,45.29],[12.1508,45.2896],[12.1517,45.2896],[12.1525,45.2904],[12.1541,45.2904],[12.1546,45.29],[12.1545,45.2891],[12.1537,45.2883],[12.1537,45.2874],[12.1541,45.2871],[12.155,45.287],[12.1558,45.2879],[12.1575,45.2879],[12.1583,45.2888],[12.1591,45.2887],[12.16,45.2896],[12.1625,45.2896],[12.1629,45.2891],[12.1629,45.2883],[12.1608,45.2863],[12.1592,45.2862],[12.1583,45.2854],[12.1558,45.2854],[12.1554,45.285],[12.1562,45.2841],[12.1562,45.2833],[12.1554,45.2825],[12.1558,45.2821],[12.1567,45.2829],[12.1583,45.2829],[12.1592,45.2837],[12.16,45.2837],[12.1608,45.2829],[12.1616,45.2829],[12.1625,45.2837],[12.1658,45.2837],[12.1666,45.2829],[12.1674,45.2829],[12.1679,45.2825],[12.1679,45.2808],[12.167,45.2799],[12.1671,45.2783],[12.1662,45.2775],[12.1663,45.2758],[12.1654,45.275],[12.1654,45.2741],[12.1645,45.2733],[12.1646,45.2725],[12.1625,45.2704],[12.1567,45.2704],[12.1554,45.2716],[12.1566,45.2729],[12.1608,45.2729],[12.1621,45.2742],[12.1621,45.2758],[12.1637,45.2775],[12.1637,45.2783],[12.1617,45.2804],[12.1608,45.2796],[12.1591,45.2796],[12.1584,45.2804],[12.1558,45.2804],[12.1537,45.2783],[12.1537,45.2775],[12.1529,45.2766],[12.1529,45.2758],[12.1521,45.2749],[12.152,45.2742],[12.1512,45.2733],[12.1512,45.2725],[12.1516,45.272],[12.1533,45.2721],[12.1537,45.2717],[12.1537,45.27],[12.1521,45.2683],[12.1525,45.2679],[12.1533,45.2688],[12.1541,45.2687],[12.155,45.2695],[12.1583,45.2696],[12.1608,45.2671],[12.1633,45.2671],[12.1646,45.2658],[12.1641,45.2654],[12.1633,45.2654],[12.1624,45.2646],[12.16,45.2646],[12.1592,45.2637],[12.1575,45.2637],[12.1562,45.2625],[12.1562,45.2616],[12.1554,45.2608],[12.1554,45.2583],[12.1558,45.2579],[12.1617,45.2579],[12.1625,45.2588],[12.1641,45.2587],[12.165,45.2596],[12.1659,45.2596],[12.1666,45.2604],[12.1691,45.2604],[12.1703,45.2591],[12.1704,45.2583],[12.17,45.2579],[12.1691,45.2579],[12.1679,45.2567],[12.1679,45.2558],[12.1671,45.255],[12.1671,45.2542],[12.1674,45.2537],[12.1733,45.2537],[12.1741,45.2546],[12.1758,45.2546],[12.1766,45.2554],[12.1792,45.2554],[12.1799,45.2562],[12.1808,45.2562],[12.1816,45.2571],[12.1842,45.2571],[12.185,45.2579],[12.1859,45.2579],[12.1866,45.2587],[12.1875,45.2588],[12.1891,45.2604],[12.1899,45.2604],[12.1908,45.2612],[12.1958,45.2612],[12.1967,45.2604],[12.2,45.2604],[12.2012,45.2616],[12.2012,45.2658],[12.2016,45.2662],[12.2024,45.2663],[12.2033,45.2671],[12.2066,45.2671],[12.2075,45.2662],[12.2133,45.2662],[12.2146,45.2649],[12.2133,45.2637],[12.2116,45.2637],[12.2113,45.2633],[12.2112,45.2625],[12.2116,45.2621],[12.2125,45.2629],[12.215,45.2629],[12.2154,45.2633],[12.2154,45.2642],[12.2158,45.2646],[12.22,45.2646],[12.2204,45.2641],[12.2204,45.2633],[12.2192,45.262],[12.2183,45.2621],[12.2179,45.2617],[12.2179,45.2566],[12.2188,45.2558],[12.2188,45.255],[12.2191,45.2546],[12.2208,45.2545],[12.2217,45.2554],[12.2233,45.2554],[12.2241,45.2546],[12.2249,45.2546],[12.2254,45.2541],[12.2254,45.2533],[12.2249,45.2529],[12.2233,45.2529],[12.2221,45.2516],[12.2224,45.2513],[12.2274,45.2513],[12.2279,45.2508],[12.2278,45.25],[12.2288,45.2492],[12.2287,45.2449],[12.2296,45.2442],[12.2296,45.2433],[12.2321,45.2408],[12.2321,45.24],[12.2317,45.2395],[12.2292,45.2396],[12.2283,45.2404],[12.2275,45.2404],[12.2254,45.2425],[12.2254,45.2433],[12.2237,45.245],[12.2237,45.2458],[12.2225,45.247],[12.22,45.2471],[12.2195,45.2467],[12.2196,45.245],[12.22,45.2446],[12.2216,45.2446],[12.2225,45.2437],[12.2233,45.2437],[12.2246,45.2424],[12.2233,45.2412],[12.2175,45.2412],[12.2166,45.2421],[12.2158,45.2412],[12.215,45.2412],[12.2141,45.2404],[12.2132,45.2404],[12.2125,45.2396],[12.2116,45.2396],[12.2112,45.2391],[12.2112,45.2383],[12.2117,45.2379],[12.2125,45.2379],[12.2133,45.237],[12.2141,45.2371],[12.2146,45.2367],[12.2146,45.2358],[12.2133,45.2346],[12.2116,45.2346],[12.2112,45.2342],[12.2113,45.2317],[12.2117,45.2313],[12.2141,45.2312],[12.215,45.2304],[12.2159,45.2304],[12.2162,45.23],[12.2158,45.2296],[12.2125,45.2296],[12.2112,45.2283],[12.2112,45.2275],[12.2116,45.227],[12.2142,45.2271],[12.215,45.2279],[12.2166,45.2279],[12.2171,45.2275],[12.2171,45.2267],[12.2162,45.2258],[12.2171,45.225],[12.2166,45.2246],[12.2133,45.2246],[12.2124,45.2238],[12.2099,45.2238],[12.2096,45.2233],[12.21,45.2229],[12.2133,45.2229],[12.2142,45.2237],[12.2175,45.2238],[12.2183,45.2246],[12.22,45.2246],[12.2208,45.2254],[12.2225,45.2254],[12.2233,45.2262],[12.2267,45.2262],[12.2271,45.2258],[12.227,45.2233],[12.2266,45.2229],[12.2233,45.2229],[12.2225,45.2221],[12.2158,45.2221],[12.2149,45.2212],[12.2133,45.2213],[12.2129,45.2208],[12.2133,45.2204],[12.2166,45.2204],[12.2175,45.2213],[12.2183,45.2212],[12.2191,45.2204],[12.2217,45.2204],[12.2224,45.2196],[12.2233,45.2196],[12.2254,45.2175],[12.2253,45.2167],[12.2246,45.2158],[12.2246,45.215],[12.2233,45.2137],[12.2216,45.2137],[12.2212,45.2133],[12.2212,45.2125],[12.2208,45.2121],[12.22,45.2121],[12.2196,45.2125],[12.2196,45.2133],[12.2192,45.2137],[12.2184,45.2137],[12.2179,45.2133],[12.2179,45.2125],[12.2171,45.2117],[12.2175,45.2112],[12.2241,45.2112],[12.225,45.2104],[12.2266,45.2104],[12.2275,45.2096],[12.2292,45.2096],[12.2304,45.2083],[12.2304,45.2066],[12.2299,45.2062],[12.2292,45.2062],[12.2283,45.2054],[12.225,45.2054],[12.2217,45.2021],[12.2208,45.2021],[12.2199,45.2012],[12.2149,45.2012],[12.2137,45.2],[12.2141,45.1996],[12.2299,45.1995],[12.2308,45.1987],[12.2317,45.1996],[12.232,45.1992],[12.2321,45.1975],[12.2312,45.1966],[12.2329,45.195],[12.2329,45.1925],[12.2341,45.1912],[12.235,45.1913],[12.2358,45.1904],[12.2391,45.1904],[12.24,45.1896],[12.2416,45.1895],[12.2425,45.1888],[12.2434,45.1887],[12.2441,45.1879],[12.2466,45.1879],[12.2475,45.187],[12.2517,45.1871],[12.2524,45.1862],[12.2692,45.1862],[12.2699,45.1871],[12.2708,45.1871],[12.2716,45.1879],[12.2725,45.1879],[12.2779,45.1933],[12.2779,45.195],[12.2796,45.1966],[12.2796,45.1975],[12.2804,45.1983],[12.2804,45.1991],[12.2812,45.2],[12.2812,45.2008],[12.2821,45.2016],[12.2821,45.2025],[12.2829,45.2033],[12.2829,45.205],[12.2838,45.2058],[12.2837,45.2092],[12.2845,45.21],[12.2846,45.2108],[12.2854,45.2117],[12.2854,45.2133],[12.2863,45.2141],[12.2862,45.2158],[12.2858,45.2162],[12.2842,45.2162],[12.2833,45.2171],[12.2791,45.2171],[12.2779,45.2158],[12.2779,45.2033],[12.2787,45.2025],[12.2787,45.2017],[12.2779,45.2008],[12.2779,45.1991],[12.2788,45.1983],[12.2787,45.1974],[12.277,45.1958],[12.277,45.1941],[12.2749,45.1921],[12.2733,45.1921],[12.2725,45.1913],[12.2692,45.1912],[12.2671,45.1933],[12.2671,45.1941],[12.2663,45.195],[12.2662,45.1958],[12.2654,45.1966],[12.2654,45.1975],[12.2646,45.1983],[12.2645,45.1992],[12.2637,45.2],[12.2637,45.2017],[12.2633,45.2021],[12.2624,45.202],[12.2621,45.2025],[12.2621,45.2041],[12.2612,45.205],[12.2612,45.2066],[12.2604,45.2075],[12.2604,45.21],[12.2596,45.2108],[12.26,45.2112],[12.2625,45.2112],[12.2633,45.2104],[12.2641,45.2104],[12.2646,45.21],[12.2645,45.2091],[12.2666,45.2071],[12.2682,45.2071],[12.2708,45.2046],[12.2712,45.205],[12.2712,45.2058],[12.2704,45.2066],[12.2704,45.2075],[12.2696,45.2083],[12.2696,45.21],[12.2704,45.2108],[12.2704,45.2117],[12.27,45.2121],[12.2691,45.2121],[12.2687,45.2125],[12.2687,45.2133],[12.27,45.2146],[12.2725,45.2146],[12.2741,45.2129],[12.2745,45.2133],[12.2721,45.2158],[12.2721,45.2175],[12.2733,45.2188],[12.2742,45.2187],[12.2746,45.2191],[12.2746,45.22],[12.2754,45.2208],[12.2754,45.2233],[12.2766,45.2246],[12.2834,45.2246],[12.2837,45.2241],[12.2838,45.2233],[12.2829,45.2225],[12.2829,45.2208],[12.2842,45.2195],[12.285,45.2196],[12.2858,45.2187],[12.2875,45.2188],[12.2883,45.2179],[12.2887,45.2183],[12.2887,45.2191],[12.2904,45.2208],[12.2904,45.2217],[12.2912,45.2225],[12.2912,45.2249],[12.292,45.2258],[12.2913,45.2267],[12.2912,45.2275],[12.2899,45.2287],[12.2883,45.2287],[12.2871,45.23],[12.287,45.2308],[12.2875,45.2312],[12.2883,45.2312],[12.2891,45.2321],[12.29,45.2321],[12.2908,45.2312],[12.2925,45.2312],[12.2934,45.2304],[12.31,45.2304],[12.3104,45.23],[12.3104,45.2292],[12.3099,45.2287],[12.3041,45.2287],[12.3033,45.2279],[12.2999,45.2279],[12.2996,45.2275],[12.2996,45.2266],[12.2988,45.2258],[12.2988,45.2242],[12.2995,45.2233],[12.2996,45.2166],[12.3003,45.2158],[12.3004,45.21],[12.3012,45.2091],[12.3012,45.2083],[12.3004,45.2075],[12.3012,45.2067],[12.3012,45.2024],[12.3021,45.2017],[12.3021,45.1966],[12.3029,45.1958],[12.3029,45.195],[12.3054,45.1925],[12.3054,45.1917],[12.3062,45.1908],[12.3062,45.1891],[12.3071,45.1883],[12.3062,45.1875],[12.3062,45.1842],[12.3054,45.1833],[12.3054,45.1825],[12.305,45.1821],[12.3041,45.1821],[12.3034,45.1812],[12.3017,45.1813],[12.3008,45.1804],[12.2983,45.1804],[12.2979,45.18],[12.2979,45.1792],[12.2983,45.1787],[12.3025,45.1787],[12.3033,45.1796],[12.3067,45.1795],[12.3075,45.1804],[12.3083,45.1804],[12.3092,45.1812],[12.31,45.1812],[12.3116,45.1829],[12.3133,45.1829],[12.3137,45.1825],[12.3138,45.1816],[12.3141,45.1813],[12.315,45.1813],[12.3153,45.1808],[12.3154,45.18],[12.3195,45.1758],[12.3196,45.175],[12.3204,45.1741],[12.3204,45.1733],[12.3225,45.1712],[12.3242,45.1712],[12.325,45.1704],[12.3275,45.1704],[12.3279,45.17],[12.3279,45.1691],[12.3287,45.1683],[12.3287,45.1675],[12.3279,45.1667],[12.3279,45.1641],[12.3271,45.1633],[12.327,45.1625],[12.3258,45.1612],[12.3233,45.1612],[12.3225,45.1604],[12.3199,45.1604],[12.3192,45.1596],[12.3183,45.1596],[12.3175,45.1588],[12.3166,45.1587],[12.3162,45.1583],[12.3162,45.1558],[12.3153,45.155],[12.3154,45.1525],[12.3141,45.1512],[12.3125,45.1512],[12.3121,45.1509],[12.3121,45.1491],[12.3133,45.1479],[12.3149,45.1479],[12.3158,45.1487],[12.3166,45.1487],[12.3171,45.1491],[12.317,45.15],[12.3187,45.1516],[12.3188,45.1525],[12.32,45.1537],[12.3208,45.1537],[12.3225,45.1554],[12.3241,45.1554],[12.3262,45.1575],[12.3262,45.1583],[12.3266,45.1588],[12.3274,45.1588],[12.33,45.1612],[12.3308,45.1613],[12.332,45.1625],[12.332,45.1642],[12.3325,45.1646],[12.3333,45.1646],[12.3346,45.1633],[12.3346,45.1617],[12.3337,45.1608],[12.3337,45.1591],[12.3329,45.1583],[12.3329,45.1567],[12.332,45.1558],[12.332,45.1541],[12.3312,45.1533],[12.3313,45.1516],[12.3304,45.1508],[12.3304,45.15],[12.3296,45.1491],[12.3296,45.1484],[12.3266,45.1454],[12.3258,45.1454],[12.3246,45.1442],[12.3246,45.1425],[12.3237,45.1416],[12.3237,45.1408],[12.3229,45.14],[12.3229,45.125],[12.3237,45.1241],[12.3237,45.1216],[12.3246,45.1208],[12.3245,45.1175],[12.3262,45.1158],[12.3262,45.1116],[12.327,45.1108],[12.3271,45.11],[12.3279,45.1092],[12.3279,45.1083],[12.3287,45.1075],[12.3288,45.1067],[12.3295,45.1058],[12.3296,45.1042],[12.3304,45.1033],[12.3304,45.1],[12.3296,45.0991],[12.3295,45.0933],[12.3274,45.0912],[12.3266,45.0912],[12.3262,45.0917],[12.3262,45.0941],[12.3258,45.0946],[12.3249,45.0946],[12.3241,45.0954],[12.3225,45.0954],[12.3212,45.0966],[12.3212,45.0974],[12.3229,45.0991],[12.3229,45.1],[12.3217,45.1012],[12.32,45.1012],[12.3192,45.102],[12.3183,45.1021],[12.3175,45.1029],[12.3116,45.1029],[12.3108,45.1037],[12.31,45.1037],[12.3087,45.105],[12.3088,45.1074],[12.3095,45.1083],[12.3096,45.1091],[12.3113,45.1108],[12.3112,45.1116],[12.3137,45.1141],[12.3136,45.1183],[12.3133,45.1187],[12.3108,45.1188],[12.31,45.1179],[12.3083,45.1179],[12.3075,45.1188],[12.3058,45.1188],[12.305,45.1195],[12.3025,45.1196],[12.3016,45.1204],[12.3008,45.1204],[12.3,45.1212],[12.2992,45.1212],[12.2987,45.1208],[12.3,45.1196],[12.3008,45.1196],[12.3016,45.1187],[12.3033,45.1188],[12.3042,45.1179],[12.305,45.1179],[12.3063,45.1166],[12.3063,45.1142],[12.3054,45.1133],[12.3062,45.1125],[12.3062,45.11],[12.3054,45.1091],[12.3054,45.1075],[12.305,45.1071],[12.3042,45.1071],[12.3037,45.1066],[12.3038,45.1058],[12.3029,45.105],[12.3029,45.1042],[12.302,45.1033],[12.3021,45.1025],[12.3003,45.1008],[12.3004,45.1],[12.2983,45.0979],[12.2941,45.0979],[12.2933,45.0987],[12.2924,45.0988],[12.2916,45.0996],[12.2883,45.0996],[12.2879,45.0992],[12.2884,45.0987],[12.29,45.0987],[12.2908,45.0979],[12.2916,45.0979],[12.2929,45.0966],[12.2929,45.095],[12.2937,45.0942],[12.2937,45.0924],[12.2946,45.0916],[12.2945,45.0875],[12.2938,45.0866],[12.2937,45.0841],[12.2929,45.0834],[12.2929,45.0816],[12.2921,45.0808],[12.2921,45.0799],[12.2925,45.0796],[12.2933,45.0796],[12.295,45.0779],[12.2975,45.0779],[12.2983,45.0771],[12.2991,45.077],[12.3,45.0762],[12.3008,45.0762],[12.3016,45.0754],[12.3057,45.0754],[12.3066,45.0762],[12.3075,45.0762],[12.3083,45.0771],[12.3116,45.0771],[12.3125,45.0763],[12.3192,45.0762],[12.32,45.0754],[12.3234,45.0754],[12.3241,45.0745],[12.3249,45.0746],[12.3279,45.0717],[12.3279,45.07],[12.3287,45.0692],[12.3287,45.0674],[12.3296,45.0666],[12.3295,45.0641],[12.3308,45.0629],[12.3313,45.0633],[12.3312,45.0641],[12.3329,45.0658],[12.3321,45.0667],[12.3321,45.07],[12.3312,45.0708],[12.3313,45.0716],[12.3316,45.0721],[12.3325,45.0721],[12.3333,45.0729],[12.3341,45.0729],[12.335,45.0737],[12.3358,45.0737],[12.3362,45.0741],[12.3362,45.075],[12.3358,45.0754],[12.335,45.0754],[12.3346,45.0758],[12.3345,45.0767],[12.3337,45.0774],[12.3337,45.0783],[12.3329,45.0791],[12.3329,45.0817],[12.3321,45.0824],[12.332,45.0833],[12.3317,45.0838],[12.3308,45.0829],[12.33,45.0829],[12.3296,45.0825],[12.3296,45.0816],[12.3288,45.0808],[12.3287,45.0766],[12.3275,45.0754],[12.3267,45.0754],[12.3262,45.0758],[12.3262,45.0775],[12.3254,45.0783],[12.3254,45.0875],[12.3262,45.0883],[12.3262,45.0892],[12.3266,45.0896],[12.3275,45.0895],[12.3283,45.0904],[12.3292,45.0904],[12.3299,45.0912],[12.3308,45.0912],[12.3316,45.0904],[12.3325,45.0904],[12.3333,45.0896],[12.3349,45.0896],[12.3358,45.0887],[12.3366,45.0887],[12.3383,45.0871],[12.34,45.0871],[12.3416,45.0854],[12.3425,45.0854],[12.3441,45.0838],[12.345,45.0837],[12.3458,45.0829],[12.3466,45.0829],[12.3504,45.0792],[12.3504,45.0783],[12.3524,45.0762],[12.3533,45.0762],[12.3562,45.0733],[12.3562,45.0725],[12.3579,45.0708],[12.3578,45.0692],[12.3588,45.0683],[12.3587,45.0667],[12.3579,45.0658],[12.3579,45.0625],[12.3599,45.0604],[12.3625,45.0604],[12.3629,45.06],[12.1,45.06],[12.1,45.42],[12.2579,45.42]],[[12.3054,45.34],[12.3054,45.3416],[12.3063,45.3425],[12.3063,45.3441],[12.3075,45.3454],[12.3083,45.3454],[12.3091,45.3462],[12.3099,45.3462],[12.3108,45.3471],[12.3116,45.3471],[12.3133,45.3488],[12.3141,45.3487],[12.315,45.3496],[12.3158,45.3496],[12.3166,45.3504],[12.3175,45.3504],[12.3183,45.3512],[12.3199,45.3512],[12.3204,45.3517],[12.3204,45.3525],[12.3212,45.3533],[12.3212,45.3549],[12.3233,45.3571],[12.3241,45.3571],[12.3271,45.3599],[12.327,45.3608],[12.3296,45.3633],[12.3296,45.3641],[12.3321,45.3666],[12.3321,45.3674],[12.3329,45.3683],[12.3329,45.3708],[12.3346,45.3725],[12.3346,45.3759],[12.3362,45.3775],[12.3362,45.3783],[12.3396,45.3816],[12.3396,45.3825],[12.3404,45.3833],[12.3404,45.3842],[12.3475,45.3913],[12.3483,45.3913],[12.3487,45.3917],[12.3488,45.3933],[12.3512,45.3958],[12.3512,45.3966],[12.3521,45.3975],[12.352,45.3983],[12.3537,45.4],[12.3538,45.4008],[12.3562,45.4033],[12.3562,45.4041],[12.3571,45.405],[12.357,45.4058],[12.3596,45.4083],[12.3596,45.4092],[12.3612,45.4108],[12.3612,45.4116],[12.3621,45.4125],[12.3621,45.4142],[12.3628,45.415],[12.3629,45.4158],[12.3666,45.4196],[12.3675,45.4195],[12.3679,45.42],[12.3821,45.42],[12.3758,45.4137],[12.3749,45.4137],[12.3745,45.4133],[12.3746,45.4125],[12.3742,45.4121],[12.3733,45.4121],[12.3729,45.4117],[12.3729,45.4108],[12.37,45.4079],[12.3691,45.4079],[12.3654,45.4042],[12.3654,45.4033],[12.3637,45.4016],[12.3638,45.4008],[12.3591,45.3963],[12.3583,45.3962],[12.3563,45.3942],[12.3562,45.3925],[12.3546,45.3908],[12.3545,45.39],[12.3541,45.3896],[12.3533,45.3896],[12.3529,45.3891],[12.3529,45.3883],[12.3513,45.3866],[12.3512,45.3858],[12.35,45.3846],[12.3492,45.3846],[12.3487,45.3841],[12.3487,45.3833],[12.3479,45.3825],[12.3479,45.3816],[12.3462,45.3799],[12.3462,45.3775],[12.3446,45.3758],[12.3445,45.375],[12.3429,45.3733],[12.3429,45.3725],[12.34,45.3696],[12.3392,45.3696],[12.3387,45.3691],[12.3388,45.3683],[12.3379,45.3675],[12.3379,45.3658],[12.3363,45.3641],[12.3362,45.3633],[12.3354,45.3625],[12.3354,45.3616],[12.3329,45.3592],[12.3329,45.3583],[12.3321,45.3575],[12.3321,45.3558],[12.3308,45.3546],[12.3283,45.3546],[12.3271,45.3533],[12.3271,45.3525],[12.3262,45.3516],[12.3263,45.3491],[12.3254,45.3483],[12.3254,45.3392],[12.3266,45.3379],[12.3283,45.3379],[12.3291,45.337],[12.3316,45.3371],[12.3325,45.3363],[12.3358,45.3363],[12.3366,45.3354],[12.3384,45.3354],[12.3391,45.3346],[12.3416,45.3346],[12.3421,45.3342],[12.3408,45.3329],[12.3383,45.3329],[12.3374,45.3337],[12.335,45.3337],[12.3341,45.3346],[12.3291,45.3346],[12.3283,45.3354],[12.3258,45.3354],[12.3249,45.3363],[12.3216,45.3362],[12.3209,45.3371],[12.3191,45.3371],[12.3183,45.3379],[12.3083,45.3379],[12.3066,45.3396],[12.3058,45.3396],[12.3054,45.34]],[[12.4262,45.42],[12.4262,45.4192],[12.4258,45.4187],[12.4233,45.4187],[12.422,45.42],[12.4262,45.42]],[[12.2262,45.3975],[12.2262,45.3983],[12.2275,45.3995],[12.2283,45.3996],[12.23,45.3979],[12.2408,45.3979],[12.2421,45.3966],[12.2421,45.395],[12.2441,45.3929],[12.2449,45.3929],[12.2454,45.3925],[12.2445,45.3917],[12.2446,45.3908],[12.2441,45.3904],[12.2433,45.3904],[12.2429,45.39],[12.2442,45.3887],[12.2499,45.3887],[12.2508,45.3879],[12.2533,45.3879],[12.2537,45.3875],[12.2537,45.3866],[12.2524,45.3854],[12.2499,45.3854],[12.2483,45.3838],[12.2475,45.3846],[12.245,45.3846],[12.2437,45.3833],[12.2438,45.3825],[12.2433,45.3821],[12.2417,45.3821],[12.2413,45.3816],[12.2416,45.3812],[12.2433,45.3812],[12.2449,45.3829],[12.2491,45.3829],[12.2496,45.3825],[12.2484,45.3812],[12.2467,45.3812],[12.2442,45.3787],[12.2425,45.3787],[12.2412,45.3775],[12.2413,45.3767],[12.2416,45.3762],[12.2425,45.3762],[12.2433,45.3771],[12.2442,45.3771],[12.2449,45.3779],[12.2458,45.3779],[12.2475,45.3796],[12.2483,45.3796],[12.2491,45.3804],[12.2499,45.3804],[12.2508,45.3812],[12.2521,45.3799],[12.2496,45.3775],[12.2496,45.3766],[12.2483,45.3754],[12.2475,45.3754],[12.2467,45.3746],[12.2433,45.3745],[12.2429,45.3742],[12.2433,45.3737],[12.2442,45.3737],[12.2471,45.3708],[12.247,45.37],[12.2467,45.3695],[12.2458,45.3696],[12.2454,45.3692],[12.2474,45.3671],[12.2491,45.3671],[12.25,45.3662],[12.2533,45.3662],[12.2542,45.3654],[12.255,45.3654],[12.2571,45.3633],[12.2559,45.362],[12.2542,45.3621],[12.2533,45.3629],[12.2525,45.3629],[12.2516,45.3638],[12.2475,45.3637],[12.247,45.3633],[12.2475,45.3629],[12.2483,45.3629],[12.2491,45.3621],[12.2508,45.3621],[12.2513,45.3616],[12.2508,45.3612],[12.25,45.3612],[12.2491,45.3604],[12.2475,45.3604],[12.247,45.36],[12.2479,45.3592],[12.2479,45.3575],[12.2487,45.3567],[12.2487,45.3541],[12.2475,45.3529],[12.2466,45.3529],[12.2458,45.3521],[12.245,45.3521],[12.2441,45.3529],[12.2433,45.3529],[12.2429,45.3533],[12.2429,45.355],[12.2421,45.3558],[12.2421,45.3575],[12.24,45.3595],[12.2392,45.3596],[12.2371,45.3616],[12.2371,45.3625],[12.2362,45.3633],[12.2362,45.3641],[12.2354,45.365],[12.2354,45.3691],[12.2358,45.3696],[12.2362,45.3691],[12.2362,45.3683],[12.2379,45.3666],[12.2379,45.3658],[12.24,45.3637],[12.2404,45.3642],[12.2404,45.3658],[12.2396,45.3666],[12.2396,45.3683],[12.2392,45.3687],[12.2383,45.3688],[12.2371,45.37],[12.2371,45.3716],[12.2358,45.3729],[12.235,45.3729],[12.2329,45.375],[12.2329,45.3758],[12.232,45.3767],[12.2321,45.3775],[12.2316,45.3779],[12.2308,45.3779],[12.23,45.3787],[12.2291,45.3787],[12.2288,45.3792],[12.2287,45.38],[12.2279,45.3809],[12.2279,45.3833],[12.2283,45.3837],[12.2291,45.3838],[12.2296,45.3841],[12.2295,45.3883],[12.2288,45.3892],[12.2287,45.39],[12.2279,45.3908],[12.2279,45.395],[12.2271,45.3958],[12.2271,45.3967],[12.2262,45.3975]],[[12.2854,45.2375],[12.2854,45.24],[12.2867,45.2412],[12.2875,45.2412],[12.29,45.2437],[12.2908,45.2438],[12.2913,45.2442],[12.2912,45.245],[12.2941,45.2479],[12.2949,45.2479],[12.2954,45.2483],[12.2954,45.2549],[12.2962,45.2558],[12.2962,45.2617],[12.2971,45.2625],[12.2971,45.265],[12.2962,45.2658],[12.2962,45.2683],[12.2971,45.2692],[12.2971,45.2725],[12.2979,45.2733],[12.2979,45.2758],[12.2987,45.2766],[12.2987,45.2808],[12.2996,45.2816],[12.2995,45.2841],[12.3004,45.285],[12.3003,45.2875],[12.3012,45.2883],[12.3012,45.29],[12.3021,45.2908],[12.3021,45.2916],[12.3025,45.2921],[12.3033,45.2921],[12.3037,45.2925],[12.3037,45.2933],[12.3042,45.2937],[12.305,45.2937],[12.3054,45.2941],[12.3054,45.2958],[12.3062,45.2966],[12.3063,45.2992],[12.3071,45.3],[12.307,45.3108],[12.3096,45.3133],[12.3095,45.3142],[12.3104,45.315],[12.3104,45.3166],[12.3112,45.3175],[12.3112,45.3183],[12.3121,45.3191],[12.3121,45.32],[12.3129,45.3208],[12.3129,45.3217],[12.3138,45.3225],[12.3137,45.3233],[12.3153,45.325],[12.3154,45.3266],[12.3158,45.3271],[12.3166,45.3271],[12.3179,45.3283],[12.3179,45.33],[12.315,45.3329],[12.3142,45.3329],[12.3137,45.3334],[12.3137,45.3349],[12.3141,45.3354],[12.3158,45.3354],[12.3166,45.3346],[12.3216,45.3346],[12.3225,45.3337],[12.325,45.3337],[12.3258,45.3329],[12.3334,45.3329],[12.3341,45.3321],[12.3349,45.3321],[12.3354,45.3316],[12.3354,45.3308],[12.3349,45.3304],[12.3283,45.3304],[12.3274,45.3312],[12.3267,45.3304],[12.325,45.3304],[12.3229,45.3283],[12.3229,45.3274],[12.3212,45.3258],[12.3212,45.3241],[12.3204,45.3233],[12.3204,45.3217],[12.3196,45.3208],[12.3196,45.32],[12.3187,45.3191],[12.3187,45.3183],[12.3179,45.3175],[12.3179,45.3158],[12.317,45.315],[12.3171,45.3142],[12.3162,45.3133],[12.3162,45.3116],[12.3146,45.31],[12.3146,45.3092],[12.3137,45.3083],[12.3137,45.3066],[12.3121,45.305],[12.3121,45.3033],[12.3112,45.3025],[12.3112,45.3],[12.3104,45.2991],[12.3104,45.2975],[12.3096,45.2966],[12.3096,45.295],[12.3087,45.2941],[12.3087,45.2916],[12.3079,45.2909],[12.3079,45.2891],[12.307,45.2883],[12.3071,45.2867],[12.3063,45.2858],[12.3062,45.2833],[12.3054,45.2824],[12.3054,45.2809],[12.3046,45.28],[12.3046,45.2783],[12.3037,45.2775],[12.3037,45.2758],[12.3029,45.275],[12.3029,45.2733],[12.302,45.2725],[12.3021,45.2692],[12.3013,45.2683],[12.3012,45.265],[12.3004,45.2642],[12.3004,45.2625],[12.2996,45.2617],[12.2995,45.2592],[12.2988,45.2583],[12.2988,45.2575],[12.2996,45.2566],[12.2996,45.2458],[12.2991,45.2454],[12.2983,45.2454],[12.2974,45.2445],[12.2966,45.2446],[12.2937,45.2416],[12.2937,45.2408],[12.2929,45.24],[12.2929,45.2367],[12.2942,45.2354],[12.3124,45.2354],[12.3137,45.2341],[12.3133,45.2337],[12.2917,45.2337],[12.2908,45.2346],[12.2892,45.2346],[12.2866,45.2371],[12.2858,45.2371],[12.2854,45.2375]],[[12.3621,45.0633],[12.3621,45.0642],[12.3625,45.0646],[12.3641,45.0646],[12.365,45.0638],[12.3716,45.0638],[12.3753,45.06],[12.3695,45.06],[12.3683,45.0612],[12.3675,45.0612],[12.3666,45.0621],[12.3649,45.0621],[12.3642,45.0629],[12.3625,45.0629],[12.3621,45.0633]],[[12.2037,45.3192],[12.2037,45.3199],[12.2041,45.3204],[12.2083,45.3204],[12.21,45.3187],[12.2116,45.3187],[12.2154,45.3225],[12.2154,45.3266],[12.2162,45.3275],[12.2162,45.3283],[12.2166,45.3287],[12.2191,45.3288],[12.22,45.3279],[12.2208,45.3279],[12.2213,45.3283],[12.2212,45.3291],[12.2217,45.3296],[12.2241,45.3296],[12.225,45.3287],[12.2259,45.3287],[12.2266,45.3279],[12.2274,45.3279],[12.2279,45.3275],[12.2266,45.3262],[12.2258,45.3263],[12.2254,45.3258],[12.2254,45.3249],[12.2237,45.3233],[12.2237,45.3225],[12.2233,45.3221],[12.2225,45.3221],[12.2212,45.3208],[12.2212,45.32],[12.2208,45.3196],[12.2191,45.3196],[12.2187,45.3191],[12.2191,45.3187],[12.2208,45.3187],[12.2216,45.3179],[12.2233,45.3179],[12.2237,45.3175],[12.2224,45.3163],[12.2208,45.3162],[12.2199,45.3154],[12.2158,45.3154],[12.215,45.3146],[12.2116,45.3146],[12.2108,45.3154],[12.21,45.3154],[12.2091,45.3163],[12.2083,45.3163],[12.2075,45.3171],[12.2058,45.317],[12.2037,45.3192]],[[12.1896,45.325],[12.1895,45.3292],[12.1913,45.3308],[12.1913,45.3325],[12.1916,45.3329],[12.1924,45.3329],[12.1954,45.3358],[12.1954,45.3367],[12.1929,45.3392],[12.1929,45.3408],[12.1921,45.3416],[12.192,45.3425],[12.1924,45.3429],[12.1958,45.3429],[12.1962,45.3433],[12.1963,45.3441],[12.1971,45.345],[12.197,45.3467],[12.1975,45.3471],[12.1992,45.3471],[12.1995,45.3467],[12.1996,45.3458],[12.2004,45.345],[12.2004,45.3442],[12.2012,45.3433],[12.2012,45.3425],[12.2008,45.3421],[12.1992,45.3421],[12.1987,45.3416],[12.1988,45.3408],[12.1979,45.34],[12.1979,45.3391],[12.1983,45.3387],[12.1991,45.3387],[12.2,45.3396],[12.2004,45.3391],[12.2004,45.3366],[12.1996,45.3358],[12.1996,45.3349],[12.1992,45.3346],[12.1984,45.3346],[12.197,45.3333],[12.1974,45.3329],[12.2033,45.3329],[12.2037,45.3325],[12.2037,45.3308],[12.2016,45.3288],[12.1999,45.3287],[12.1992,45.3279],[12.1908,45.3279],[12.1904,45.3275],[12.1904,45.3249],[12.1899,45.3245],[12.1896,45.325]],[[12.1929,45.3733],[12.1929,45.3758],[12.1933,45.3762],[12.195,45.3762],[12.1954,45.3766],[12.1953,45.3775],[12.1974,45.3796],[12.1983,45.3796],[12.1992,45.3787],[12.2008,45.3787],[12.2012,45.3783],[12.2012,45.3774],[12.2017,45.3771],[12.2041,45.3771],[12.205,45.3762],[12.2092,45.3762],[12.2104,45.375],[12.2104,45.3733],[12.2112,45.3725],[12.2112,45.3716],[12.2104,45.3708],[12.2103,45.3692],[12.2091,45.3679],[12.2075,45.3679],[12.2059,45.3696],[12.205,45.3688],[12.2008,45.3688],[12.2004,45.3691],[12.2004,45.3699],[12.2,45.3704],[12.1991,45.3704],[12.1987,45.3708],[12.1987,45.3725],[12.1983,45.3729],[12.1979,45.3725],[12.1979,45.3717],[12.1975,45.3712],[12.195,45.3712],[12.1929,45.3733]],[[12.2104,45.3666],[12.2104,45.3674],[12.2108,45.3679],[12.2116,45.3679],[12.215,45.3712],[12.2158,45.3712],[12.2216,45.3654],[12.2224,45.3654],[12.2237,45.3642],[12.2237,45.3633],[12.2262,45.3608],[12.2245,45.3592],[12.2246,45.3566],[12.2258,45.3554],[12.2266,45.3554],[12.2271,45.355],[12.2271,45.3541],[12.2267,45.3537],[12.225,45.3537],[12.2246,45.3533],[12.2246,45.3516],[12.2241,45.3513],[12.2225,45.3512],[12.2212,45.3524],[12.2221,45.3533],[12.2221,45.355],[12.2216,45.3554],[12.2199,45.3554],[12.2188,45.3566],[12.2188,45.3591],[12.2179,45.36],[12.2179,45.3616],[12.2166,45.3629],[12.2149,45.3629],[12.2138,45.3642],[12.2146,45.365],[12.2133,45.3663],[12.2108,45.3662],[12.2104,45.3666]],[[12.2012,45.3392],[12.2024,45.3404],[12.2033,45.3404],[12.2042,45.3412],[12.205,45.3412],[12.2062,45.34],[12.2062,45.3392],[12.2075,45.3379],[12.2083,45.3379],[12.2087,45.3375],[12.2087,45.3367],[12.2091,45.3362],[12.2099,45.3362],[12.2116,45.3346],[12.2124,45.3346],[12.215,45.3321],[12.2158,45.3329],[12.2192,45.3329],[12.2204,45.3341],[12.22,45.3346],[12.2175,45.3345],[12.2163,45.3358],[12.2166,45.3362],[12.2208,45.3363],[12.2221,45.335],[12.222,45.3341],[12.2225,45.3338],[12.2233,45.3338],[12.2237,45.3333],[12.2237,45.3324],[12.2224,45.3312],[12.2216,45.3312],[12.2207,45.3304],[12.2199,45.3304],[12.2191,45.3295],[12.2159,45.3296],[12.215,45.3288],[12.2142,45.3287],[12.2133,45.3279],[12.2125,45.3288],[12.2116,45.3279],[12.2108,45.3279],[12.21,45.3271],[12.2092,45.3271],[12.2083,45.3279],[12.2075,45.3279],[12.207,45.3283],[12.2071,45.3291],[12.2079,45.33],[12.2053,45.3325],[12.2062,45.3333],[12.2062,45.3358],[12.2041,45.3379],[12.2025,45.3379],[12.2012,45.3392]]];
+const $ = (s, el) => (el || document).querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const app = $('#app');
+
+if (!window.PE || !window.SunCalc) {
+  app.innerHTML = '<div class="card"><h2>Calcoli astronomici non caricati</h2><p class="muted">Non sono riuscito a caricare la libreria per sole e luna. Controlla la connessione e riapri la pagina.</p></div>';
+  return;
+}
+const { MIN, HOUR, DAY } = PE;
+const APP_VERSION = '1.0';
+
+/* ---------- formattazione ---------- */
+const TZ = { hour: '2-digit', minute: '2-digit' };
+const fT = ms => new Date(ms).toLocaleTimeString('it-IT', TZ);
+const fDay = ms => new Date(ms).toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short' });
+const fDayLong = ms => new Date(ms).toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
+const cm = h => (h >= 0 ? '+' : '−') + Math.abs(Math.round(h)) + ' cm';
+const pad = n => String(n).padStart(2, '0');
+const isoDay = ms => { const d = new Date(ms); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+const parseLocal = (day, hm) => { const [y, m, d] = day.split('-').map(Number); const [h, mi] = (hm || '00:00').split(':').map(Number); return new Date(y, m - 1, d, h, mi).getTime(); };
+const qIdx = v => v >= 80 ? 5 : v >= 65 ? 4 : v >= 50 ? 3 : v >= 35 ? 2 : 1;
+const qCol = v => `var(--q${qIdx(v)})`;
+const qTxt = v => `var(--qt${qIdx(v)})`;
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+const MESI = ['G', 'F', 'M', 'A', 'M', 'G', 'L', 'A', 'S', 'O', 'N', 'D'];
+const TIPI = { spiaggia: 'Spiaggia', diga: 'Diga', scogliera: 'Scogliera', foce: 'Foce', laguna: 'Laguna' };
+const SPECIE_BY_ID = Object.fromEntries(PE.SPECIE.map(s => [s.id, s]));
+const ESCHE = ['arenicola', 'coreano', 'americano', 'bibi', 'cannolicchio', 'granchio', 'cozza', 'sardina', 'alice', 'gamberetto vivo', 'minnow', 'metal jig', 'WTD', 'siliconico', 'ondulante', 'totanara'];
+const DEFAULT_SPOT ={ id: '_def', nome: 'Sottomarina', tipo: 'spiaggia', lat: 45.205, lon: 12.303, anticipo: 47, _def: true };
+
+/* ---------- stato ---------- */
+const S = {
+  tab: 'oggi', dayOffset: 0, canPhoto: !!window.indexedDB,
+  root: {}, spots: [], uscite: [], spotsLoaded: false, uscLoaded: false,
+  view: null, mapAdd: false, me: null,
+};
+const IS_IOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const IS_STANDALONE = window.navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
+
+/* ---------- foto sul telefono (IndexedDB) ---------- */
+const fotoURL = new Map();
+const Photos = {
+  _db: null,
+  open() {
+    if (!this._db) this._db = new Promise((res, rej) => {
+      const r = indexedDB.open('montante', 1);
+      r.onupgradeneeded = () => r.result.createObjectStore('foto');
+      r.onsuccess = () => res(r.result);
+      r.onerror = () => rej(r.error);
+    });
+    return this._db;
+  },
+  async tx(mode, fn) {
+    const db = await this.open();
+    return new Promise((res, rej) => {
+      const t = db.transaction('foto', mode), r = fn(t.objectStore('foto'));
+      let out;
+      if (r) r.onsuccess = () => { out = r.result; };
+      t.oncomplete = () => res(out);
+      t.onerror = () => rej(t.error);
+      t.onabort = () => rej(t.error || { name: 'QuotaExceededError' });
+    });
+  },
+  put(blob, id) { id = id || uid(); return this.tx('readwrite', st => st.put(blob, id)).then(() => id); },
+  get(id) { return this.tx('readonly', st => st.get(id)); },
+  del(id) { const u = fotoURL.get(id); if (u) { URL.revokeObjectURL(u); fotoURL.delete(id); } return this.tx('readwrite', st => st.delete(id)); },
+  clear() { for (const u of fotoURL.values()) URL.revokeObjectURL(u); fotoURL.clear(); return this.tx('readwrite', st => st.clear()); },
+};
+async function hydrate(root) {
+  for (const img of (root || document).querySelectorAll('img[data-foto]:not([src])')) {
+    const id = img.dataset.foto;
+    let u = fotoURL.get(id);
+    if (!u) {
+      try { const b = await Photos.get(id); if (!b) continue; u = URL.createObjectURL(b); fotoURL.set(id, u); } catch (e) { continue; }
+    }
+    img.src = u;
+  }
+}
+
+/* ---------- archivio sul telefono ---------- */
+const Store = {
+  KEY: 'montante:v1', local: null,
+  load() {
+    let d = null;
+    try { d = JSON.parse(localStorage.getItem(this.KEY) || 'null'); } catch (e) { d = null; }
+    d = d || { root: {}, spots: {}, uscite: {} };
+    d.root = d.root || {}; d.spots = d.spots || {}; d.uscite = d.uscite || {};
+    this.local = d;
+    S.root = d.root;
+    S.spots = Object.entries(d.spots).map(([id, v]) => Object.assign({ id }, v));
+    S.uscite = Object.entries(d.uscite).map(([id, v]) => Object.assign({ id }, v));
+    S.spotsLoaded = S.uscLoaded = true; modelCache = null;
+  },
+  save() {
+    try { localStorage.setItem(this.KEY, JSON.stringify(this.local)); }
+    catch (e) { throw { code: 'quota_exceeded' }; }
+  },
+  async setRoot(patch) {
+    const prev = this.local.root;
+    this.local.root = Object.assign({}, prev, patch);
+    try { this.save(); } catch (e) { this.local.root = prev; throw e; }
+    S.root = this.local.root; render();
+  },
+  async saveDoc(kind, id, data) {
+    const prev = this.local[kind][id];
+    this.local[kind][id] = data;
+    try { this.save(); } catch (e) { if (prev) this.local[kind][id] = prev; else delete this.local[kind][id]; throw e; }
+    this.load(); render();
+  },
+  async delDoc(kind, id) { delete this.local[kind][id]; this.save(); this.load(); render(); },
+  replaceAll(d) {
+    this.local = { root: d.root || {}, spots: d.spots || {}, uscite: d.uscite || {} };
+    this.save(); this.load();
+  },
+};
+function errMsg(e) {
+  const c = e && (e.code || e.name);
+  if (c === 'quota_exceeded' || c === 'QuotaExceededError') return 'Memoria del telefono piena: elimina qualche foto o uscita.';
+  return 'Salvataggio non riuscito, riprova.';
+}
+
+/* ---------- meteo e mare dal vivo (Open-Meteo) ---------- */
+const distM = (la1, lo1, la2, lo2) => {
+  const R = 6371000, r = Math.PI / 180, dla = (la2 - la1) * r, dlo = (lo2 - lo1) * r;
+  const a = Math.sin(dla / 2) ** 2 + Math.cos(la1 * r) * Math.cos(la2 * r) * Math.sin(dlo / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(a));
+};
+const fmtDist = m => m < 1000 ? Math.round(m / 10) * 10 + ' m' : (m / 1000).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + ' km';
+const f1 = x => (Math.round(x * 10) / 10).toLocaleString('it-IT', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const Meteo = {
+  KEY: 'montante:meteo', d: null, h: null, cond: [], t0: 0, stamp: 0, loading: false, failed: false,
+  load() {
+    try { this.d = JSON.parse(localStorage.getItem(this.KEY) || 'null'); } catch (e) { this.d = null; }
+    this.index();
+  },
+  index() {
+    this.h = null; this.cond = []; this.stamp = 0;
+    const d = this.d;
+    if (!d || !d.f || !d.f.hourly || !d.f.hourly.time) return;
+    const f = d.f.hourly, m = d.m && d.m.hourly && d.m.hourly.time ? d.m.hourly : null;
+    const mi = m ? new Map(m.time.map((t, i) => [t, i])) : null;
+    const g = (arr, i) => (arr && i != null && arr[i] != null ? arr[i] : null);
+    this.h = f.time.map((t, i) => {
+      const j = mi ? mi.get(t) : null;
+      return {
+        t: t * 1000, temp: g(f.temperature_2m, i), p: g(f.pressure_msl, i), ws: g(f.wind_speed_10m, i), wd: g(f.wind_direction_10m, i),
+        wg: g(f.wind_gusts_10m, i), wc: g(f.weather_code, i), pp: g(f.precipitation_probability, i),
+        wh: m ? g(m.wave_height, j) : null, wp: m ? g(m.wave_period, j) : null, sst: m ? g(m.sea_surface_temperature, j) : null,
+      };
+    });
+    this.t0 = this.h.length ? this.h[0].t : 0;
+    this.stamp = d.at || 0;
+    this.cond = this.h.map((h, i) => this.derive(i));
+  },
+  derive(i) {
+    const H = this.h, h = H[i], c = {};
+    if (h.ws != null) c.vento = h.ws < 12 ? 'debole' : h.ws < 28 ? 'moderato' : 'forte';
+    if (h.p != null) {
+      const p3 = i >= 3 ? H[i - 3].p : null;
+      const dp = p3 != null ? h.p - p3 : 0;
+      c.pressione = dp <= -1 ? 'calo' : dp >= 1 ? 'salita' : 'stabile';
+    }
+    if (h.wh != null) {
+      let mx = 0;
+      for (let k = Math.max(0, i - 24); k < i; k++) if (H[k].wh != null) mx = Math.max(mx, H[k].wh);
+      const w3 = i >= 3 ? H[i - 3].wh : null;
+      if (mx >= 0.7 && h.wh <= 0.7 * mx && w3 != null && h.wh < w3 && h.wh >= 0.12) c.mare = 'scaduta';
+      else c.mare = h.wh < 0.25 ? 'calmo' : h.wh < 0.75 ? 'pocomosso' : 'mosso';
+    }
+    return c;
+  },
+  idx(ms) { if (!this.h || !this.h.length) return -1; const i = Math.round((ms - this.t0) / HOUR); return i >= 0 && i < this.h.length ? i : -1; },
+  at(ms) { const i = this.idx(ms); return i < 0 ? null : this.h[i]; },
+  dp3(ms) { const i = this.idx(ms); if (i < 3) return null; const a = this.h[i].p, b = this.h[i - 3].p; return a != null && b != null ? a - b : null; },
+  near(sp) { const d = this.d; return !!(d && this.h && distM(d.lat, d.lon, sp.lat, sp.lon) < 25000); },
+  stale(sp) { const d = this.d; return !d || Date.now() - (d.at || 0) > 45 * MIN || distM(d.lat, d.lon, sp.lat, sp.lon) > 10000; },
+  async refresh(sp, force) {
+    if (this.loading || (!force && !this.stale(sp))) return;
+    if (!navigator.onLine) { this.failed = true; render(); return; }
+    this.loading = true; this.failed = false; if (S.tab === 'oggi') render();
+    const la = sp.lat.toFixed(4), lo = sp.lon.toFixed(4);
+    const fu = `https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&hourly=temperature_2m,pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,precipitation_probability&past_days=1&forecast_days=7&timeformat=unixtime&wind_speed_unit=kmh&timezone=GMT`;
+    const mu = `https://marine-api.open-meteo.com/v1/marine?latitude=${la}&longitude=${lo}&hourly=wave_height,wave_period,sea_surface_temperature&past_days=1&forecast_days=7&timeformat=unixtime&cell_selection=sea`;
+    const get = async (u) => { const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 15000); try { const r = await fetch(u, { signal: ctl.signal }); if (!r.ok) throw new Error('http ' + r.status); return await r.json(); } finally { clearTimeout(tm); } };
+    try {
+      const [f, m] = await Promise.all([get(fu), get(mu).catch(() => null)]);
+      if (!f || !f.hourly) throw new Error('vuoto');
+      this.d = { at: Date.now(), lat: sp.lat, lon: sp.lon, f, m };
+      try { localStorage.setItem(this.KEY, JSON.stringify(this.d)); } catch (e) { /* senza cache: pazienza */ }
+      this.index(); curveCache.clear();
+    } catch (e) { this.failed = true; }
+    finally { this.loading = false; render(); }
+  },
+};
+const VENTI = ['Tramontana', 'Bora', 'Levante', 'Scirocco', 'Ostro', 'Libeccio', 'Ponente', 'Maestrale'];
+const PUNTI = ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'];
+const windName = d => { const k = Math.round(((d % 360) + 360) % 360 / 45) % 8; return PUNTI[k] + ' · ' + VENTI[k]; };
+function wxName(c) {
+  if (c == null) return '';
+  if (c === 0) return 'Sereno'; if (c === 1) return 'Quasi sereno'; if (c === 2) return 'Parzialmente nuvoloso'; if (c === 3) return 'Coperto';
+  if (c === 45 || c === 48) return 'Nebbia'; if (c >= 51 && c <= 57) return 'Pioviggine'; if (c >= 61 && c <= 67) return 'Pioggia';
+  if (c >= 71 && c <= 77) return 'Neve'; if (c >= 80 && c <= 82) return 'Rovesci'; if (c >= 85 && c <= 86) return 'Neve'; if (c >= 95) return 'Temporale';
+  return '';
+}
+function wxIcon(c, night, size) {
+  size = size || 22;
+  const o = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">`;
+  const sun = '<circle cx="12" cy="12" r="4.2" fill="#FFB020"/><g stroke="#FFB020" stroke-width="2"><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></g>';
+  const moon = '<path d="M19 14.5A7.5 7.5 0 1 1 9.5 5a6 6 0 0 0 9.5 9.5z" fill="#F3E3A6"/>';
+  const cloud = (fill) => `<path d="M7 18.5h10a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.6A3.3 3.3 0 0 0 7 18.5z" fill="${fill}"/>`;
+  const drops = '<g stroke="#4A9BE8" stroke-width="2"><path d="M9 20.5l-1 2M13 20.5l-1 2M17 20.5l-1 2"/></g>';
+  if (c == null) return '';
+  if (c <= 1) return o + (night ? moon : sun) + '</svg>';
+  if (c === 2) return o + `<g transform="translate(-3 -3) scale(.8)">${night ? moon : sun}</g>` + cloud('var(--cloud)') + '</svg>';
+  if (c === 3) return o + cloud('var(--cloud)') + '</svg>';
+  if (c === 45 || c === 48) return o + '<g stroke="var(--cloud-d)" stroke-width="2"><path d="M4 9h16M3 13h18M5 17h14"/></g></svg>';
+  if (c >= 95) return o + cloud('var(--cloud-d)').replace('18.5', '16') + '<path d="M12.5 15l-2.5 4h3l-2 4" stroke="#FFB020" stroke-width="2"/></svg>';
+  if ((c >= 71 && c <= 77) || c === 85 || c === 86) return o + cloud('var(--cloud)').replace(/18\.5/g, '16') + '<g fill="var(--cloud-d)"><circle cx="9" cy="20" r="1.2"/><circle cx="13" cy="21.5" r="1.2"/><circle cx="16.5" cy="20" r="1.2"/></g></svg>';
+  return o + `<g transform="translate(0 -2)">${cloud('var(--cloud-d)')}</g>` + drops + '</svg>';
+}
+const arrowSVG = (wd, size) => `<svg width="${size || 14}" height="${size || 14}" viewBox="0 0 24 24" style="transform:rotate(${Math.round(wd + 180)}deg)" aria-hidden="true"><path d="M12 2.5l6.5 10h-4.5v9h-4v-9H5.5z" fill="currentColor"/></svg>`;
+
+/* ---------- posizione GPS ---------- */
+function locate() {
+  return new Promise((res, rej) => {
+    if (!navigator.geolocation) return rej({ code: 0 });
+    navigator.geolocation.getCurrentPosition(p => res({ lat: p.coords.latitude, lon: p.coords.longitude, acc: p.coords.accuracy }), rej, { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
+  });
+}
+const geoErr = e => e && e.code === 1 ? 'Posizione non consentita: attivala per Montante nelle impostazioni di localizzazione di Safari.' : 'Posizione non disponibile, riprova tra poco all\'aperto.';
+
+/* ---------- utilità di dominio ---------- */
+function spotsSorted() { return S.spots.slice().sort((a, b) => (a.ordine || 0) - (b.ordine || 0) || String(a.nome).localeCompare(b.nome)); }
+function currentSpot() {
+  const sp = S.spots.find(s => s.id === S.root.spotSel) || spotsSorted()[0];
+  return sp || DEFAULT_SPOT;
+}
+function condToday() { const o = S.root.oggi; return o && o.data === isoDay(Date.now()) ? (o.cond || {}) : {}; }
+function hasCond(c) { return c && Object.values(c).some(Boolean); }
+function rods() { return (S.root.gear || []).filter(g => g.tipo === 'canna'); }
+function gearFor(tec) {
+  const g = S.root.gear || [];
+  return { canne: g.filter(x => x.tipo === 'canna' && x.cat === tec), mulinelli: g.filter(x => x.tipo === 'mulinello' && (x.usi || []).includes(tec)) };
+}
+function allCatches() { const out = []; for (const u of S.uscite) for (const c of (u.catture || [])) out.push(Object.assign({ _u: u }, c)); return out; }
+let modelCache = null;
+function getModel() { if (!modelCache) modelCache = PE.learnModel(allCatches().filter(c => c.marea)); return modelCache; }
+const curveCache = new Map();
+function condAt(ms, sp) {
+  const c = Object.assign({}, Meteo.near(sp) ? (Meteo.cond[Meteo.idx(ms)] || {}) : {});
+  if (isoDay(ms) === isoDay(Date.now())) { const man = condToday(); for (const k of Object.keys(man)) if (man[k]) c[k] = man[k]; }
+  return hasCond(c) ? c : null;
+}
+function curve(d0, sp) {
+  const m = getModel();
+  const key = [d0, sp.id, sp.lat, sp.lon, sp.anticipo, Meteo.stamp, JSON.stringify(condToday()), m.n].join('|');
+  let c = curveCache.get(key);
+  if (!c) {
+    if (curveCache.size > 80) curveCache.clear();
+    c = [];
+    for (let t = d0; t <= d0 + DAY; t += 15 * MIN) c.push(Object.assign({ t }, PE.scoreAt(t, sp, { cond: condAt(t, sp), model: m })));
+    curveCache.set(key, c);
+  }
+  return c;
+}
+function reasons(s) {
+  const r = [];
+  const lu = { alba: 'Alba', tramonto: 'Tramonto', notte: 'Notte', giorno: 'Giorno pieno' }[s.buckets.luce];
+  const ma = { montante: 'Marea montante', calante: 'Marea calante', stanca: 'Marea ferma' }[s.buckets.marea];
+  r.push(ma, lu);
+  if (s.buckets.solunare === 'maggiore') r.push('Periodo maggiore');
+  if (s.buckets.solunare === 'minore') r.push('Periodo minore');
+  if (s.buckets.luna === 'piena') r.push('Luna piena');
+  if (s.buckets.luna === 'nuova') r.push('Luna nuova');
+  return r;
+}
+
+/* ---------- elementi grafici ---------- */
+const hqCol = v => `var(--hq${qIdx(v)})`;
+function waveSVG() {
+  const path = (amp, y) => { let d = `M0 ${y}`; for (let i = 0; i < 8; i++) { const x = i * 100; d += ` C${x + 25} ${y - amp} ${x + 75} ${y + amp} ${x + 100} ${y}`; } return d + ` L800 60 L0 60 Z`; };
+  return `<div class="wave" aria-hidden="true"><svg class="w1" viewBox="0 0 800 60" preserveAspectRatio="none"><path d="${path(9, 30)}" fill="var(--bg)"/></svg><svg class="w2" viewBox="0 0 800 60" preserveAspectRatio="none"><path d="${path(7, 36)}" fill="var(--bg)"/></svg></div>`;
+}
+function heroSmall(title, sub, action) {
+  return `<header class="hero small"><div class="hero-in gut"><div class="hero-title"><div style="min-width:0"><h1>${title}</h1><p>${sub}</p></div>${action || ''}</div></div>${waveSVG()}</header>`;
+}
+function gaugeSVG(v) {
+  const cx = 118, cy = 104, R = 92, a0 = 135, span = 270;
+  const P = a => [cx + R * Math.cos(a * Math.PI / 180), cy + R * Math.sin(a * Math.PI / 180)];
+  const arc = (from, to) => { const [x0, y0] = P(from), [x1, y1] = P(to); return `M${x0.toFixed(2)} ${y0.toFixed(2)} A${R} ${R} 0 ${to - from > 180 ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`; };
+  const av = a0 + span * Math.max(0.5, v) / 100;
+  const [kx, ky] = P(av);
+  let ticks = '';
+  for (let i = 0; i <= 10; i++) { const a = (a0 + span * i / 10) * Math.PI / 180; const r1 = R + 12, r2 = R + (i % 5 ? 15 : 18); ticks += `<line x1="${(cx + r1 * Math.cos(a)).toFixed(1)}" y1="${(cy + r1 * Math.sin(a)).toFixed(1)}" x2="${(cx + r2 * Math.cos(a)).toFixed(1)}" y2="${(cy + r2 * Math.sin(a)).toFixed(1)}" stroke="var(--on-hero-2)" stroke-width="${i % 5 ? 1 : 1.6}" stroke-linecap="round" opacity=".55"/>`; }
+  return `<svg viewBox="0 0 236 200" aria-hidden="true"><defs><linearGradient id="gg" gradientUnits="userSpaceOnUse" x1="${cx - R}" y1="0" x2="${cx + R}" y2="0"><stop offset="0" style="stop-color:var(--hq2)"/><stop offset=".5" style="stop-color:var(--hq3)"/><stop offset=".78" style="stop-color:var(--hq4)"/><stop offset="1" style="stop-color:var(--hq5)"/></linearGradient><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
+    ${ticks}<path d="${arc(a0, a0 + span)}" fill="none" stroke="var(--glass-2)" stroke-width="16" stroke-linecap="round"/>
+    <path d="${arc(a0, av)}" fill="none" stroke="url(#gg)" stroke-width="16" stroke-linecap="round" filter="url(#glow)" opacity=".55"/>
+    <path d="${arc(a0, av)}" fill="none" stroke="url(#gg)" stroke-width="16" stroke-linecap="round"/>
+    <circle cx="${kx.toFixed(1)}" cy="${ky.toFixed(1)}" r="11" fill="var(--on-hero)"/><circle cx="${kx.toFixed(1)}" cy="${ky.toFixed(1)}" r="5" fill="${hqCol(v)}"/></svg>`;
+}
+function ringHTML(v, size) {
+  size = size || 46; const r = size / 2 - 4, c = 2 * Math.PI * r;
+  return `<span class="ring" style="width:${size}px;height:${size}px"><svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-hidden="true"><circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="var(--line)" stroke-width="4.5"/><circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="${qCol(v)}" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="${(c * v / 100).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 ${size / 2} ${size / 2})"/></svg><b class="num">${v}</b></span>`;
+}
+function moonSVG(phase) {
+  const R = 28, cx = 32, cy = 32, k = Math.cos(2 * Math.PI * phase), rx = Math.abs(k) * R;
+  const waxing = phase < 0.5;
+  const lit = waxing
+    ? `M${cx} ${cy - R} A${R} ${R} 0 0 1 ${cx} ${cy + R} A${rx.toFixed(2)} ${R} 0 0 ${k > 0 ? 0 : 1} ${cx} ${cy - R} Z`
+    : `M${cx} ${cy - R} A${R} ${R} 0 0 0 ${cx} ${cy + R} A${rx.toFixed(2)} ${R} 0 0 ${k > 0 ? 1 : 0} ${cx} ${cy - R} Z`;
+  return `<svg class="moon" viewBox="0 0 64 64" aria-hidden="true"><defs><radialGradient id="mg" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#FFF8E1"/><stop offset="1" stop-color="#E8DDB5"/></radialGradient></defs><circle cx="${cx}" cy="${cy}" r="${R}" fill="var(--surface-2)" stroke="var(--line)"/><path d="${lit}" fill="url(#mg)"/></svg>`;
+}
+function skyArcSVG(da, nowMs) {
+  const W = 320, x0 = 22, x1 = 298, yb = 74, P1 = [160, -58];
+  const B = f => [(1 - f) * (1 - f) * x0 + 2 * (1 - f) * f * P1[0] + f * f * x1, (1 - f) * (1 - f) * yb + 2 * (1 - f) * f * P1[1] + f * f * yb];
+  let sun = '';
+  if (nowMs && nowMs > da.sunrise && nowMs < da.sunset) {
+    const [sx, sy] = B((nowMs - da.sunrise) / (da.sunset - da.sunrise));
+    sun = `<circle cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="13" fill="#FFC23D" opacity=".25"/><circle cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="7.5" fill="#FFB020"/>`;
+  }
+  return `<svg viewBox="0 0 ${W} 98" aria-hidden="true"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB020" stop-opacity=".22"/><stop offset="1" stop-color="#FFB020" stop-opacity="0"/></linearGradient></defs>
+    <path d="M${x0} ${yb} Q${P1[0]} ${P1[1]} ${x1} ${yb} Z" fill="url(#sk)"/><path d="M${x0} ${yb} Q${P1[0]} ${P1[1]} ${x1} ${yb}" fill="none" stroke="#FFB020" stroke-width="2" stroke-dasharray="3 5" stroke-linecap="round"/>
+    <line x1="6" x2="${W - 6}" y1="${yb}" y2="${yb}" stroke="var(--line)" stroke-width="1.5"/>${sun}
+    <text x="${x0}" y="93" font-size="12" font-weight="800" fill="var(--ink)" text-anchor="start">${fT(da.sunrise)}</text><text x="${x1}" y="93" font-size="12" font-weight="800" fill="var(--ink)" text-anchor="end">${fT(da.sunset)}</text>
+    <text x="${x0 + 44}" y="93" font-size="10.5" font-weight="700" fill="var(--muted)">alba</text><text x="${x1 - 44}" y="93" font-size="10.5" font-weight="700" fill="var(--muted)" text-anchor="end">tramonto</text></svg>`;
+}
+const PIN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 1 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>';
+const UP = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+const DOWN = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>';
+const CHEV = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
+
+/* ---------- vista: Oggi ---------- */
+function chartSVG(pts, sp, d0, da, nowMs) {
+  const W = 360, H = 196, L = 8, R = 8, x = t => L + (t - d0) / DAY * (W - L - R);
+  const yI = v => 166 - v * 1.38;
+  const tides = []; for (let t = d0; t <= d0 + DAY; t += 15 * MIN) tides.push([t, PE.tideAt(t, sp)]);
+  const hs = tides.map(p => p[1]); const tMin = Math.min(...hs), tMax = Math.max(...hs);
+  const yT = h => 158 - (h - tMin) / Math.max(1, tMax - tMin) * 104;
+  const clipT = t => Math.max(d0, Math.min(d0 + DAY, t));
+  let g = '';
+  g += `<rect x="${x(d0)}" y="18" width="${x(clipT(da.sunrise)) - x(d0)}" height="148" rx="6" fill="var(--night)"/>`;
+  g += `<rect x="${x(clipT(da.sunset))}" y="18" width="${x(d0 + DAY) - x(clipT(da.sunset))}" height="148" rx="6" fill="var(--night)"/>`;
+  for (const p of da.minori) { const a = clipT(p.da), b = clipT(p.a); if (b > a) g += `<rect x="${x(a)}" y="18" width="${x(b) - x(a)}" height="148" rx="4" fill="var(--sol2)"/>`; }
+  for (const p of da.maggiori) { const a = clipT(p.da), b = clipT(p.a); if (b > a) g += `<rect x="${x(a)}" y="18" width="${x(b) - x(a)}" height="148" rx="4" fill="var(--sol1)"/>`; }
+  for (const v of [25, 50, 75, 100]) g += `<line x1="${L}" x2="${W - R}" y1="${yI(v)}" y2="${yI(v)}" stroke="var(--line)" stroke-width=".7" stroke-dasharray="1 4" stroke-linecap="round"/>`;
+  // curva morbida dell'indice
+  const P = pts.map(p => [x(p.t), yI(p.v)]);
+  let line = `M${P[0][0].toFixed(1)} ${P[0][1].toFixed(1)}`;
+  for (let i = 1; i < P.length; i++) { const [xa, ya] = P[i - 1], [xb, yb] = P[i]; const xm = (xa + xb) / 2; line += ` C${xm.toFixed(1)} ${ya.toFixed(1)} ${xm.toFixed(1)} ${yb.toFixed(1)} ${xb.toFixed(1)} ${yb.toFixed(1)}`; }
+  g += `<path d="${line} L${x(d0 + DAY)} ${yI(0)} L${x(d0)} ${yI(0)} Z" fill="url(#gq)" opacity=".32"/>`;
+  g += `<path d="${line}" fill="none" stroke="url(#gq)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+  const tl = tides.map((p, i) => (i ? 'L' : 'M') + x(p[0]).toFixed(1) + ' ' + yT(p[1]).toFixed(1)).join(' ');
+  g += `<path d="${tl}" fill="none" stroke="var(--tide)" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round"/>`;
+  for (const e of PE.tideExtremes(d0, d0 + DAY, sp)) {
+    const ex = x(e.t), ey = yT(e.h);
+    g += `<circle cx="${ex}" cy="${ey}" r="3.4" fill="var(--surface)" stroke="var(--tide)" stroke-width="2"/>`;
+    const anchor = ex < 30 ? 'start' : ex > W - 30 ? 'end' : 'middle';
+    g += `<text x="${ex}" y="${e.alta ? ey - 8 : ey + 15}" text-anchor="${anchor}" font-size="10" font-weight="800" fill="var(--tide)">${cm(e.h).replace(' cm', '')}</text>`;
+  }
+  for (const h of [0, 6, 12, 18, 24]) {
+    const tx = x(d0 + h * HOUR);
+    g += `<text x="${tx}" y="188" font-size="10" font-weight="700" fill="var(--muted)" text-anchor="${h === 0 ? 'start' : h === 24 ? 'end' : 'middle'}">${pad(h)}:00</text>`;
+  }
+  if (nowMs) g += `<line x1="${x(nowMs)}" x2="${x(nowMs)}" y1="16" y2="168" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/><circle cx="${x(nowMs)}" cy="14" r="4.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>`;
+  g += `<g id="cur" visibility="hidden"><line id="curl" x1="0" x2="0" y1="16" y2="168" stroke="var(--ink)" stroke-width="1.2" stroke-dasharray="2 3"/><circle id="curd" r="6" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/></g>`;
+  const defs = `<defs><linearGradient id="gq" x1="0" y1="${yI(0)}" x2="0" y2="${yI(100)}" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--q1)"/><stop offset=".42" style="stop-color:var(--q2)"/><stop offset=".58" style="stop-color:var(--q3)"/><stop offset=".74" style="stop-color:var(--q4)"/><stop offset="1" style="stop-color:var(--q5)"/></linearGradient></defs>`;
+  return `<svg id="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Indice di pescosità e marea nelle 24 ore">${defs}${g}</svg>`;
+}
+function readoutHTML(t, sp) {
+  const s = PE.scoreAt(t, sp, { cond: condAt(t, sp), model: getModel() }), h = PE.tideAt(t, sp);
+  const ph = { montante: 'montante', calante: 'calante', stanca: 'ferma' }[s.buckets.marea];
+  const w = Meteo.near(sp) ? Meteo.at(t) : null;
+  return `<span><b class="num">${fT(t)}</b></span><span>indice <b class="num" style="color:${qCol(s.v)}">${s.v}</b></span><span>marea <b class="num">${cm(h)}</b> ${ph}</span>` +
+    (w && w.ws != null ? `<span>vento <b class="num">${Math.round(w.ws)}</b> km/h</span>` : '') + (w && w.wh != null ? `<span>onde <b class="num">${f1(w.wh)}</b> m</span>` : '');
+}
+function isNight(ms, sp) { const da = PE.dayAstro(ms, sp.lat, sp.lon); return ms < da.sunrise || ms > da.sunset; }
+function meteoCard(refMs, sp, isToday, d0) {
+  const man = isToday ? condToday() : {};
+  const h = Meteo.near(sp) ? Meteo.at(refMs) : null;
+  const seg = (grp, label) => `<div class="cgroup"><span class="flabel">${label}</span><div class="seg" role="group" aria-label="${label}">${Object.entries(PE.COND[grp]).map(([k, l]) => `<button data-act="cond" data-g="${grp}" data-v="${k}" aria-pressed="${man[grp] === k}">${l}</button>`).join('')}</div></div>`;
+  const status = Meteo.loading ? 'Aggiorno…' : Meteo.d ? `agg. ${fT(Meteo.d.at)}${Date.now() - Meteo.d.at > 3 * HOUR ? ' · vecchio' : ''}` : '';
+  let body = '';
+  if (h) {
+    const c = Meteo.cond[Meteo.idx(refMs)] || {};
+    const dp = Meteo.dp3(refMs);
+    const tile = (ic, k, v, s) => `<div class="mt"><span class="k">${ic}${k}</span><span class="v num">${v}</span><span class="s">${s}</span></div>`;
+    body += `<div class="wx">${wxIcon(h.wc, isNight(refMs, sp), 30)}<span>${isToday ? 'Adesso' : 'Alle ' + fT(refMs)} <b class="num">${h.temp != null ? Math.round(h.temp) + ' °C' : ''}</b> · ${esc(wxName(h.wc))}${h.pp != null ? ` · pioggia ${h.pp}%` : ''}</span></div>`;
+    body += '<div class="meteo">' +
+      tile(h.wd != null ? `<span class="arr">${arrowSVG(h.wd, 13)}</span>` : '', 'Vento', h.ws != null ? `${Math.round(h.ws)} <small>km/h</small>` : '—', h.wd != null ? `${windName(h.wd)}${h.wg != null ? ' · raffiche ' + Math.round(h.wg) : ''}` : '') +
+      tile('', 'Onde', h.wh != null ? `${f1(h.wh)} <small>m</small>` : '—', h.wh != null ? `${PE.COND.mare[c.mare] || ''}${h.wp != null ? ' · periodo ' + Math.round(h.wp) + ' s' : ''}` : 'non disponibile') +
+      tile('', 'Acqua', h.sst != null ? `${f1(h.sst)} <small>°C</small>` : '—', 'temperatura del mare') +
+      tile('', 'Pressione', h.p != null ? `${Math.round(h.p)} <small>hPa</small>` : '—', c.pressione ? `${PE.COND.pressione[c.pressione].toLowerCase()}${dp != null ? ` (${dp >= 0 ? '+' : '−'}${f1(Math.abs(dp))} in 3 h)` : ''}` : '') +
+      '</div>';
+    const start = isToday ? Math.ceil(Date.now() / HOUR) * HOUR : d0;
+    let strip = '';
+    for (let k = 0; k < 8; k++) {
+      const t = start + k * 3 * HOUR, w = Meteo.at(t);
+      if (!w) continue;
+      strip += `<div class="hr"><span class="h num">${pad(new Date(t).getHours())}:00</span>${wxIcon(w.wc, isNight(t, sp), 22)}<span class="num">${w.wd != null ? `<span class="arr">${arrowSVG(w.wd, 11)}</span>` : ''}${w.ws != null ? Math.round(w.ws) : '–'}</span><span class="num w">${w.wh != null ? f1(w.wh) + ' m' : ''}</span></div>`;
+    }
+    if (strip) body += `<div class="strip" aria-label="Previsioni ogni 3 ore">${strip}</div>`;
+  } else {
+    body += `<p class="hint">${Meteo.loading ? 'Sto scaricando le previsioni…' : !navigator.onLine ? 'Sei offline: le previsioni arrivano appena torni in rete. Intanto puoi segnare tu le condizioni.' : Meteo.failed ? 'Previsioni non raggiungibili in questo momento. Riprova o segna tu le condizioni.' : 'Previsioni non ancora scaricate.'}</p>`;
+  }
+  let manual = '';
+  if (isToday) {
+    manual += seg('acqua', 'Acqua (la vedi solo tu)');
+    const over = seg('mare', 'Mare') + seg('vento', 'Vento') + seg('pressione', 'Pressione');
+    manual += h ? `<details class="fix"${['mare', 'vento', 'pressione'].some(k => man[k]) ? ' open' : ''}><summary>Correggi le condizioni di oggi</summary><div class="fixin">${over}</div></details>` : over;
+  }
+  const cMod = isToday ? PE.condModifier(condAt(Date.now(), sp) || {}) : 0;
+  return `<section class="card">
+    <div class="card-h"><h2>Meteo e mare</h2><span class="hstat"><span class="eyebrow">${status}</span><button class="ibtn${Meteo.loading ? ' spin' : ''}" data-act="refresh-meteo" aria-label="Aggiorna previsioni"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button></span></div>
+    ${body}
+    ${isToday && cMod ? `<p class="hint" style="margin:0">Effetto sull'indice di adesso: <b class="num" style="color:var(--accent)">${cMod > 0 ? '+' : ''}${cMod}</b></p>` : ''}
+    ${manual}
+    <div class="links"><a href="https://www.comune.venezia.it/maree" target="_blank" rel="noopener">Centro Maree ↗</a><a href="https://www.windy.com/?${sp.lat.toFixed(3)},${sp.lon.toFixed(3)},11" target="_blank" rel="noopener">Windy ↗</a></div>
+    <p class="hint">Previsioni Open-Meteo per lo spot selezionato.</p>
+  </section>`;
+}
+function renderOggi() {
+  const sp = currentSpot(), now = Date.now(), model = getModel();
+  const today0 = PE.dayStart(now), d0 = today0 + S.dayOffset * DAY;
+  const isToday = S.dayOffset === 0;
+  const pts = curve(d0, sp);
+  const da = PE.dayAstro(d0 + 12 * HOUR, sp.lat, sp.lon);
+  const cur = isToday ? PE.scoreAt(now, sp, { cond: condAt(now, sp), model }) : null;
+  const peak = pts.reduce((a, b) => (b.v > a.v ? b : a));
+  const ref = cur || peak, refMs = cur ? now : peak.t;
+  const wins = PE.bestWindows(pts, 3);
+  const ext = PE.tideExtremes(d0, d0 + DAY, sp);
+  const hv = ref.v;
+  const nextWin = isToday ? wins.find(w => w.a > now) : null;
+
+  let days = '';
+  for (let i = 0; i < 7; i++) {
+    const t = today0 + i * DAY, mx = Math.max(...curve(t, sp).map(p => p.v));
+    days += `<button class="day" data-act="day" data-i="${i}" aria-pressed="${i === S.dayOffset}" aria-label="${esc(fDayLong(t))}, indice massimo ${mx}">
+      <span class="dw">${i === 0 ? 'Oggi' : new Date(t).toLocaleDateString('it-IT', { weekday: 'short' }).replace('.', '')}</span>
+      <span class="dn num">${new Date(t).getDate()}</span><span class="dot" style="background:${hqCol(mx)}"></span></button>`;
+  }
+  const heroChips = reasons(ref).map(r => `<span class="hchip">${esc(r)}</span>`).join('') +
+    (ref.mCond ? `<span class="hchip hot">Meteo-mare ${ref.mCond > 0 ? '+' : ''}${ref.mCond}</span>` : '') +
+    (Math.round(ref.mPers) ? `<span class="hchip hot">Diario ${ref.mPers > 0 ? '+' : ''}${Math.round(ref.mPers)}</span>` : '');
+  let nextLine;
+  if (isToday) nextLine = nextWin ? (nextWin.da <= now ? `Sei nella finestra migliore <span>fino alle ${fT(nextWin.a + 15 * MIN)}</span>` : `Prossima finestra <span>${fT(nextWin.da)}–${fT(nextWin.a + 15 * MIN)}</span>`) : 'Finestre di oggi passate <span>· guarda domani</span>';
+  else nextLine = `Picco alle ${fT(peak.t)} <span>· ${esc(fDayLong(d0))}</span>`;
+
+  const winsHTML = wins.length ? wins.map(w => {
+    const s = PE.scoreAt(w.at, sp, { cond: condAt(w.at, sp), model });
+    return `<div class="win">${ringHTML(w.top)}<div style="min-width:0"><div class="wt num">${fT(w.da)} – ${fT(w.a + 15 * MIN)}</div><div class="wr">${reasons(s).slice(0, 3).map(esc).join(' · ')}</div></div></div>`;
+  }).join('') : '<p class="muted small" style="margin:0">Nessuna finestra sopra la media in questa giornata.</p>';
+
+  const tidesHTML = ext.map(e => `<div class="tide"><span class="k">${e.alta ? UP + 'Alta' : DOWN + 'Bassa'}</span><span class="t num">${fT(e.t)}</span><span class="h num">${cm(e.h)}</span></div>`).join('');
+  let nowTide = '';
+  if (isToday) { const h = PE.tideAt(now, sp), r = PE.tideRate(now, sp); nowTide = `<div class="tidenow">${Math.abs(r) < 2.5 ? '<span style="color:var(--tide)">●</span>' : `<span style="color:var(--tide)">${r > 0 ? UP : DOWN}</span>`}<span>Adesso <b class="num">${cm(h)}</b> · ${Math.abs(r) < 2.5 ? 'marea ferma' : (r > 0 ? 'cresce' : 'cala') + ' di ' + Math.abs(Math.round(r)) + ' cm/h'}</span></div>`; }
+
+  const sol = [...da.maggiori.map(p => ({ t: p.centro, k: 'M' })), ...da.minori.map(p => ({ t: p.centro, k: 'm' }))].filter(p => p.t >= d0 && p.t < d0 + DAY).sort((a, b) => a.t - b.t);
+  const species = PE.speciesNow(refMs, sp, condAt(refMs, sp), ref.buckets).slice(0, 3);
+  const fresh = !S.root.benvenuto && !S.spots.length && !(S.root.gear || []).length && !S.uscite.length;
+
+  app.innerHTML = `
+  <header class="hero">
+    <div class="hero-in gut">
+      <div class="top">
+        <div class="brand"><b>Montante</b><span>${esc(fDayLong(now))}</span></div>
+        <div class="toprow-r"><button class="glassbtn" data-act="pickspot" aria-label="Cambia spot">${PIN}<span>${esc(sp.nome)}</span></button><button class="glassbtn round" data-act="settings" aria-label="Impostazioni e backup"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg></button></div>
+      </div>
+      <div class="days">${days}</div>
+      <div class="gaugebox">
+        <div class="gauge">${gaugeSVG(hv)}<div class="gv"><b class="num">${hv}</b><span class="ql" style="color:${hqCol(hv)}">${PE.label(hv)}</span><span class="gs">${cur ? 'adesso · ' + fT(now) : 'miglior momento'}</span></div></div>
+        <div class="hchips">${heroChips}</div>
+        <p class="nextwin">${nextLine}</p>
+      </div>
+    </div>
+    ${waveSVG()}
+  </header>
+  <div class="wrap gut">
+  ${IS_IOS && !IS_STANDALONE ? `<div class="banner install"><b>Installa Montante sul telefono</b><span>Tocca <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="Condividi" style="vertical-align:-3px"><path d="M12 15V3M7.5 7.5 12 3l4.5 4.5"/><path d="M6 11H5v10h14V11h-1"/></svg> Condividi e poi «Aggiungi alla schermata Home». I dati salvati qui in Safari non passano all'app installata.</span></div>` : ''}
+  ${fresh ? `<section class="card welcome"><h2>Benvenuto in Montante</h2><p class="small muted" style="margin:0">Hai il file di backup con spot e attrezzatura? Caricalo e ritrovi tutto.</p><div class="acts"><button class="btn pri" data-act="settings" data-focus="import">Carica il backup</button><button class="btn" data-act="welcome-skip">Inizia da zero</button></div></section>`
+    : sp._def && S.spotsLoaded ? `<div class="banner">Sto usando Sottomarina come posizione predefinita. <button class="linkbtn" data-act="go" data-tab="spot">Aggiungi i tuoi spot</button></div>` : ''}
+
+  <section class="card">
+    <div class="card-h"><h2>Finestre migliori</h2><span class="eyebrow">${esc(fDay(d0))}</span></div>
+    <div class="wins">${winsHTML}</div>
+  </section>
+
+  ${meteoCard(refMs, sp, isToday, d0)}
+
+  <section class="card">
+    <div class="card-h"><h2>Le 24 ore</h2><span class="eyebrow">tocca il grafico</span></div>
+    <div class="readout" id="readout">${readoutHTML(refMs, sp)}</div>
+    <div class="chart">${chartSVG(pts, sp, d0, da, isToday ? now : null)}</div>
+    <div class="legend"><span><i style="background:linear-gradient(90deg,var(--q2),var(--q4),var(--q5))"></i>Indice</span><span><i style="background:none;border-top:2px dashed var(--tide);height:0;border-radius:0"></i>Marea</span><span><i style="background:var(--sol1)"></i>Periodi solunari</span><span><i style="background:var(--night);box-shadow:inset 0 0 0 1px var(--line)"></i>Notte</span></div>
+  </section>
+
+  <section class="card">
+    <div class="card-h"><h2>Marea</h2><span class="eyebrow">${esc(sp.nome)}</span></div>
+    <div class="tides">${tidesHTML}</div>
+    ${nowTide}
+    <p class="hint">Marea astronomica in cm sullo zero di Punta della Salute, anticipata di ${esc(sp.anticipo)} min per questo spot. Vento e pressione possono spostarla anche di decine di centimetri.</p>
+  </section>
+
+  <section class="card">
+    <h2>Sole e luna</h2>
+    <div class="skyarc">${skyArcSVG(da, isToday ? now : null)}</div>
+    <div class="sky">${moonSVG(da.phase)}<div><div style="font-weight:800;font-size:1.05rem">${PE.moonPhaseName(da.phase)}</div><div class="small muted num" style="font-weight:600">${Math.round(da.fraction * 100)}% illuminata · sorge ${da.moonrise ? fT(da.moonrise) : '—'} · tramonta ${da.moonset ? fT(da.moonset) : '—'}</div></div></div>
+    <div class="cgroup"><span class="flabel">Periodi solunari</span><div class="sols">${sol.map(p => `<span class="sol ${p.k === 'M' ? '' : 'm'} num">${fT(p.t)}<span>${p.k === 'M' ? 'maggiore' : 'minore'}</span></span>`).join('') || '<span class="muted small">—</span>'}</div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-h"><h2>Specie del momento</h2><button class="linkbtn" data-act="go" data-tab="specie">Calendario</button></div>
+    <div class="splist">${species.map(({ s, v }) => {
+      const tec = s.tecniche.map(t => { const g = gearFor(t); return g.canne.length ? g.canne.map(c => c.nome.replace(/^(Trabucco|Shimano|Daiwa) /, '')).join(', ') : PE.TECNICHE[t]; }).join(' · ');
+      return `<button class="sprow" data-act="species" data-id="${s.id}">${ringHTML(v)}<span style="min-width:0"><span class="nm">${esc(s.nome)}</span><span class="ds">${esc(tec)}</span></span><span class="go">${CHEV}</span></button>`;
+    }).join('') || '<p class="muted small">Nessuna specie in stagione.</p>'}</div>
+  </section>
+
+  <details class="card how">
+    <summary>Come si calcola l'indice</summary>
+    <table><tbody>
+      <tr><td>Movimento della marea (più acqua che scorre, meglio; bonus in montante)</td><td>${Math.round(PE.W.marea * 100)}%</td></tr>
+      <tr><td>Periodi solunari (transiti, sorgere e tramonto della luna)</td><td>${Math.round(PE.W.solunare * 100)}%</td></tr>
+      <tr><td>Luce: alba e tramonto al massimo, poi notte, poi giorno pieno</td><td>${Math.round(PE.W.luce * 100)}%</td></tr>
+      <tr><td>Stagione: specie dell'Alto Adriatico presenti questo mese</td><td>${Math.round(PE.W.stagione * 100)}%</td></tr>
+      <tr><td>Fase lunare: luna nuova e piena più favorevoli</td><td>${Math.round(PE.W.luna * 100)}%</td></tr>
+      <tr><td>Meteo-mare ora per ora dalle previsioni (onde e mare in scaduta, vento, pressione) e acqua che segni tu</td><td>±15</td></tr>
+      <tr><td>Il tuo diario (da 3 catture, pieno effetto da 15)</td><td>±10</td></tr>
+    </tbody></table>
+    <p class="hint">Catture registrate: ${model.n}. ${model.n < 3 ? 'Ancora poche per personalizzare l\'indice.' : 'L\'indice sta già imparando dalle tue uscite.'}</p>
+  </details>
+  </div>`;
+
+  bindChart(pts, sp, d0);
+}
+function bindChart(pts, sp, d0) {
+  const svg = $('#chart'); if (!svg) return;
+  const ro = $('#readout');
+  const move = ev => {
+    const r = svg.getBoundingClientRect();
+    const fx = (ev.clientX - r.left) / r.width * 360;
+    const t = d0 + Math.max(0, Math.min(1, (fx - 8) / 344)) * DAY;
+    const tt = Math.round(t / (15 * MIN)) * 15 * MIN;
+    const p = pts.reduce((a, b) => Math.abs(b.t - tt) < Math.abs(a.t - tt) ? b : a);
+    const x = 8 + (p.t - d0) / DAY * 344, y = 166 - p.v * 1.38;
+    $('#cur', svg).setAttribute('visibility', 'visible');
+    $('#curl', svg).setAttribute('x1', x); $('#curl', svg).setAttribute('x2', x);
+    $('#curd', svg).setAttribute('cx', x); $('#curd', svg).setAttribute('cy', y);
+    ro.innerHTML = readoutHTML(p.t, sp);
+  };
+  svg.addEventListener('pointerdown', move);
+  svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || e.buttons) move(e); });
+}
+
+/* ---------- vista: Spot e mappa ---------- */
+const LAT0 = 45.22, COS0 = Math.cos(LAT0 * Math.PI / 180), K = 1000;
+const px = lon => (lon - 12.3) * COS0 * K, py = lat => (LAT0 - lat) * K;
+const unpx = x => x / (COS0 * K) + 12.3, unpy = y => LAT0 - y / K;
+const LAND_D = LAND.map(poly => 'M' + poly.map(([lo, la]) => px(lo).toFixed(2) + ' ' + py(la).toFixed(2)).join('L') + 'Z').join('');
+const PLACES = [
+  ['Chioggia', 45.2185, 12.2745, 'end'], ['Sottomarina', 45.2125, 12.2905, 'middle'], ['Pellestrina', 45.268, 12.316, 'start'],
+  ['Isola Verde', 45.168, 12.296, 'end'], ['Mare Adriatico', 45.195, 12.345, 'middle', 1], ['Laguna di Venezia', 45.262, 12.245, 'middle', 1],
+];
+function mapLayers() {
+  const v = S.view, u = v.w / 340;
+  let g = '';
+  for (let lo = 12.1; lo <= 12.46; lo += 0.05) g += `<line x1="${px(lo)}" x2="${px(lo)}" y1="${py(45.45)}" y2="${py(45.0)}" stroke="var(--grid)" stroke-width="${u}"/>`;
+  for (let la = 45.05; la <= 45.45; la += 0.05) g += `<line x1="${px(12.05)}" x2="${px(12.5)}" y1="${py(la)}" y2="${py(la)}" stroke="var(--grid)" stroke-width="${u}"/>`;
+  g += `<path d="${LAND_D}" fill="var(--land)" stroke="var(--land-edge)" stroke-width="${u * 1.2}" stroke-linejoin="round"/>`;
+  for (const [n, la, lo, an, it] of PLACES) g += `<text x="${px(lo)}" y="${py(la)}" text-anchor="${an}" font-size="${u * (it ? 12.5 : 11.5)}" fill="var(--muted)" font-family="Manrope, system-ui, sans-serif" ${it ? 'font-style="italic" font-weight="600"' : 'font-weight="800"'} letter-spacing="${u * .5}">${n}</text>`;
+  const sel = currentSpot(), now = Date.now();
+  const cond = condToday();
+  for (const s of spotsSorted()) {
+    const x = px(s.lon), y = py(s.lat);
+    const sc = PE.scoreAt(now, s, { cond: condAt(now, s), model: getModel() }).v;
+    const on = s.id === sel.id;
+    const r = u * (on ? 15 : 13);
+    g += `<g data-spot="${esc(s.id)}" style="cursor:pointer"><circle cx="${x}" cy="${y}" r="${r * 1.7}" fill="${qCol(sc)}" opacity=".18"/><circle cx="${x}" cy="${y}" r="${r}" fill="${qCol(sc)}" stroke="${on ? 'var(--accent)' : 'var(--surface)'}" stroke-width="${u * (on ? 3.4 : 2.4)}"/>` +
+      `<text x="${x}" y="${y + u * 4.3}" text-anchor="middle" font-size="${u * 12}" font-weight="800" fill="${qTxt(sc)}" font-family="Manrope, system-ui, sans-serif">${sc}</text>` +
+      `<text x="${x + r + u * 6}" y="${y + u * 4.2}" font-size="${u * 12.5}" font-weight="800" fill="var(--ink)" stroke="var(--surface)" stroke-width="${u * 3.5}" paint-order="stroke" font-family="Manrope, system-ui, sans-serif">${esc(s.nome)}</text></g>`;
+  }
+  if (S.me) g += `<circle cx="${px(S.me.lon)}" cy="${py(S.me.lat)}" r="${u * 18}" fill="#2F80ED" opacity=".18"/><circle cx="${px(S.me.lon)}" cy="${py(S.me.lat)}" r="${u * 6.5}" fill="#2F80ED" stroke="#fff" stroke-width="${u * 2.6}"/>`;
+  if (S.pending) g += `<circle cx="${px(S.pending.lon)}" cy="${py(S.pending.lat)}" r="${u * 10}" fill="var(--accent)" stroke="var(--surface)" stroke-width="${u * 3}"/>`;
+  return g;
+}
+function viewBox() { const v = S.view; return `${v.cx - v.w / 2} ${v.cy - v.h / 2} ${v.w} ${v.h}`; }
+function renderSpot() {
+  const list = spotsSorted(), now = Date.now(), sel = currentSpot();
+  if (!S.view) {
+    const pts = list.length ? list : [DEFAULT_SPOT];
+    const cx = pts.reduce((a, s) => a + px(s.lon), 0) / pts.length, cy = pts.reduce((a, s) => a + py(s.lat), 0) / pts.length;
+    S.view = { cx, cy, w: 80, h: 90 };
+  }
+  const cond = condToday();
+  app.innerHTML = heroSmall('Spot', `${list.length} ${list.length === 1 ? 'salvato' : 'salvati'} tra Chioggia e Sottomarina`, `<button class="act" data-act="mapadd">${S.mapAdd ? 'Annulla' : '+ Nuovo'}</button>`) + `
+  <div class="wrap gut">
+  <div class="mapbox">
+    <svg id="map" viewBox="${viewBox()}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Mappa degli spot tra Chioggia e Sottomarina"><rect x="-500" y="-500" width="1000" height="1000" fill="var(--sea)"/><g id="layers">${mapLayers()}</g></svg>
+    <div class="mapctl"><button data-act="zoom" data-z="0.7" aria-label="Ingrandisci">+</button><button data-act="zoom" data-z="1.43" aria-label="Riduci">−</button><button data-act="locate-map" aria-label="La mia posizione"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button></div>
+    ${S.mapAdd ? '<div class="maptip">Tocca la mappa nel punto esatto dello spot</div>' : ''}
+  </div>
+  <p class="hint">Trascina per spostarti, pizzica o usa + e − per lo zoom. Il numero sul segnaposto è l'indice di adesso.</p>
+  ${list.length ? list.map(s => {
+    const sc = PE.scoreAt(now, s, { cond: condAt(now, s), model: getModel() }).v;
+    const nx = PE.tideExtremes(now, now + DAY, s)[0];
+    const n = S.uscite.filter(u => u.spotId === s.id).reduce((a, u) => a + (u.catture || []).length, 0);
+    return `<section class="card spotcard">
+      <div class="spotrow"><div style="min-width:0"><h3>${esc(s.nome)}</h3><span class="small muted" style="font-weight:600">${TIPI[s.tipo] || 'Spot'}${nx ? ` · ${nx.alta ? 'alta' : 'bassa'} alle ${fT(nx.t)} (${cm(nx.h)})` : ''}</span></div>${ringHTML(sc, 50)}</div>
+      <div class="chips"><span class="chip">${n} ${n === 1 ? 'cattura' : 'catture'}</span>${s.id === sel.id ? '<span class="chip acc">In uso su Oggi</span>' : ''}</div>
+      ${s.note ? `<p class="small muted" style="margin:0">${esc(s.note)}</p>` : ''}
+      <div class="acts">${s.id !== sel.id ? `<button class="btn pri" data-act="usespot" data-id="${esc(s.id)}">Usa per Oggi</button>` : ''}<a class="btn" href="https://maps.apple.com/?ll=${s.lat},${s.lon}&q=${encodeURIComponent(s.nome)}&t=k" target="_blank" rel="noopener">Apri in Mappe ↗</a><button class="btn" data-act="editspot" data-id="${esc(s.id)}">Modifica</button></div>
+    </section>`;
+  }).join('') : `<section class="card empty"><span class="ic">${PIN}</span><h3>${S.spotsLoaded ? 'Nessuno spot salvato' : 'Carico i tuoi spot…'}</h3><p class="muted small" style="margin:0">Tocca “+ Nuovo” e poi il punto sulla mappa: diga, spiaggia o foce. Ogni spot ha la sua marea e il suo indice.</p></section>`}
+  </div>`;
+  bindMap();
+}
+function bindMap() {
+  const svg = $('#map'); if (!svg) return;
+  const rect = () => svg.getBoundingClientRect();
+  const fit = () => { const r = rect(); S.view.h = S.view.w * r.height / Math.max(1, r.width); svg.setAttribute('viewBox', viewBox()); };
+  fit();
+  const ptrs = new Map(); let moved = false, start = null, pinch = null, downPin = null;
+  const toWorld = (cx, cy) => { const r = rect(), v = S.view; return [v.cx - v.w / 2 + (cx - r.left) / r.width * v.w, v.cy - v.h / 2 + (cy - r.top) / r.height * v.h]; };
+  const redraw = (full) => { svg.setAttribute('viewBox', viewBox()); if (full) $('#layers', svg).innerHTML = mapLayers(); };
+  let zt = null; const zoomDone = () => { clearTimeout(zt); zt = setTimeout(() => redraw(true), 120); };
+  svg.addEventListener('pointerdown', e => { downPin = e.target.closest ? e.target.closest('[data-spot]') : null; try { svg.setPointerCapture(e.pointerId); } catch (err) { /* ignora */ } ptrs.set(e.pointerId, [e.clientX, e.clientY]); moved = false; start = [e.clientX, e.clientY, S.view.cx, S.view.cy]; if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), w: S.view.w }; } });
+  svg.addEventListener('pointermove', e => {
+    if (!ptrs.has(e.pointerId)) return;
+    ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+    if (ptrs.size === 2 && pinch) {
+      const [a, b] = [...ptrs.values()]; const d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      const ratio = S.view.h / S.view.w;
+      S.view.w = Math.max(8, Math.min(260, pinch.w * pinch.d / Math.max(10, d))); S.view.h = S.view.w * ratio; moved = true; redraw(false); zoomDone(); return;
+    }
+    const r = rect(); const dx = e.clientX - start[0], dy = e.clientY - start[1];
+    if (Math.abs(dx) + Math.abs(dy) > 6) moved = true;
+    if (moved && ptrs.size === 1) { S.view.cx = start[2] - dx / r.width * S.view.w; S.view.cy = start[3] - dy / r.height * S.view.h; redraw(false); }
+  });
+  const end = e => {
+    const was = ptrs.has(e.pointerId); ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch = null;
+    if (!was || moved || e.type === 'pointercancel') { if (ptrs.size === 1) { const [p] = [...ptrs.values()]; start = [p[0], p[1], S.view.cx, S.view.cy]; } return; }
+    const pin = downPin; downPin = null;
+    if (S.mapAdd) {
+      const [wx, wy] = toWorld(e.clientX, e.clientY);
+      S.pending = { lat: +unpy(wy).toFixed(5), lon: +unpx(wx).toFixed(5) }; S.mapAdd = false;
+      redraw(true); openSpotSheet(null, S.pending);
+    } else if (pin) { openSpotSheet(pin.getAttribute('data-spot')); }
+  };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  svg.addEventListener('wheel', e => { e.preventDefault(); const ratio = S.view.h / S.view.w; S.view.w = Math.max(8, Math.min(260, S.view.w * (e.deltaY > 0 ? 1.15 : 0.87))); S.view.h = S.view.w * ratio; redraw(false); zoomDone(); }, { passive: false });
+}
+
+/* ---------- vista: Diario ---------- */
+function renderDiario() {
+  const list = S.uscite.slice().sort((a, b) => (b.t0 || 0) - (a.t0 || 0));
+  const all = allCatches();
+  const m = getModel();
+  const bySp = {};
+  for (const c of all) { const k = c.nome || 'Altro'; bySp[k] = (bySp[k] || 0) + 1; }
+  const topSp = Object.entries(bySp).sort((a, b) => b[1] - a[1]);
+  const LBL = { marea: { montante: 'Montante', calante: 'Calante', stanca: 'Marea ferma' }, luce: { alba: 'Alba', giorno: 'Giorno', tramonto: 'Tramonto', notte: 'Notte' }, luna: { nuova: 'Luna nuova', crescente: 'Crescente', piena: 'Luna piena', calante: 'Calante' }, solunare: { maggiore: 'Maggiore', minore: 'Minore', fuori: 'Fuori periodo' } };
+  const TIT = { marea: 'Marea', luce: 'Luce', luna: 'Luna', solunare: 'Periodi solunari' };
+  const liftHTML = m.n ? Object.keys(LBL).map(dim => `<div class="lift"><span class="flabel">${TIT[dim]}</span>${Object.entries(LBL[dim]).map(([k, l]) => {
+    const share = (m.counts[dim][k] || 0) / m.n, exp = PE.EXPECT[dim][k];
+    return `<div class="row"><span>${l}</span><span class="track"><i style="width:${Math.round(share * 100)}%"></i><u style="left:${Math.round(exp * 100)}%"></u></span><span class="num small" style="text-align:right;font-weight:800">${Math.round(share * 100)}%</span></div>`;
+  }).join('')}</div>`).join('') : '';
+  app.innerHTML = heroSmall('Diario', `${list.length} ${list.length === 1 ? 'uscita' : 'uscite'} · ${all.length} ${all.length === 1 ? 'cattura' : 'catture'}`, '<button class="act" data-act="newtrip">+ Uscita</button>') + `
+  <div class="wrap gut">
+  
+  ${all.length ? `<section class="card">
+    <h2>Le tue catture</h2>
+    <div class="stats"><div class="stat"><b class="num">${list.length}</b><span>${list.length === 1 ? 'uscita' : 'uscite'}</span></div><div class="stat"><b class="num">${all.length}</b><span>${all.length === 1 ? 'cattura' : 'catture'}</span></div><div class="stat"><b style="font-size:1.05rem;line-height:1.15">${esc(topSp[0] ? topSp[0][0] : '—')}</b><span>specie più presa</span></div></div>
+    <div class="chips">${topSp.map(([k, n]) => `<span class="chip">${esc(k)} <b class="num">${n}</b></span>`).join('')}</div>
+  </section>
+  <section class="card"><h2>Quando prendi di più</h2>
+    <p class="hint">La barra è la quota delle tue catture, il segno verticale è quanto ci si aspetterebbe a caso. Dove la barra lo supera, l'indice ti premia.</p>
+    ${liftHTML}
+  </section>` : ''}
+  ${list.length ? list.map(u => {
+    const cs = u.catture || [];
+    const sum = {}; for (const c of cs) { const k = c.nome || 'Altro'; (sum[k] = sum[k] || []).push(c.cm ? c.cm + ' cm' : ''); }
+    const photos = cs.flatMap(c => c.foto || []);
+    const cd = u.cond || {};
+    return `<button class="entry" data-act="opentrip" data-id="${esc(u.id)}">
+      <span class="eh"><h3>${esc(fDay(u.t0))}</h3><span class="small muted num" style="font-weight:700">${esc(u.inizio || '')}${u.fine ? '–' + esc(u.fine) : ''}</span></span>
+      <span class="small muted" style="font-weight:600">${esc(u.spotNome || '')}</span>
+      <span class="small">${cs.length ? Object.entries(sum).map(([k, v]) => `<b>${v.length} ${esc(k.toLowerCase())}</b>${v.filter(Boolean).length ? ' (' + v.filter(Boolean).join(', ') + ')' : ''}`).join(' · ') : '<b>Cappotto</b>'}</span>
+      ${hasCond(cd) ? `<span class="chips">${Object.entries(cd).filter(([, v]) => v).map(([g, v]) => `<span class="chip">${PE.COND[g][v]}</span>`).join('')}</span>` : ''}
+      ${photos.length ? `<span class="thumbs">${photos.slice(0, 6).map(id => `<img data-foto="${esc(id)}" alt="">`).join('')}</span>` : ''}
+    </button>`;
+  }).join('') : `<section class="card empty"><span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3.5h11a1.5 1.5 0 0 1 1.5 1.5v15H7.5A2.5 2.5 0 0 1 5 17.5V4.5a1 1 0 0 1 1-1z"/><path d="M5 17.5A2.5 2.5 0 0 1 7.5 15h11"/></svg></span><h3>${S.uscLoaded ? 'Il diario è vuoto' : 'Carico il diario…'}</h3><p class="muted small" style="margin:0">Registra la prossima uscita: spot, orari, catture con misura, esca e canna, foto. Marea, luna e luce le aggiungo io in automatico, e da 3 catture l'indice inizia a imparare da te.</p><button class="btn pri" data-act="newtrip">Registra un'uscita</button></section>`}
+  </div>`;
+}
+
+/* ---------- vista: Specie ---------- */
+const GEAR_IC = {
+  canna: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20 20 4"/><path d="M20 4v9a3 3 0 0 1-3 3"/><circle cx="7.5" cy="16.5" r="2"/></svg>',
+  mulinello: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="12" r="6"/><circle cx="11" cy="12" r="2"/><path d="M17 12h4M21 9v6"/></svg>',
+};
+function renderSpecie() {
+  const mo = new Date().getMonth();
+  const sorted = PE.SPECIE.slice().sort((a, b) => b.mesi[mo] - a.mesi[mo] || a.nome.localeCompare(b.nome));
+  const cellCol = v => ['transparent', 'var(--q2)', 'var(--q3)', 'var(--q5)'][v];
+  const gear = S.root.gear || [];
+  app.innerHTML = heroSmall('Specie', 'Alto Adriatico, pesca da riva') + `
+  <div class="wrap gut">
+  <section class="card">
+    <div class="card-h"><h2>Calendario</h2><span class="chip acc" style="text-transform:capitalize">${new Date().toLocaleDateString('it-IT', { month: 'long' })}</span></div>
+    <div class="calwrap"><table class="cal"><colgroup><col class="nc"></colgroup><thead><tr><th></th>${MESI.map((m, i) => `<th class="${i === mo ? 'now' : ''}" scope="col">${m}</th>`).join('')}</tr></thead><tbody>
+      ${sorted.map(s => `<tr><td class="n"><button data-act="species" data-id="${s.id}">${esc(s.nome)}</button></td>${s.mesi.map((v, i) => `<td class="c ${i === mo ? 'now' : ''}" style="background:${v ? cellCol(v) : 'var(--surface-2)'};opacity:${v ? 1 : .6}" title="${['Assente', 'Possibile', 'Buono', 'Ottimo'][v]}"></td>`).join('')}</tr>`).join('')}
+    </tbody></table></div>
+    <div class="legend"><span><i style="background:var(--q2)"></i>Possibile</span><span><i style="background:var(--q3)"></i>Buono</span><span><i style="background:var(--q5)"></i>Ottimo</span></div>
+  </section>
+  <section class="card">
+    <h2>In questo mese</h2>
+    <div class="splist">${sorted.filter(s => s.mesi[mo] > 0).map(s => `<button class="sprow" data-act="species" data-id="${s.id}" style="grid-template-columns:1fr auto auto"><span style="min-width:0"><span class="nm">${esc(s.nome)}</span><span class="ds">${esc(s.consiglio)}</span></span><span class="chip" style="background:${cellCol(s.mesi[mo])};color:${s.mesi[mo] === 1 ? 'var(--qt2)' : s.mesi[mo] === 2 ? 'var(--qt3)' : 'var(--qt5)'}">${['', 'Possibile', 'Buono', 'Ottimo'][s.mesi[mo]]}</span><span class="go">${CHEV}</span></button>`).join('')}</div>
+  </section>
+  <section class="card">
+    <div class="card-h"><h2>La tua attrezzatura</h2><button class="linkbtn" data-act="gear">Modifica</button></div>
+    ${gear.length ? ['canna', 'mulinello'].map(t => `<div class="cgroup"><span class="flabel">${t === 'canna' ? 'Canne' : 'Mulinelli'}</span><div class="gearlist">${gear.filter(g => g.tipo === t).map(g => `<div class="gear"><span class="gi">${GEAR_IC[t]}</span><span style="min-width:0"><b>${esc(g.nome)}</b><span>${esc(t === 'canna' ? (PE.TECNICHE[g.cat] || '') : (g.usi || []).map(u => PE.TECNICHE[u]).join(', '))}${g.note ? ' · ' + esc(g.note) : ''}</span></span></div>`).join('')}</div></div>`).join('')
+      : '<p class="muted small" style="margin:0">Aggiungi canne e mulinelli: ti dirò quale usare per ogni specie e potrai segnarli nel diario.</p>'}
+  </section>
+  <p class="hint">Misure minime da Reg. UE 2019/1241 dove indicate. Controlla sempre le regole locali e il limite giornaliero della pesca sportiva.</p>
+  </div>`;
+}
+
+/* ---------- fogli ---------- */
+function sheet(html, onMount) {
+  const root = $('#sheet-root');
+  root.innerHTML = `<div class="sheet-bg" data-act="closebg"><div class="sheet" role="dialog" aria-modal="true">${html}</div></div>`;
+  document.body.style.overflow = 'hidden';
+  if (onMount) onMount($('.sheet', root));
+  hydrate(root);
+  const f = $('.sheet input, .sheet select, .sheet button:not(.x)', root); if (f && f.tagName !== 'BUTTON') { /* niente auto-focus per non aprire la tastiera */ }
+}
+function closeSheet() { $('#sheet-root').innerHTML = ''; document.body.style.overflow = ''; if (S.pending) { S.pending = null; render(); } }
+function toast(msg) {
+  const r = $('#toast-root'); r.innerHTML = `<div class="toast" role="status">${esc(msg)}</div>`;
+  clearTimeout(toast.t); toast.t = setTimeout(() => { r.innerHTML = ''; }, 2600);
+}
+const top = (title) => `<div class="sheet-top"><h2>${title}</h2><button class="x" data-act="close" aria-label="Chiudi">✕</button></div>`;
+
+function openPickSpot() {
+  const list = spotsSorted(), sel = currentSpot(), now = Date.now(), cond = condToday();
+  sheet(top('Scegli lo spot') + (list.length ? list.map(s => {
+    const sc = PE.scoreAt(now, s, { cond: condAt(now, s), model: getModel() }).v;
+    return `<button class="entry" data-act="usespot" data-id="${esc(s.id)}" data-close="1"><span class="eh"><h3>${esc(s.nome)}</h3><span class="pill num" style="background:${qCol(sc)};color:${qTxt(sc)}">${sc}</span></span><span class="small muted">${TIPI[s.tipo] || ''}${s.id === sel.id ? ' · in uso' : ''}</span></button>`;
+  }).join('') : '<p class="muted">Non hai ancora spot salvati.</p>') + `${list.length ? `<button class="btn pri block" data-act="nearest" data-close="1">${PIN} Lo spot più vicino a me</button>` : ''}<button class="btn block" data-act="go" data-tab="spot" data-close="1">Gestisci gli spot</button>`);
+}
+
+function openSpotSheet(id, at) {
+  const s = id ? S.spots.find(x => x.id === id) : null;
+  const d = s || { nome: '', tipo: 'spiaggia', lat: at ? at.lat : 45.205, lon: at ? at.lon : 12.303, anticipo: 47, note: '' };
+  sheet(top(s ? 'Modifica spot' : 'Nuovo spot') + `
+    <form id="spotf" class="field" style="gap:12px">
+      <div class="field"><label for="sp-nome">Nome</label><input id="sp-nome" required maxlength="60" value="${esc(d.nome)}" placeholder="Es. Testata diga di Sottomarina"></div>
+      <div class="row2">
+        <div class="field"><label for="sp-tipo">Tipo</label><select id="sp-tipo">${Object.entries(TIPI).map(([k, l]) => `<option value="${k}" ${d.tipo === k ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+        <div class="field"><label for="sp-ant">Anticipo marea (min)</label><input id="sp-ant" type="number" inputmode="numeric" min="-120" max="120" value="${esc(d.anticipo)}"></div>
+      </div>
+      <p class="hint">Rispetto a Punta della Salute (tabelle del Centro Maree): mare aperto e dighe della bocca di Chioggia circa 47 min prima, Chioggia Vigo circa 20.</p>
+      <div class="row2">
+        <div class="field"><label for="sp-lat">Latitudine</label><input id="sp-lat" type="number" step="0.00001" inputmode="decimal" required value="${esc(d.lat)}"></div>
+        <div class="field"><label for="sp-lon">Longitudine</label><input id="sp-lon" type="number" step="0.00001" inputmode="decimal" required value="${esc(d.lon)}"></div>
+      </div>
+      <button class="btn block" type="button" id="sp-gps">${PIN} Usa la mia posizione attuale</button>
+      <div class="field"><label for="sp-note">Note</label><textarea id="sp-note" maxlength="600" placeholder="Fondale, buche, dove si incaglia, parcheggio…">${esc(d.note || '')}</textarea></div>
+      <button class="btn pri block" type="submit">${s ? 'Salva modifiche' : 'Salva spot'}</button>
+      ${s ? `<div id="delzone"><button class="btn danger block" type="button" data-act="askdel">Elimina spot</button></div>` : ''}
+    </form>`, el => {
+    $('#sp-tipo', el).addEventListener('change', e => { const a = $('#sp-ant', el); if (!s) a.value = e.target.value === 'laguna' ? 20 : 47; });
+    $('#sp-gps', el).addEventListener('click', async () => {
+      const b = $('#sp-gps', el); b.disabled = true; b.textContent = 'Cerco la posizione…';
+      try { const p = await locate(); $('#sp-lat', el).value = p.lat.toFixed(5); $('#sp-lon', el).value = p.lon.toFixed(5); toast(`Posizione presa (±${Math.round(p.acc)} m)`); }
+      catch (err) { toast(geoErr(err)); }
+      finally { b.disabled = false; b.innerHTML = PIN + ' Usa la mia posizione attuale'; }
+    });
+    $('#spotf', el).addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = {
+        nome: $('#sp-nome', el).value.trim() || 'Spot', tipo: $('#sp-tipo', el).value,
+        anticipo: Number($('#sp-ant', el).value) || 0, lat: Number($('#sp-lat', el).value), lon: Number($('#sp-lon', el).value),
+        note: $('#sp-note', el).value.trim(), ordine: s ? (s.ordine || 0) : S.spots.length + 1,
+      };
+      if (!isFinite(data.lat) || !isFinite(data.lon) || Math.abs(data.lat) > 90 || Math.abs(data.lon) > 180) { toast('Coordinate non valide'); return; }
+      const nid = s ? s.id : uid();
+      S.pending = null;
+      try { await Store.saveDoc('spots', nid, data); if (!s && !S.spots.length) await Store.setRoot({ spotSel: nid }); closeSheet(); toast(s ? 'Spot aggiornato' : 'Spot salvato'); }
+      catch (err) { toast(errMsg(err)); }
+    });
+    const dz = $('#delzone', el);
+    if (dz) dz.addEventListener('click', async e => {
+      const b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.act === 'askdel') dz.innerHTML = `<div class="confirm"><span>Eliminare “${esc(s.nome)}”? Le uscite già registrate restano nel diario.</span><button class="btn danger" type="button" data-act="dodel">Elimina</button><button class="btn" type="button" data-act="nodel">Annulla</button></div>`;
+      if (b.dataset.act === 'nodel') dz.innerHTML = `<button class="btn danger block" type="button" data-act="askdel">Elimina spot</button>`;
+      if (b.dataset.act === 'dodel') { try { await Store.delDoc('spots', s.id); closeSheet(); toast('Spot eliminato'); } catch (err) { toast(errMsg(err)); } }
+    });
+  });
+}
+
+function openSpecies(id) {
+  const s = SPECIE_BY_ID[id]; if (!s) return;
+  const mo = new Date().getMonth();
+  const tec = s.tecniche.map(t => {
+    const g = gearFor(t);
+    const items = [...g.canne.map(c => c.nome + (c.note ? ' (' + c.note + ')' : '')), ...g.mulinelli.map(m => m.nome + (m.note ? ' (' + m.note + ')' : ''))];
+    return `<div class="sp" style="grid-template-columns:1fr"><b>${PE.TECNICHE[t]}</b><p>${items.length ? esc(items.join(' + ')) : 'Nessuna attrezzatura salvata per questa tecnica'}</p></div>`;
+  }).join('');
+  sheet(top(esc(s.nome)) + `
+    <p class="muted" style="margin:-8px 0 0"><i>${esc(s.lat)}</i>${s.min ? ` · misura minima ${s.min} cm` : ''}</p>
+    <div class="calwrap"><table class="cal" style="min-width:0"><thead><tr>${MESI.map((m, i) => `<th class="${i === mo ? 'now' : ''}">${m}</th>`).join('')}</tr></thead><tbody><tr>${s.mesi.map((v, i) => `<td class="c ${i === mo ? 'now' : ''}" style="background:${v ? ['', 'var(--q2)', 'var(--q3)', 'var(--q5)'][v] : 'var(--surface-2)'};opacity:${v ? 1 : .5}"></td>`).join('')}</tr></tbody></table></div>
+    <div class="kv"><span class="k">Dove</span><span>${esc(s.dove)}</span></div>
+    <div class="kv"><span class="k">Esche</span><span>${esc(s.esche)}</span></div>
+    <div class="kv"><span class="k">Il momento giusto</span><span>${esc(s.consiglio)}</span></div>
+    <div><p class="eyebrow" style="margin:0 0 4px">Con la tua attrezzatura</p>${tec}</div>`);
+}
+
+function openGear() {
+  const draft = JSON.parse(JSON.stringify(S.root.gear || []));
+  const rowHTML = () => draft.map((g, i) => `<div class="catch"><div class="ch"><b>${esc(g.nome)}</b><button class="linkbtn" type="button" data-rm="${i}" style="color:var(--danger)">Rimuovi</button></div><span class="small muted">${g.tipo === 'canna' ? 'Canna · ' + (PE.TECNICHE[g.cat] || '') : 'Mulinello · ' + (g.usi || []).map(u => PE.TECNICHE[u]).join(', ')}${g.note ? ' · ' + esc(g.note) : ''}</span></div>`).join('');
+  sheet(top('Attrezzatura') + `
+    <div id="glist" style="display:grid;gap:8px">${rowHTML()}</div>
+    <form id="gform" class="subform">
+      <span class="flabel">Aggiungi</span>
+      <div class="field"><label for="g-nome">Nome</label><input id="g-nome" required maxlength="80" placeholder="Es. Daiwa Legalist 4000"></div>
+      <div class="row2"><div class="field"><label for="g-tipo">Tipo</label><select id="g-tipo"><option value="canna">Canna</option><option value="mulinello">Mulinello</option></select></div>
+      <div class="field"><label for="g-cat">Tecnica</label><select id="g-cat">${Object.entries(PE.TECNICHE).map(([k, l]) => `<option value="${k}">${l}</option>`).join('')}</select></div></div>
+      <div class="field"><label for="g-note">Nota</label><input id="g-note" maxlength="80" placeholder="Es. treccia 0,19"></div>
+      <button class="btn" type="submit">Aggiungi alla lista</button>
+    </form>
+    <button class="btn pri block" data-act="savegear" type="button">Salva attrezzatura</button>`, el => {
+    $('#glist', el).addEventListener('click', e => { const b = e.target.closest('[data-rm]'); if (b) { draft.splice(+b.dataset.rm, 1); $('#glist', el).innerHTML = rowHTML(); } });
+    $('#gform', el).addEventListener('submit', e => {
+      e.preventDefault();
+      const tipo = $('#g-tipo', el).value, cat = $('#g-cat', el).value;
+      draft.push(Object.assign({ id: uid(), nome: $('#g-nome', el).value.trim(), tipo, note: $('#g-note', el).value.trim() }, tipo === 'canna' ? { cat } : { usi: [cat] }));
+      e.target.reset(); $('#glist', el).innerHTML = rowHTML();
+    });
+    el.addEventListener('click', async e => { if (e.target.closest('[data-act="savegear"]')) { try { await Store.setRoot({ gear: draft }); closeSheet(); toast('Attrezzatura salvata'); } catch (err) { toast(errMsg(err)); } } });
+  });
+}
+
+/* --- uscita: nuova, apri, modifica --- */
+function openTrip(id) {
+  const u = S.uscite.find(x => x.id === id); if (!u) return;
+  const cs = u.catture || [];
+  const cd = u.cond || {};
+  sheet(top(esc(fDay(u.t0))) + `
+    <p class="muted" style="margin:-8px 0 0">${esc(u.spotNome || '')} · ${esc(u.inizio || '')}${u.fine ? '–' + esc(u.fine) : ''}</p>
+    ${hasCond(cd) ? `<div class="chips">${Object.entries(cd).filter(([, v]) => v).map(([g, v]) => `<span class="chip">${PE.COND[g][v]}</span>`).join('')}</div>` : ''}
+    ${u.auto ? `<p class="small" style="margin:0">All'inizio: marea ${cm(u.auto.h)} ${u.auto.marea === 'stanca' ? 'ferma' : u.auto.marea}, ${esc(u.auto.lunaNome)}, ${u.auto.luce}.</p>` : ''}
+    ${u.auto && u.auto.meteo ? `<p class="small" style="margin:0">Meteo: ${[u.auto.meteo.ws != null ? 'vento ' + Math.round(u.auto.meteo.ws) + ' km/h' + (u.auto.meteo.wd != null ? ' ' + windName(u.auto.meteo.wd).split(' · ')[1] : '') : '', u.auto.meteo.wh != null ? 'onde ' + f1(u.auto.meteo.wh) + ' m' : '', u.auto.meteo.sst != null ? 'acqua ' + f1(u.auto.meteo.sst) + ' °C' : '', u.auto.meteo.p != null ? Math.round(u.auto.meteo.p) + ' hPa' : ''].filter(Boolean).join(', ')}.</p>` : ''}
+    ${cs.length ? cs.map(c => `<div class="catch"><div class="ch"><b>${esc(c.nome)}${c.cm ? ' · ' + esc(c.cm) + ' cm' : ''}${c.g ? ' · ' + esc(c.g) + ' g' : ''}</b><span class="small muted num">${esc(c.ora || '')}</span></div>
+      <span class="small muted">${[c.esca, c.canna, c.rilasciato ? 'rilasciato' : '', c.marea ? 'marea ' + (c.marea === 'stanca' ? 'ferma' : c.marea) : '', c.luce, c.solunare && c.solunare !== 'fuori' ? 'periodo ' + c.solunare : ''].filter(Boolean).map(esc).join(' · ')}</span>
+      ${(c.foto || []).length ? `<span class="thumbs">${c.foto.map(f => `<img data-foto="${esc(f)}" alt="Foto di ${esc(c.nome)}" style="width:110px;height:110px">`).join('')}</span>` : ''}</div>`).join('') : '<p class="muted">Nessuna cattura in questa uscita.</p>'}
+    ${u.note ? `<p style="margin:0;white-space:pre-wrap">${esc(u.note)}</p>` : ''}
+    <div class="acts"><button class="btn" data-act="edittrip" data-id="${esc(u.id)}">Modifica</button></div>
+    <div id="tdel"><button class="btn danger block" data-act="tripaskdel">Elimina uscita</button></div>`, el => {
+    const dz = $('#tdel', el);
+    dz.addEventListener('click', async e => {
+      const b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.act === 'tripaskdel') dz.innerHTML = `<div class="confirm"><span>Eliminare l'uscita e le sue foto?</span><button class="btn danger" data-act="tripdodel">Elimina</button><button class="btn" data-act="tripnodel">Annulla</button></div>`;
+      if (b.dataset.act === 'tripnodel') dz.innerHTML = `<button class="btn danger block" data-act="tripaskdel">Elimina uscita</button>`;
+      if (b.dataset.act === 'tripdodel') {
+        try {
+          await Store.delDoc('uscite', u.id);
+          for (const c of cs) for (const f of (c.foto || [])) { try { await Photos.del(f); } catch (err) { /* già rimossa */ } }
+          closeSheet(); toast('Uscita eliminata');
+        } catch (err) { toast(errMsg(err)); }
+      }
+    });
+  });
+}
+
+function openTripForm(id) {
+  const u = id ? S.uscite.find(x => x.id === id) : null;
+  const now = new Date();
+  const sp0 = currentSpot();
+  const draft = u ? JSON.parse(JSON.stringify(u)) : {
+    data: isoDay(Date.now()), inizio: pad(Math.max(0, now.getHours() - 2)) + ':00', fine: pad(now.getHours()) + ':' + pad(now.getMinutes()),
+    spotId: sp0._def ? '' : sp0.id, cond: Object.assign({}, condAt(Date.now(), sp0) || {}), catture: [], note: '',
+  };
+  draft.cond = draft.cond || {}; draft.catture = draft.catture || [];
+  const spots = spotsSorted();
+  const rodOpts = rods();
+  const catchList = () => draft.catture.length ? draft.catture.map((c, i) => `<div class="catch"><div class="ch"><b>${esc(c.nome)}${c.cm ? ' · ' + esc(c.cm) + ' cm' : ''}</b><span><span class="small muted num">${esc(c.ora || '')}</span> <button class="linkbtn" type="button" data-rmc="${i}" style="color:var(--danger);margin-left:8px">Rimuovi</button></span></div><span class="small muted">${[c.esca, c.canna, c.rilasciato ? 'rilasciato' : '', (c.foto || []).length ? (c.foto.length + ' foto') : ''].filter(Boolean).map(esc).join(' · ')}</span></div>`).join('') : '<p class="hint">Nessuna cattura: se è stato cappotto salva pure così.</p>';
+  const segF = (grp, label) => `<div class="cgroup"><span class="flabel">${label}</span><div class="seg" data-grp="${grp}">${Object.entries(PE.COND[grp]).map(([k, l]) => `<button type="button" data-v="${k}" aria-pressed="${draft.cond[grp] === k}">${l}</button>`).join('')}</div></div>`;
+  let pendingPhotos = []; let uploading = 0;
+  sheet(top(u ? 'Modifica uscita' : 'Nuova uscita') + `
+    <form id="tripf" style="display:grid;gap:12px">
+      <div class="row3">
+        <div class="field"><label for="t-data">Data</label><input id="t-data" type="date" required value="${esc(draft.data || isoDay(draft.t0 || Date.now()))}"></div>
+        <div class="field"><label for="t-in">Inizio</label><input id="t-in" type="time" value="${esc(draft.inizio || '')}"></div>
+        <div class="field"><label for="t-fi">Fine</label><input id="t-fi" type="time" value="${esc(draft.fine || '')}"></div>
+      </div>
+      <div class="field"><label for="t-spot">Spot</label><select id="t-spot">${spots.map(s => `<option value="${esc(s.id)}" ${draft.spotId === s.id ? 'selected' : ''}>${esc(s.nome)}</option>`).join('')}<option value="" ${!draft.spotId ? 'selected' : ''}>${spots.length ? 'Altro posto' : 'Sottomarina (predefinito)'}</option></select></div>
+      <div id="condbox" style="display:grid;gap:10px">${segF('mare', 'Mare')}${segF('acqua', 'Acqua')}${segF('vento', 'Vento')}${segF('pressione', 'Pressione')}</div>
+      <div style="display:grid;gap:8px"><span class="flabel">Catture</span><div id="clist" style="display:grid;gap:8px">${catchList()}</div></div>
+      <div class="subform" id="cform">
+        <span class="flabel">Aggiungi una cattura</span>
+        <div class="row2">
+          <div class="field"><label for="c-sp">Specie</label><select id="c-sp">${PE.SPECIE.map(s => `<option value="${s.id}">${esc(s.nome)}</option>`).join('')}<option value="_altro">Altra specie…</option></select></div>
+          <div class="field"><label for="c-ora">Ora</label><input id="c-ora" type="time" value="${esc(draft.fine || '')}"></div>
+        </div>
+        <div class="field" id="c-altro-w" hidden><label for="c-altro">Nome della specie</label><input id="c-altro" maxlength="40" placeholder="Es. Pagello"></div>
+        <div class="row2">
+          <div class="field"><label for="c-cm">Misura (cm)</label><input id="c-cm" type="number" inputmode="decimal" min="0" step="0.5"></div>
+          <div class="field"><label for="c-g">Peso (g)</label><input id="c-g" type="number" inputmode="numeric" min="0" step="10"></div>
+        </div>
+        <div class="field"><label for="c-esca">Esca</label><input id="c-esca" maxlength="60" list="esche-dl" placeholder="Es. cannolicchio"><datalist id="esche-dl">${ESCHE.map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
+        <div class="field"><label for="c-canna">Canna</label><select id="c-canna"><option value="">—</option>${rodOpts.map(r => `<option>${esc(r.nome)}</option>`).join('')}</select></div>
+        <label class="check"><input id="c-ril" type="checkbox"> Rilasciato</label>
+        ${S.canPhoto ? `<div class="field"><label for="c-foto">Foto</label><input id="c-foto" type="file" accept="image/*" multiple><span class="hint" id="c-fst"></span></div>` : '<p class="hint">Questo browser non permette di salvare foto.</p>'}
+        <button class="btn" type="button" data-act="addcatch">Aggiungi cattura</button>
+      </div>
+      <div class="field"><label for="t-note">Note</label><textarea id="t-note" maxlength="2000" placeholder="Montature, dove mangiavano, cosa cambiare la prossima volta…">${esc(draft.note || '')}</textarea></div>
+      <button class="btn pri block" type="submit" id="t-save">${u ? 'Salva modifiche' : 'Salva uscita'}</button>
+    </form>`, el => {
+    $('#condbox', el).addEventListener('click', e => {
+      const b = e.target.closest('button[data-v]'); if (!b) return;
+      const grp = b.parentElement.dataset.grp;
+      draft.cond[grp] = draft.cond[grp] === b.dataset.v ? '' : b.dataset.v;
+      for (const x of b.parentElement.children) x.setAttribute('aria-pressed', x.dataset.v === draft.cond[grp]);
+    });
+    $('#c-sp', el).addEventListener('change', e => { $('#c-altro-w', el).hidden = e.target.value !== '_altro'; });
+    $('#clist', el).addEventListener('click', e => { const b = e.target.closest('[data-rmc]'); if (b) { const [c] = draft.catture.splice(+b.dataset.rmc, 1); const orig = new Set(u ? (u.catture || []).flatMap(x => x.foto || []) : []); for (const f of (c && c.foto) || []) if (!orig.has(f)) Photos.del(f).catch(() => {}); $('#clist', el).innerHTML = catchList(); } });
+    const fin = $('#c-foto', el);
+    if (fin) fin.addEventListener('change', async () => {
+      const st = $('#c-fst', el);
+      for (const f of fin.files) {
+        uploading++; st.textContent = 'Carico la foto…';
+        try { const blob = await shrink(f); const id = await Photos.put(blob); pendingPhotos.push(id); st.textContent = pendingPhotos.length + ' foto pronte'; }
+        catch (err) { st.textContent = err && err.name === 'QuotaExceededError' ? 'Memoria del telefono piena' : 'Foto non salvata: riprova'; }
+        finally { uploading--; }
+      }
+      fin.value = '';
+    });
+    el.addEventListener('click', e => {
+      if (!e.target.closest('[data-act="addcatch"]')) return;
+      if (uploading) { toast('Aspetta che finisca il caricamento della foto'); return; }
+      const spv = $('#c-sp', el).value;
+      const nome = spv === '_altro' ? ($('#c-altro', el).value.trim() || 'Altra specie') : SPECIE_BY_ID[spv].nome;
+      draft.catture.push({
+        id: uid(), specie: spv === '_altro' ? '' : spv, nome, ora: $('#c-ora', el).value,
+        cm: $('#c-cm', el).value ? Number($('#c-cm', el).value) : null, g: $('#c-g', el).value ? Number($('#c-g', el).value) : null,
+        esca: $('#c-esca', el).value.trim(), canna: $('#c-canna', el).value, rilasciato: $('#c-ril', el).checked, foto: pendingPhotos.slice(),
+      });
+      const s = SPECIE_BY_ID[spv];
+      if (s && s.min && draft.catture[draft.catture.length - 1].cm && draft.catture[draft.catture.length - 1].cm < s.min) toast(`Sotto misura: per ${s.nome} il minimo è ${s.min} cm`);
+      pendingPhotos = [];
+      for (const k of ['#c-cm', '#c-g', '#c-altro']) $(k, el).value = '';
+      $('#c-ril', el).checked = false; const fst = $('#c-fst', el); if (fst) fst.textContent = '';
+      $('#clist', el).innerHTML = catchList();
+    });
+    $('#tripf', el).addEventListener('submit', async e => {
+      e.preventDefault();
+      if (uploading) { toast('Aspetta che finisca il caricamento della foto'); return; }
+      if (pendingPhotos.length) { toast('Hai foto non ancora aggiunte: premi “Aggiungi cattura”'); return; }
+      const data = $('#t-data', el).value || isoDay(Date.now());
+      const spotId = $('#t-spot', el).value;
+      const sp = S.spots.find(s => s.id === spotId) || DEFAULT_SPOT;
+      const inizio = $('#t-in', el).value, fine = $('#t-fi', el).value;
+      const t0 = parseLocal(data, inizio || '12:00');
+      const s0 = PE.scoreAt(t0, sp, {});
+      const da0 = PE.dayAstro(t0, sp.lat, sp.lon);
+      const w0 = Meteo.near(sp) ? Meteo.at(t0) : null;
+      const catture = draft.catture.map(c => {
+        let t = parseLocal(data, c.ora || inizio || '12:00');
+        if (inizio && c.ora && c.ora < inizio) t += DAY; // uscita a cavallo della mezzanotte
+        const sc = PE.scoreAt(t, sp, {});
+        return Object.assign({}, c, { t, h: Math.round(PE.tideAt(t, sp)), marea: sc.buckets.marea, luce: sc.buckets.luce, luna: sc.buckets.luna, solunare: sc.buckets.solunare });
+      });
+      const doc = {
+        data, inizio, fine, t0, spotId: sp._def ? '' : sp.id, spotNome: sp.nome,
+        cond: Object.fromEntries(Object.entries(draft.cond).filter(([, v]) => v)), note: $('#t-note', el).value.trim(), catture,
+        auto: { h: Math.round(PE.tideAt(t0, sp)), marea: s0.buckets.marea, luce: s0.buckets.luce, lunaNome: PE.moonPhaseName(da0.phase), indice: s0.v, meteo: w0 ? { ws: w0.ws, wd: w0.wd, wh: w0.wh, sst: w0.sst, p: w0.p } : null },
+        creato: u ? (u.creato || Date.now()) : Date.now(), agg: Date.now(),
+      };
+      const btn = $('#t-save', el); btn.disabled = true;
+      try {
+        await Store.saveDoc('uscite', u ? u.id : uid(), doc);
+        if (u) { const keep = new Set(catture.flatMap(c => c.foto || [])); for (const f of (u.catture || []).flatMap(c => c.foto || [])) if (!keep.has(f)) Photos.del(f).catch(() => {}); }
+        closeSheet(); toast(u ? 'Uscita aggiornata' : 'Uscita salvata');
+      }
+      catch (err) { btn.disabled = false; toast(errMsg(err)); }
+    });
+  });
+}
+async function shrink(file) {
+  const max = 1600;
+  let bmp;
+  try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+  catch (e) { bmp = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = URL.createObjectURL(file); }); }
+  const w = bmp.width, h = bmp.height, k = Math.min(1, max / Math.max(w, h));
+  const c = document.createElement('canvas'); c.width = Math.round(w * k); c.height = Math.round(h * k);
+  c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+  return await new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error('blob')), 'image/jpeg', 0.82));
+}
+
+/* --- impostazioni, backup e ripristino --- */
+const blobToDataURL = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = () => rej(r.error); r.readAsDataURL(b); });
+async function buildBackup() {
+  const foto = {};
+  for (const u of S.uscite) for (const c of (u.catture || [])) for (const id of (c.foto || [])) {
+    if (foto[id]) continue;
+    try { const b = await Photos.get(id); if (b) foto[id] = await blobToDataURL(b); } catch (e) { /* foto mancante */ }
+  }
+  const d = Store.local;
+  const out = { app: 'montante', v: 1, creato: new Date().toISOString(), root: d.root, spots: d.spots, uscite: d.uscite, foto };
+  const name = `montante-backup-${isoDay(Date.now())}.json`;
+  const text = JSON.stringify(out);
+  return { name, text, size: text.length, nFoto: Object.keys(foto).length };
+}
+function parseBackup(text) {
+  let d;
+  try { d = JSON.parse(text); } catch (e) { throw new Error('Il file non è un backup di Montante.'); }
+  if (!d || d.app !== 'montante' || typeof d.root !== 'object' || typeof d.spots !== 'object' || typeof d.uscite !== 'object') throw new Error('Il file non è un backup di Montante.');
+  return d;
+}
+async function applyBackup(d) {
+  await Photos.clear().catch(() => {});
+  for (const [id, url] of Object.entries(d.foto || {})) {
+    try { const b = await (await fetch(url)).blob(); await Photos.put(b, id); } catch (e) { /* foto saltata */ }
+  }
+  const root = Object.assign({}, d.root, { benvenuto: true });
+  Store.replaceAll({ root, spots: d.spots, uscite: d.uscite });
+  curveCache.clear();
+}
+function openSettings(focus) {
+  const nS = S.spots.length, nU = S.uscite.length;
+  sheet(top('Impostazioni') + `
+    <section class="sgroup">
+      <h3>Backup</h3>
+      <p class="hint">Spot, attrezzatura, diario e foto sono salvati solo su questo telefono. Ogni tanto salva un backup in File o su iCloud Drive.</p>
+      <div id="exp"><button class="btn pri block" type="button" data-x="prep">Crea il backup</button></div>
+    </section>
+    <section class="sgroup" id="impbox">
+      <h3>Ripristina da backup</h3>
+      <p class="hint">Sostituisce i dati di questo telefono (ora: ${nS} spot, ${nU} ${nU === 1 ? 'uscita' : 'uscite'}).</p>
+      <label class="btn block filebtn" for="imp-file">Scegli il file di backup</label>
+      <input id="imp-file" class="vh" type="file" accept=".json,application/json,text/plain">
+      <details class="fix"><summary>Oppure incolla il testo del backup</summary><div class="fixin"><div class="field"><label for="imp-text">Testo del backup</label><textarea id="imp-text" rows="4" placeholder='{"app":"montante", …}'></textarea></div><button class="btn" type="button" data-x="paste">Usa questo testo</button></div></details>
+      <div id="impconf"></div>
+    </section>
+    <section class="sgroup">
+      <h3>Previsioni</h3>
+      <p class="hint">${Meteo.d ? `Ultimo aggiornamento ${fDay(Meteo.d.at)} alle ${fT(Meteo.d.at)}.` : 'Non ancora scaricate.'} Dati meteo e mare di Open-Meteo, marea calcolata sul telefono anche senza rete.</p>
+      <button class="btn block" type="button" data-x="meteo">Aggiorna adesso</button>
+    </section>
+    <p class="hint" style="text-align:center">Montante · versione ${APP_VERSION}</p>`, el => {
+    const exp = $('#exp', el), conf = $('#impconf', el);
+    let pendingImport = null;
+    const askImport = text => {
+      try { pendingImport = parseBackup(text); }
+      catch (err) { conf.innerHTML = `<div class="confirm"><span>${esc(err.message)}</span></div>`; return; }
+      const d = pendingImport, ns = Object.keys(d.spots).length, nu = Object.keys(d.uscite).length, ng = (d.root.gear || []).length;
+      conf.innerHTML = `<div class="confirm"><span>Backup del ${d.creato ? esc(fDay(Date.parse(d.creato))) : '?'}: ${ns} spot, ${ng} attrezzi, ${nu} ${nu === 1 ? 'uscita' : 'uscite'}${Object.keys(d.foto || {}).length ? ', ' + Object.keys(d.foto).length + ' foto' : ''}. Sostituire i dati attuali?</span><button class="btn pri" type="button" data-x="doimp">Ripristina</button><button class="btn" type="button" data-x="noimp">Annulla</button></div>`;
+    };
+    $('#imp-file', el).addEventListener('change', async e => {
+      const f = e.target.files && e.target.files[0]; if (!f) return;
+      askImport(await f.text()); e.target.value = '';
+    });
+    el.addEventListener('click', async e => {
+      const b = e.target.closest('[data-x]'); if (!b) return;
+      const x = b.dataset.x;
+      if (x === 'prep') {
+        b.disabled = true; b.textContent = 'Preparo il backup…';
+        try {
+          const bk = await buildBackup();
+          exp.innerHTML = `<button class="btn pri block" type="button" data-x="share">Salva il backup (${Math.max(1, Math.round(bk.size / 1024))} KB${bk.nFoto ? ', ' + bk.nFoto + ' foto' : ''})</button><p class="hint" style="margin-top:6px">Nel foglio di condivisione scegli «Salva in File».</p>`;
+          exp._bk = bk;
+        } catch (err) { b.disabled = false; b.textContent = 'Crea il backup'; toast('Backup non riuscito, riprova.'); }
+      } else if (x === 'share') {
+        const bk = exp._bk; if (!bk) return;
+        const mk = type => new File([bk.text], bk.name, { type });
+        let file = mk('application/json');
+        if (navigator.canShare && !navigator.canShare({ files: [file] })) file = mk('text/plain');
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+          try { await navigator.share({ files: [file], title: 'Backup Montante' }); toast('Backup pronto'); }
+          catch (err) { if (err && err.name !== 'AbortError') toast('Condivisione non riuscita'); }
+        } else {
+          const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = bk.name;
+          document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+          toast('Backup scaricato');
+        }
+      } else if (x === 'paste') {
+        askImport($('#imp-text', el).value.trim());
+      } else if (x === 'noimp') {
+        pendingImport = null; conf.innerHTML = '';
+      } else if (x === 'doimp' && pendingImport) {
+        b.disabled = true; b.textContent = 'Ripristino…';
+        try { await applyBackup(pendingImport); closeSheet(); render(); toast('Dati ripristinati'); Meteo.refresh(currentSpot()); }
+        catch (err) { b.disabled = false; b.textContent = 'Ripristina'; toast(errMsg(err)); }
+      } else if (x === 'meteo') {
+        closeSheet(); Meteo.refresh(currentSpot(), true);
+      }
+    });
+    if (focus === 'import') setTimeout(() => $('#impbox', el).scrollIntoView({ block: 'start' }), 60);
+  });
+}
+
+/* ---------- navigazione e azioni ---------- */
+function render() {
+  for (const a of document.querySelectorAll('nav.tabs a')) {
+    if (a.dataset.tab === S.tab) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+  }
+  const y = window.scrollY;
+  if (S.tab === 'oggi') renderOggi();
+  else if (S.tab === 'spot') renderSpot();
+  else if (S.tab === 'diario') renderDiario();
+  else renderSpecie();
+  if (S._renderedTab === S.tab) window.scrollTo(0, y); else window.scrollTo(0, 0);
+  S._renderedTab = S.tab;
+  hydrate(app);
+}
+function route() {
+  const h = (location.hash || '#oggi').slice(1);
+  S.tab = ['oggi', 'spot', 'diario', 'specie'].includes(h) ? h : 'oggi';
+  if (S.tab !== 'spot') { S.mapAdd = false; }
+  render();
+}
+window.addEventListener('hashchange', route);
+document.addEventListener('click', async e => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const act = el.dataset.act;
+  if (act === 'closebg') { if (e.target === el) closeSheet(); return; }
+  if (act === 'close') { closeSheet(); return; }
+  if (el.dataset.close) closeSheet();
+  switch (act) {
+    case 'day': S.dayOffset = +el.dataset.i; render(); break;
+    case 'go': location.hash = el.dataset.tab; break;
+    case 'pickspot': openPickSpot(); break;
+    case 'usespot': try { await Store.setRoot({ spotSel: el.dataset.id }); toast('Spot impostato per Oggi'); Meteo.refresh(currentSpot()); } catch (err) { toast(errMsg(err)); } break;
+    case 'settings': openSettings(el.dataset.focus); break;
+    case 'welcome-skip': try { await Store.setRoot({ benvenuto: true }); } catch (err) { toast(errMsg(err)); } break;
+    case 'refresh-meteo': Meteo.refresh(currentSpot(), true); break;
+    case 'locate-map':
+      try { toast('Cerco la tua posizione…'); const p = await locate(); S.me = p; if (S.view) { S.view.cx = px(p.lon); S.view.cy = py(p.lat); } render(); toast('Sei qui'); }
+      catch (err) { toast(geoErr(err)); }
+      break;
+    case 'nearest':
+      try {
+        toast('Cerco la tua posizione…');
+        const p = await locate();
+        const near = S.spots.map(x => ({ x, d: distM(p.lat, p.lon, x.lat, x.lon) })).sort((a, b) => a.d - b.d)[0];
+        if (!near) { toast('Non hai ancora spot salvati'); break; }
+        await Store.setRoot({ spotSel: near.x.id });
+        toast(`Più vicino: ${near.x.nome} (${fmtDist(near.d)})`);
+        Meteo.refresh(currentSpot());
+      } catch (err) { toast(err && err.code != null && typeof err.code === 'number' ? geoErr(err) : errMsg(err)); }
+      break;
+    case 'editspot': openSpotSheet(el.dataset.id); break;
+    case 'mapadd': S.mapAdd = !S.mapAdd; render(); break;
+    case 'zoom': { const r = S.view.h / S.view.w; S.view.w = Math.max(8, Math.min(260, S.view.w * +el.dataset.z)); S.view.h = S.view.w * r; render(); break; }
+    case 'cond': {
+      const c = Object.assign({}, condToday()); const g = el.dataset.g, v = el.dataset.v;
+      c[g] = c[g] === v ? '' : v;
+      try { await Store.setRoot({ oggi: { data: isoDay(Date.now()), cond: c } }); } catch (err) { toast(errMsg(err)); }
+      break;
+    }
+    case 'species': openSpecies(el.dataset.id); break;
+    case 'gear': openGear(); break;
+    case 'newtrip': openTripForm(null); break;
+    case 'opentrip': openTrip(el.dataset.id); break;
+    case 'edittrip': openTripForm(el.dataset.id); break;
+  }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#sheet-root').firstChild) closeSheet(); });
+// aggiorna l'indice di "adesso" ogni 5 minuti quando non c'è un foglio aperto
+setInterval(() => { if (!$('#sheet-root').firstChild && S.tab === 'oggi' && S.dayOffset === 0) render(); }, 5 * MIN);
+
+Store.load();
+Meteo.load();
+route();
+Meteo.refresh(currentSpot());
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== 'visible') return;
+  if (!$('#sheet-root').firstChild) render();
+  Meteo.refresh(currentSpot());
+});
+window.addEventListener('online', () => Meteo.refresh(currentSpot(), true));
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('./sw.js').catch(() => {});
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) { /* facoltativo */ }
+})();
+</script>
+</body>
+</html>

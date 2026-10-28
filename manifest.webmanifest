@@ -1,0 +1,32 @@
+{
+  "name": "Montante",
+  "short_name": "Montante",
+  "lang": "it",
+  "description": "Indice di pescosità, marea, meteo-mare, spot e diario per la pesca a Chioggia e Sottomarina.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#031B25",
+  "theme_color": "#031B25",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
