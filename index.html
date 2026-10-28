@@ -14,6 +14,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" href="icon-192.png">
+<link rel="stylesheet" href="leaflet.css">
 <link rel="preload" href="manrope-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="unbounded-700.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -219,7 +220,6 @@ details.how td:last-child { text-align: right; font-weight: 800; padding-left: 1
 
 /* mappa */
 .mapbox { position: relative; border-radius: var(--r); overflow: hidden; background: var(--sea); box-shadow: var(--shadow); }
-.mapbox svg { display: block; width: 100%; height: min(60vh, 460px); touch-action: none; user-select: none; -webkit-user-select: none; }
 .mapctl { position: absolute; right: 12px; top: 12px; display: grid; gap: 8px; }
 .mapctl button { border: 0; background: var(--nav-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 50%; width: 40px; height: 40px; font-size: 1.25rem; font-weight: 800; box-shadow: var(--shadow); color: var(--ink); }
 .maptip { position: absolute; left: 12px; right: 64px; top: 12px; padding: 10px 14px; border-radius: 14px; font-size: .86rem; font-weight: 800; background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); }
@@ -351,6 +351,63 @@ details.fix[open] summary::before { content: "－ "; }
 .sgroup .btn:not(.pri) { background: var(--surface); }
 .filebtn { cursor: pointer; }
 
+/* ===== 1.1: mappa vera, catture ===== */
+:root { --ok: #0E8F63; --ok-soft: rgba(16, 168, 124, .13); --bad-soft: rgba(198, 44, 34, .1); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ok: #3FDBA6; --ok-soft: rgba(63, 219, 166, .13); --bad-soft: rgba(255, 138, 128, .12); } }
+:root[data-theme="dark"] { --ok: #3FDBA6; --ok-soft: rgba(63, 219, 166, .13); --bad-soft: rgba(255, 138, 128, .12); }
+
+.mapbox { position: relative; height: min(58vh, 470px); isolation: isolate; }
+.lmap { position: absolute; inset: 0; z-index: 0; }
+.lmap.leaflet-container { background: var(--sea); font-family: var(--f-body); }
+.lmap.adding { cursor: crosshair; }
+.coast { fill: var(--land); fill-opacity: 1; stroke: var(--land-edge); stroke-width: 1; }
+.mapctl { z-index: 3; }
+.mapctl button { display: grid; place-items: center; }
+.maplayers { position: absolute; left: 12px; top: 12px; z-index: 3; display: flex; gap: 2px; padding: 4px; border-radius: 999px; background: var(--nav-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: var(--shadow); }
+.maplayers button { border: 0; background: transparent; border-radius: 999px; padding: 7px 10px; font-weight: 800; font-size: .76rem; color: var(--ink); }
+.maplayers button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.maptip { top: auto; bottom: 30px; left: 12px; right: 12px; z-index: 3; text-align: center; }
+.spotpin { background: none; border: 0; }
+.spotpin .pinc { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .9rem; border: 3px solid #FFFFFF; box-shadow: 0 4px 14px rgba(0, 0, 0, .35); font-family: var(--f-body); box-sizing: border-box; }
+.spotpin .pinc.on { border-color: #F2552C; }
+.spotpin .pinl { position: absolute; left: 44px; top: 50%; transform: translateY(-50%); white-space: nowrap; font-weight: 800; font-size: .78rem; color: #0A1E27; background: rgba(255, 255, 255, .94); padding: 3px 9px; border-radius: 999px; box-shadow: 0 2px 8px rgba(0, 0, 0, .22); font-family: var(--f-body); }
+.leaflet-container .leaflet-control-attribution { font-size: 10px; background: rgba(255, 255, 255, .8); color: #33454D; border-radius: 8px 0 0 0; }
+.leaflet-container .leaflet-control-attribution a { color: #1067A0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tiles-osm { filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.55); } }
+:root[data-theme="dark"] .tiles-osm { filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.55); }
+
+.recog { background: linear-gradient(135deg, var(--accent-soft), var(--surface) 70%); }
+.recog-in { display: flex; gap: 12px; align-items: center; }
+.ric-ic { width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); flex: none; }
+.search input { width: 100%; border: 1.5px solid transparent; background: var(--surface); box-shadow: var(--shadow); border-radius: 16px; padding: 13px 16px; font-size: 16px; font-weight: 700; -webkit-appearance: none; appearance: none; }
+.search input:focus { outline: none; border-color: var(--accent); }
+.guide { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.gcard { border: 0; padding: 0; background: var(--surface); border-radius: 18px; overflow: hidden; text-align: left; box-shadow: var(--shadow); display: grid; grid-template-rows: auto 1fr; color: var(--ink); min-width: 0; }
+.fimg { display: block; aspect-ratio: 4 / 3; background: linear-gradient(135deg, var(--hero-b), var(--hero-c)); position: relative; overflow: hidden; }
+.fimg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fimg .ph { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: rgba(255, 255, 255, .3); }
+.fimg.big { aspect-ratio: 16 / 11; border-radius: 18px; }
+.gtx { display: grid; gap: 2px; padding: 10px 12px 12px; align-content: start; min-width: 0; }
+.gtx .nm { font-weight: 800; font-size: .94rem; line-height: 1.2; }
+.gtx .lat { font-size: .72rem; font-style: italic; color: var(--muted); font-weight: 600; overflow-wrap: anywhere; }
+.minb { display: inline-block; font-size: .7rem; font-weight: 800; border-radius: 999px; padding: 3px 8px; background: var(--accent-soft); color: var(--accent); margin: 5px 4px 0 0; }
+.minb.none { background: var(--surface-2); color: var(--muted); }
+.minb.danger { background: var(--bad-soft); color: var(--danger); }
+.gphoto { display: grid; gap: 0; }
+.credit { font-size: .68rem; color: var(--muted); margin: 6px 2px 0; font-weight: 600; overflow-wrap: anywhere; }
+.verdict { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; padding: 14px; border-radius: 18px; background: var(--surface-2); }
+.verdict .big { font-family: var(--f-display); font-weight: 700; font-size: 1.8rem; letter-spacing: -.03em; line-height: 1; text-align: center; min-width: 74px; color: var(--accent); }
+.verdict .big small { display: block; font-family: var(--f-body); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 800; margin-top: 5px; }
+.verdict b { font-weight: 800; }
+.verdict p { margin: 2px 0 0; font-size: .86rem; color: var(--muted); font-weight: 600; }
+.verdict.ok { background: var(--ok-soft); } .verdict.ok .big { color: var(--ok); }
+.verdict.bad { background: var(--bad-soft); } .verdict.bad .big { color: var(--danger); }
+.warnbox { padding: 12px 14px; border-radius: 14px; background: var(--bad-soft); color: var(--danger); font-weight: 700; font-size: .9rem; }
+.rules p { margin: 0; font-size: .9rem; }
+nav.tabs .in { grid-template-columns: repeat(5, 1fr); max-width: 480px; }
+nav.tabs a { font-size: .64rem; }
+.btn svg { flex: none; }
+
 </style>
 </head>
 <body>
@@ -360,11 +417,13 @@ details.fix[open] summary::before { content: "－ "; }
     <a href="#oggi" data-tab="oggi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 16c2.5 0 2.5-2.5 5-2.5s2.5 2.5 5 2.5 2.5-2.5 5-2.5 2.5 2.5 5 2.5"/><path d="M2 20c2.5 0 2.5-2.5 5-2.5s2.5 2.5 5 2.5 2.5-2.5 5-2.5 2.5 2.5 5 2.5"/><path d="M8 10a4 4 0 0 1 8 0"/><path d="M12 3v2M5.6 5.6l1.4 1.4M18.4 5.6 17 7"/></svg>Oggi</a>
     <a href="#spot" data-tab="spot"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 1 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>Spot</a>
     <a href="#diario" data-tab="diario"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h11a1.5 1.5 0 0 1 1.5 1.5v15H7.5A2.5 2.5 0 0 1 5 17.5V4.5a1 1 0 0 1 1-1z"/><path d="M5 17.5A2.5 2.5 0 0 1 7.5 15h11"/><path d="M9 7.5h6M9 10.5h4"/></svg>Diario</a>
+    <a href="#catture" data-tab="catture"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="8" width="19" height="8" rx="1.6"/><path d="M6.5 8v3M10 8v4.5M13.5 8v3M17 8v4.5"/></svg>Catture</a>
     <a href="#specie" data-tab="specie"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12c3-4.2 7.8-6 12.5-4.2L21.5 4v16l-6.5-3.8C10.3 18 5.5 16.2 2.5 12z"/><circle cx="8" cy="11" r=".9" fill="currentColor"/></svg>Specie</a>
   </div>
 </nav>
 <div id="sheet-root"></div>
 <div id="toast-root"></div>
+<script src="leaflet.js"></script>
 <script>
 /*
  (c) 2011-2015, Vladimir Agafonkin
@@ -975,6 +1034,25 @@ else window.SunCalc = SunCalc;
 
   /* --- Indice di pescosità --- */
   const W = { marea: .28, solunare: .2, luce: .2, luna: .12, stagione: .2 };
+  // ogni tipo di spot rende meglio in condizioni diverse
+  function spotModifier(tipo, b, cond) {
+    const mare = cond && cond.mare;
+    let m = 0;
+    if (tipo === 'diga' || tipo === 'scogliera') {
+      if (mare === 'scaduta') m += 4; else if (mare === 'calmo') m -= 2;
+      if (b.luce === 'alba' || b.luce === 'tramonto') m += 1;
+    } else if (tipo === 'spiaggia') {
+      if (mare === 'pocomosso') m += 3; else if (mare === 'mosso') m -= 3;
+      if (b.marea === 'montante') m += 2;
+    } else if (tipo === 'foce') {
+      if (b.marea === 'calante') m += 4; else if (b.marea === 'stanca') m -= 2;
+      if (mare === 'scaduta') m += 2;
+    } else if (tipo === 'laguna') {
+      if (b.marea === 'stanca') m -= 4; else m += 2;
+      if (mare === 'mosso') m += 2;
+    }
+    return m;
+  }
   function scoreAt(ms, spot, opts) {
     opts = opts || {};
     const lat = spot.lat, lon = spot.lon;
@@ -996,8 +1074,9 @@ else window.SunCalc = SunCalc;
     const buckets = { marea: tidePhase(ms, spot), luce: lightBucket(ms, da), luna: moonBucket(ph), solunare: sol.kind };
     const mCond = opts.cond ? condModifier(opts.cond) : 0;
     const mPers = personalModifier(opts.model, buckets);
-    const v = clamp(Math.round((base - 12) * 1.18 + mCond + mPers), 0, 100);
-    return { v, base, mCond, mPers, parts: { marea: cMarea, solunare: cSol, luce: cLuce, luna: cLuna, stagione: cStag }, buckets, rate: r, sol };
+    const mSpot = spotModifier(spot.tipo, buckets, opts.cond);
+    const v = clamp(Math.round((base - 12) * 1.18 + mCond + mPers + mSpot), 0, 100);
+    return { v, base, mCond, mPers, mSpot, parts: { marea: cMarea, solunare: cSol, luce: cLuce, luna: cLuna, stagione: cStag }, buckets, rate: r, sol };
   }
   function label(v) {
     if (v >= 80) return 'Ottima';
@@ -1057,7 +1136,7 @@ if (!window.PE || !window.SunCalc) {
   return;
 }
 const { MIN, HOUR, DAY } = PE;
-const APP_VERSION = '1.0';
+const APP_VERSION = '1.1';
 
 /* ---------- formattazione ---------- */
 const TZ = { hour: '2-digit', minute: '2-digit' };
@@ -1325,6 +1404,151 @@ function reasons(s) {
   return r;
 }
 
+/* ---------- guida ai pesci: misure minime e riconoscimento ---------- */
+// Misure minime: Reg. (UE) 2019/1241 all. IX (stessi valori del Reg. CE 1967/2006) e D.P.R. 1639/1968.
+// foto: nome scientifico usato per cercare la foto su iNaturalist; stag: id della specie nel calendario stagionale.
+const RICONOSCI_URL = 'https://claude.ai/artifact/FoKxCQ856Hg2P5xpzp3Yq5';
+const GUIDE = [
+  { id: 'orata', nome: 'Orata', lat: 'Sparus aurata', min: 20, stag: 'orata',
+    riconosci: 'Corpo alto e ovale, fascia dorata tra gli occhi, macchia scura in alto sull\'opercolo; denti robusti per rompere conchiglie e granchi.',
+    simili: 'Il sarago ha fasce verticali e la macchia nera sulla coda; il pagro è rosato.', dove: 'Spiaggia, dighe e bocche di porto, soprattutto in autunno.' },
+  { id: 'spigola', nome: 'Spigola (branzino)', lat: 'Dicentrarchus labrax', min: 25, stag: 'spigola',
+    riconosci: 'Corpo allungato e argenteo con dorso grigio, due pinne dorsali separate, spina sull\'opercolo con una macchia scura, bocca grande.',
+    simili: 'La spigola maculata ha puntini neri sui fianchi; il cefalo ha bocca piccola e testa larga.', dove: 'Foci, testate delle dighe, spiaggia con mare in scaduta.' },
+  { id: 'mormora', nome: 'Mormora', lat: 'Lithognathus mormyrus', min: 20, stag: 'mormora',
+    riconosci: 'Argentea con 14-15 sottili fasce verticali scure tutte uguali, muso allungato e appuntito.',
+    simili: 'Il sarago maggiore ha una grande macchia nera sulla coda e fasce meno regolari.', dove: 'Spiaggia sabbiosa, prima e seconda buca, con mare calmo.' },
+  { id: 'sarago', nome: 'Sarago maggiore', lat: 'Diplodus sargus', min: 23, stag: 'sarago',
+    riconosci: 'Fasce verticali sottili scure alternate, grande macchia nera sul peduncolo della coda, bordo della coda scuro.',
+    simili: 'Il sarago fasciato ha solo due fasce nere larghe; il pizzuto ha il muso appuntito.', dove: 'Dighe e scogliere, nella schiuma sotto i massi.' },
+  { id: 'pizzuto', nome: 'Sarago pizzuto', lat: 'Diplodus puntazzo', min: 18,
+    riconosci: 'Muso lungo e appuntito, 6-7 fasce verticali scure e larghe, macchia nera sulla coda.',
+    simili: 'Il sarago maggiore ha il muso più corto e fasce sottili.', dove: 'Scogliere e dighe.' },
+  { id: 'fasciato', nome: 'Sarago fasciato (testa nera)', lat: 'Diplodus vulgaris', min: 18,
+    riconosci: 'Due larghe fasce nere: una subito dietro la testa e una sul peduncolo della coda.',
+    simili: 'Lo sparaglione ha un solo anello nero sulla coda e pinne ventrali gialle.', dove: 'Scogliere, dighe e porti.' },
+  { id: 'sparaglione', nome: 'Sparaglione', lat: 'Diplodus annularis', min: 12,
+    riconosci: 'Piccolo, con riflessi gialli, anello nero sul peduncolo della coda, pinne ventrali gialle.',
+    simili: 'I giovani di sarago hanno fasce verticali.', dove: 'Porti, dighe e fondali con alghe.' },
+  { id: 'sogliola', nome: 'Sogliola', lat: 'Solea solea', min: 20, stag: 'sogliola',
+    riconosci: 'Pesce piatto ovale con gli occhi sul lato destro, macchia nera sulla punta della pinna pettorale.',
+    simili: 'La passera è più romboidale e ruvida al tatto.', dove: 'Spiaggia su fondo sabbioso-fangoso, di notte.' },
+  { id: 'passera', nome: 'Passera', lat: 'Platichthys flesus', min: 15,
+    riconosci: 'Pesce piatto romboidale, tubercoli ruvidi alla base delle pinne e lungo la linea laterale, spesso con macchie arancio.',
+    simili: 'La sogliola è ovale, liscia e ha la macchia nera sulla pettorale.', dove: 'Foci e laguna, fondali fangosi.' },
+  { id: 'rombo', nome: 'Rombo chiodato', lat: 'Scophthalmus maximus', min: null, stag: 'rombo',
+    riconosci: 'Piatto e quasi rotondo, occhi sul lato sinistro, tubercoli ossei ("chiodi") sparsi sul lato scuro.',
+    simili: 'Il rombo liscio non ha tubercoli ed è più ovale.', dove: 'Spiaggia, canaloni sabbiosi, a fine inverno.' },
+  { id: 'ombrina', nome: 'Ombrina', lat: 'Umbrina cirrosa', min: null, stag: 'ombrina',
+    riconosci: 'Linee oblique dorate e azzurre sui fianchi, un corto barbiglio sotto il mento, dorso alto.',
+    simili: 'La corvina è bruno scura e non ha il barbiglio.', dove: 'Foci e testate delle dighe, di notte con acqua velata.' },
+  { id: 'corvina', nome: 'Corvina', lat: 'Sciaena umbra', min: null,
+    riconosci: 'Bruno scuro con riflessi bronzo, pinne ventrali e anale nere con il bordo anteriore bianco, nessun barbiglio.',
+    simili: 'L\'ombrina ha linee oblique dorate e il barbiglio.', dove: 'Scogliere e dighe, al buio.' },
+  { id: 'serra', nome: 'Pesce serra', lat: 'Pomatomus saltatrix', min: null, stag: 'serra',
+    riconosci: 'Dorso blu-verde e ventre argenteo, bocca grande con denti aguzzi e taglienti, coda forcuta.',
+    simili: 'La leccia amia ha la linea laterale a forma di S e bocca senza denti evidenti.', dove: 'Foci e dighe, dove ci sono mangianze.',
+    pericolo: 'Denti molto affilati: tienilo per il corpo e slamalo con la pinza.' },
+  { id: 'leccia', nome: 'Leccia stella', lat: 'Trachinotus ovatus', min: null, stag: 'leccia',
+    riconosci: 'Argentea e compressa, 3-5 macchie nere rotonde sul fianco, coda molto forcuta con le punte scure.',
+    simili: 'La leccia amia è molto più grande e ha la linea laterale a S.', dove: 'Sotto riva nella risacca, a fine estate.' },
+  { id: 'amia', nome: 'Leccia amia', lat: 'Lichia amia', min: null,
+    riconosci: 'Grande e argentea, linea laterale che disegna una curva a S, dorso grigio scuro.',
+    simili: 'Il pesce serra ha denti aguzzi e linea laterale dritta.', dove: 'Foci e porti, a caccia di cefali.' },
+  { id: 'sgombro', nome: 'Sgombro', lat: 'Scomber scombrus', min: 18, stag: 'sgombro',
+    riconosci: 'Dorso blu-verde con bande ondulate nere, ventre argenteo senza macchie, piccole pinnule dietro dorsale e anale.',
+    simili: 'Il lanzardo ha l\'occhio più grande e macchiette scure sul ventre.', dove: 'Testate delle dighe, in primavera e autunno.' },
+  { id: 'lanzardo', nome: 'Lanzardo', lat: 'Scomber colias', min: 18,
+    riconosci: 'Come lo sgombro ma con l\'occhio più grande e piccole macchie scure sul ventre argenteo.',
+    simili: 'Lo sgombro ha il ventre pulito, senza macchie.', dove: 'Testate delle dighe, in branco.' },
+  { id: 'sugarello', nome: 'Sugarello (suro)', lat: 'Trachurus trachurus', min: 15,
+    riconosci: 'Linea laterale coperta per tutta la lunghezza da scudetti ossei a carena, macchia scura sul bordo dell\'opercolo.',
+    simili: 'Lo sgombro non ha gli scudetti sulla linea laterale.', dove: 'Porti e dighe, di sera sotto le luci.' },
+  { id: 'cefalo', nome: 'Cefalo (muggine)', lat: 'Mugil cephalus', min: 20, alias: 'muggine bosega lotregano verzelata calamita',
+    riconosci: 'Testa larga e appiattita, bocca piccola senza denti evidenti, scaglie grandi, due pinne dorsali ben separate.',
+    simili: 'In laguna ci sono più specie di cefali (bosega, lotregano, verzelata): la misura minima vale per tutti.', dove: 'Porti, foci, canali e laguna.' },
+  { id: 'fragolino', nome: 'Pagello fragolino', lat: 'Pagellus erythrinus', min: 15,
+    riconosci: 'Rosa intenso con piccoli punti azzurri sul dorso, muso appuntito, occhio grande.',
+    simili: 'L\'orata ha la fascia dorata tra gli occhi e corpo più alto.', dove: 'Fondali misti al largo delle dighe.' },
+  { id: 'palamita', nome: 'Palamita', lat: 'Sarda sarda', min: 25,
+    riconosci: 'Dorso blu con strisce oblique scure che scendono verso il basso, ventre argenteo, denti robusti.',
+    simili: 'Il tonnetto alletterato ha disegni ondulati sul dorso e macchie scure sotto la pettorale.', dove: 'Si avvicina alle dighe a fine estate.' },
+  { id: 'triglia', nome: 'Triglia di fango', lat: 'Mullus barbatus', min: 11,
+    riconosci: 'Rosa-rossa, due lunghi barbigli sotto il mento, profilo della testa quasi verticale.',
+    simili: 'La gallinella ha la testa ossea e grandi pinne pettorali blu.', dove: 'Fondali fangosi e sabbiosi.' },
+  { id: 'go', nome: 'Gò', lat: 'Zosterisessor ophiocephalus', min: 12, alias: 'ghiozzo',
+    riconosci: 'Ghiozzo grande con testa larga e appiattita, colore bruno-verde marmorizzato, due pinne dorsali.',
+    simili: 'Gli altri ghiozzi sono più piccoli e chiari.', dove: 'Laguna e canali, su fondo fangoso con alghe.' },
+  { id: 'gallinella', nome: 'Gallinella (capone)', lat: 'Chelidonichthys lucerna', min: null,
+    riconosci: 'Testa ossea e squadrata, grandi pinne pettorali blu con bordo verde, tre raggi liberi con cui "cammina" sul fondo.',
+    simili: 'La triglia ha due barbigli e testa liscia.', dove: 'Spiaggia e fondali sabbiosi.' },
+  { id: 'tracina', nome: 'Tracina (pesce ragno)', lat: 'Trachinus draco', min: null, alias: 'ragno',
+    riconosci: 'Corpo allungato, occhi in alto, bocca obliqua verso l\'alto, prima pinna dorsale corta e nera, linee oblique sui fianchi.',
+    simili: 'Non confonderla con i ghiozzi: guarda la pinna dorsale nera e le spine sull\'opercolo.', dove: 'Fondali sabbiosi, anche a pochi metri da riva in estate.',
+    pericolo: 'Spine velenose sulla prima pinna dorsale e sull\'opercolo. Se ti punge, immergi la parte in acqua molto calda ma non ustionante per 30-90 minuti e chiama un medico se il dolore non passa o ti senti male.' },
+  { id: 'seppia', nome: 'Seppia', lat: 'Sepia officinalis', min: null, stag: 'seppia',
+    riconosci: 'Corpo ovale con una pinna sottile lungo tutto il bordo del mantello, osso interno, striature zebrate sul dorso.',
+    simili: 'Il calamaro è allungato con pinne a rombo in fondo.', dove: 'Dighe e moli, soprattutto in primavera.' },
+  { id: 'calamaro', nome: 'Calamaro', lat: 'Loligo vulgaris', min: null, stag: 'calamaro',
+    riconosci: 'Mantello allungato e affusolato, pinne a forma di rombo nella parte finale, penna interna trasparente.',
+    simili: 'Il totano ha pinne più piccole e corte.', dove: 'Testate delle dighe illuminate, di notte, in inverno.' },
+];
+const GUIDE_BY_ID = Object.fromEntries(GUIDE.map(g => [g.id, g]));
+
+/* --- foto delle specie da iNaturalist, salvate sul telefono --- */
+const FISH_PH = '<svg class="ph" width="56" height="56" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.5 12c3-4.2 7.8-6 12.5-4.2L21.5 4v16l-6.5-3.8C10.3 18 5.5 16.2 2.5 12z"/></svg>';
+const Taxa = {
+  KEY: 'montante:taxa', map: {}, queue: [], busy: false,
+  load() { try { this.map = JSON.parse(localStorage.getItem(this.KEY) || '{}') || {}; } catch (e) { this.map = {}; } },
+  save() { try { localStorage.setItem(this.KEY, JSON.stringify(this.map)); } catch (e) { /* senza cache */ } },
+  get(latin) { const t = this.map[latin]; return t && t.url ? t : null; },
+  want(latin, first) {
+    const t = this.map[latin];
+    if ((t && t.url) || (t && t.none && Date.now() - t.at < 7 * DAY)) return;
+    const i = this.queue.indexOf(latin);
+    if (i >= 0) { if (!first) return; this.queue.splice(i, 1); }
+    if (first) this.queue.unshift(latin); else this.queue.push(latin);
+    this.pump();
+  },
+  async pump() {
+    if (this.busy || !navigator.onLine) return;
+    this.busy = true;
+    while (this.queue.length) {
+      const latin = this.queue.shift();
+      try {
+        const r = await fetch(`https://api.inaturalist.org/v1/taxa?q=${encodeURIComponent(latin)}&per_page=5&locale=it`);
+        if (r.ok) {
+          const list = (await r.json()).results || [];
+          const t = list.find(x => String(x.name || '').toLowerCase() === latin.toLowerCase()) || list.find(x => x.rank === 'species') || list[0];
+          const p = t && t.default_photo;
+          this.map[latin] = p && (p.medium_url || p.url) ? { url: p.medium_url || p.url, attr: p.attribution || '', id: t.id } : { none: true, at: Date.now() };
+          this.save();
+          fillTaxon(latin);
+        }
+      } catch (e) { /* senza rete: riprova alla prossima apertura */ }
+      await new Promise(res => setTimeout(res, 1000)); // iNaturalist chiede al massimo una richiesta al secondo
+    }
+    this.busy = false;
+  },
+};
+function taxonImg(latin, cls) {
+  const t = Taxa.get(latin);
+  if (!t) Taxa.want(latin, cls === 'big');
+  return `<span class="fimg ${cls || ''}" data-taxon="${esc(latin)}">${t ? `<img src="${esc(t.url)}" alt="" loading="lazy">` : FISH_PH}</span>`;
+}
+function taxonCredit(latin) {
+  const t = Taxa.get(latin);
+  return t ? `<p class="credit">Foto: ${esc(t.attr || 'iNaturalist')} · <a href="https://www.inaturalist.org/taxa/${encodeURIComponent(t.id)}" target="_blank" rel="noopener">iNaturalist ↗</a></p>` : '';
+}
+function fillTaxon(latin) {
+  const t = Taxa.get(latin); if (!t) return;
+  for (const el of document.querySelectorAll('.fimg[data-taxon]')) {
+    if (el.dataset.taxon !== latin || el.querySelector('img')) continue;
+    el.innerHTML = `<img src="${esc(t.url)}" alt="" loading="lazy">`;
+    if (el.classList.contains('big') && !(el.nextElementSibling && el.nextElementSibling.classList.contains('credit'))) el.insertAdjacentHTML('afterend', taxonCredit(latin));
+  }
+}
+
 /* ---------- elementi grafici ---------- */
 const hqCol = v => `var(--hq${qIdx(v)})`;
 function waveSVG() {
@@ -1575,6 +1799,7 @@ function renderOggi() {
       <tr><td>Stagione: specie dell'Alto Adriatico presenti questo mese</td><td>${Math.round(PE.W.stagione * 100)}%</td></tr>
       <tr><td>Fase lunare: luna nuova e piena più favorevoli</td><td>${Math.round(PE.W.luna * 100)}%</td></tr>
       <tr><td>Meteo-mare ora per ora dalle previsioni (onde e mare in scaduta, vento, pressione) e acqua che segni tu</td><td>±15</td></tr>
+      <tr><td>Tipo di spot: la diga rende di più col mare in scaduta, la spiaggia con poco mosso e montante, la foce in calante</td><td>±4</td></tr>
       <tr><td>Il tuo diario (da 3 catture, pieno effetto da 15)</td><td>±10</td></tr>
     </tbody></table>
     <p class="hint">Catture registrate: ${model.n}. ${model.n < 3 ? 'Ancora poche per personalizzare l\'indice.' : 'L\'indice sta già imparando dalle tue uscite.'}</p>
@@ -1602,54 +1827,87 @@ function bindChart(pts, sp, d0) {
   svg.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || e.buttons) move(e); });
 }
 
-/* ---------- vista: Spot e mappa ---------- */
-const LAT0 = 45.22, COS0 = Math.cos(LAT0 * Math.PI / 180), K = 1000;
-const px = lon => (lon - 12.3) * COS0 * K, py = lat => (LAT0 - lat) * K;
-const unpx = x => x / (COS0 * K) + 12.3, unpy = y => LAT0 - y / K;
-const LAND_D = LAND.map(poly => 'M' + poly.map(([lo, la]) => px(lo).toFixed(2) + ' ' + py(la).toFixed(2)).join('L') + 'Z').join('');
-const PLACES = [
-  ['Chioggia', 45.2185, 12.2745, 'end'], ['Sottomarina', 45.2125, 12.2905, 'middle'], ['Pellestrina', 45.268, 12.316, 'start'],
-  ['Isola Verde', 45.168, 12.296, 'end'], ['Mare Adriatico', 45.195, 12.345, 'middle', 1], ['Laguna di Venezia', 45.262, 12.245, 'middle', 1],
-];
-function mapLayers() {
-  const v = S.view, u = v.w / 340;
-  let g = '';
-  for (let lo = 12.1; lo <= 12.46; lo += 0.05) g += `<line x1="${px(lo)}" x2="${px(lo)}" y1="${py(45.45)}" y2="${py(45.0)}" stroke="var(--grid)" stroke-width="${u}"/>`;
-  for (let la = 45.05; la <= 45.45; la += 0.05) g += `<line x1="${px(12.05)}" x2="${px(12.5)}" y1="${py(la)}" y2="${py(la)}" stroke="var(--grid)" stroke-width="${u}"/>`;
-  g += `<path d="${LAND_D}" fill="var(--land)" stroke="var(--land-edge)" stroke-width="${u * 1.2}" stroke-linejoin="round"/>`;
-  for (const [n, la, lo, an, it] of PLACES) g += `<text x="${px(lo)}" y="${py(la)}" text-anchor="${an}" font-size="${u * (it ? 12.5 : 11.5)}" fill="var(--muted)" font-family="Manrope, system-ui, sans-serif" ${it ? 'font-style="italic" font-weight="600"' : 'font-weight="800"'} letter-spacing="${u * .5}">${n}</text>`;
-  const sel = currentSpot(), now = Date.now();
-  const cond = condToday();
-  for (const s of spotsSorted()) {
-    const x = px(s.lon), y = py(s.lat);
-    const sc = PE.scoreAt(now, s, { cond: condAt(now, s), model: getModel() }).v;
-    const on = s.id === sel.id;
-    const r = u * (on ? 15 : 13);
-    g += `<g data-spot="${esc(s.id)}" style="cursor:pointer"><circle cx="${x}" cy="${y}" r="${r * 1.7}" fill="${qCol(sc)}" opacity=".18"/><circle cx="${x}" cy="${y}" r="${r}" fill="${qCol(sc)}" stroke="${on ? 'var(--accent)' : 'var(--surface)'}" stroke-width="${u * (on ? 3.4 : 2.4)}"/>` +
-      `<text x="${x}" y="${y + u * 4.3}" text-anchor="middle" font-size="${u * 12}" font-weight="800" fill="${qTxt(sc)}" font-family="Manrope, system-ui, sans-serif">${sc}</text>` +
-      `<text x="${x + r + u * 6}" y="${y + u * 4.2}" font-size="${u * 12.5}" font-weight="800" fill="var(--ink)" stroke="var(--surface)" stroke-width="${u * 3.5}" paint-order="stroke" font-family="Manrope, system-ui, sans-serif">${esc(s.nome)}</text></g>`;
-  }
-  if (S.me) g += `<circle cx="${px(S.me.lon)}" cy="${py(S.me.lat)}" r="${u * 18}" fill="#2F80ED" opacity=".18"/><circle cx="${px(S.me.lon)}" cy="${py(S.me.lat)}" r="${u * 6.5}" fill="#2F80ED" stroke="#fff" stroke-width="${u * 2.6}"/>`;
-  if (S.pending) g += `<circle cx="${px(S.pending.lon)}" cy="${py(S.pending.lat)}" r="${u * 10}" fill="var(--accent)" stroke="var(--surface)" stroke-width="${u * 3}"/>`;
-  return g;
+/* ---------- vista: Spot con mappa vera (Leaflet) ---------- */
+const CROSS = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>';
+let lmap = null, mapEl = null, spotLayer = null, meLayer = null, pendLayer = null, seaLayer = null;
+const baseLayers = {};
+const MAP_PREF = 'montante:mappa';
+function mapPref() { try { return Object.assign({ base: 'mappa', nautica: false }, JSON.parse(localStorage.getItem(MAP_PREF) || '{}')); } catch (e) { return { base: 'mappa', nautica: false }; } }
+function setMapPref(p) { try { localStorage.setItem(MAP_PREF, JSON.stringify(p)); } catch (e) { /* facoltativo */ } }
+function createMap() {
+  lmap = L.map(mapEl, { zoomControl: false, minZoom: 7, maxZoom: 19, worldCopyJump: false });
+  lmap.attributionControl.setPrefix(false);
+  // costa disegnata sotto le tessere: resta visibile anche senza rete
+  lmap.createPane('coast'); lmap.getPane('coast').style.zIndex = 150;
+  const coastR = L.svg({ pane: 'coast' });
+  for (const poly of LAND) L.polygon(poly.map(([lo, la]) => [la, lo]), { pane: 'coast', renderer: coastR, className: 'coast', interactive: false }).addTo(lmap);
+  baseLayers.mappa = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, zIndex: 1, className: 'tiles-osm', attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' });
+  baseLayers.satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, maxNativeZoom: 18, zIndex: 1, attribution: 'Foto aeree © Esri, Maxar, Earthstar Geographics' });
+  seaLayer = L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', { maxZoom: 19, maxNativeZoom: 18, zIndex: 5, attribution: '© <a href="https://www.openseamap.org" target="_blank" rel="noopener">OpenSeaMap</a>' });
+  spotLayer = L.layerGroup().addTo(lmap);
+  meLayer = L.layerGroup().addTo(lmap);
+  pendLayer = L.layerGroup().addTo(lmap);
+  applyMapPref();
+  lmap.on('click', e => {
+    if (!S.mapAdd) return;
+    S.mapAdd = false;
+    S.pending = { lat: +e.latlng.lat.toFixed(5), lon: +e.latlng.lng.toFixed(5) };
+    drawPending();
+    openSpotSheet(null, S.pending);
+  });
 }
-function viewBox() { const v = S.view; return `${v.cx - v.w / 2} ${v.cy - v.h / 2} ${v.w} ${v.h}`; }
-function renderSpot() {
-  const list = spotsSorted(), now = Date.now(), sel = currentSpot();
-  if (!S.view) {
-    const pts = list.length ? list : [DEFAULT_SPOT];
-    const cx = pts.reduce((a, s) => a + px(s.lon), 0) / pts.length, cy = pts.reduce((a, s) => a + py(s.lat), 0) / pts.length;
-    S.view = { cx, cy, w: 80, h: 90 };
+function applyMapPref() {
+  if (!lmap) return;
+  const p = mapPref();
+  for (const [k, l] of Object.entries(baseLayers)) {
+    if (k === p.base) { if (!lmap.hasLayer(l)) l.addTo(lmap); }
+    else if (lmap.hasLayer(l)) lmap.removeLayer(l);
   }
-  const cond = condToday();
+  if (p.nautica) { if (!lmap.hasLayer(seaLayer)) seaLayer.addTo(lmap); }
+  else if (lmap.hasLayer(seaLayer)) lmap.removeLayer(seaLayer);
+}
+function drawSpots() {
+  if (!lmap) return;
+  spotLayer.clearLayers();
+  const sel = currentSpot(), now = Date.now(), model = getModel();
+  for (const s of spotsSorted()) {
+    const sc = PE.scoreAt(now, s, { cond: condAt(now, s), model }).v;
+    const icon = L.divIcon({
+      className: 'spotpin', iconSize: [38, 38], iconAnchor: [19, 19],
+      html: `<span class="pinc${s.id === sel.id ? ' on' : ''}" style="background:${qCol(sc)};color:${qTxt(sc)}">${sc}</span><span class="pinl">${esc(s.nome)}</span>`,
+    });
+    L.marker([s.lat, s.lon], { icon, title: s.nome, riseOnHover: true }).on('click', () => { if (!S.mapAdd) openSpotSheet(s.id); }).addTo(spotLayer);
+  }
+  drawMe(); drawPending();
+}
+function drawMe() {
+  if (!lmap) return;
+  meLayer.clearLayers();
+  if (!S.me) return;
+  if (S.me.acc) L.circle([S.me.lat, S.me.lon], { radius: S.me.acc, color: '#2F80ED', weight: 1, opacity: .5, fillColor: '#2F80ED', fillOpacity: .12, interactive: false }).addTo(meLayer);
+  L.circleMarker([S.me.lat, S.me.lon], { radius: 7, color: '#FFFFFF', weight: 3, fillColor: '#2F80ED', fillOpacity: 1, interactive: false }).addTo(meLayer);
+}
+function drawPending() {
+  if (!lmap) return;
+  pendLayer.clearLayers();
+  if (S.pending) L.circleMarker([S.pending.lat, S.pending.lon], { radius: 9, color: '#FFFFFF', weight: 3, fillColor: '#F2552C', fillOpacity: 1, interactive: false }).addTo(pendLayer);
+}
+function initialView() {
+  const list = spotsSorted();
+  if (list.length > 1) lmap.fitBounds(L.latLngBounds(list.map(s => [s.lat, s.lon])), { padding: [60, 60], maxZoom: 14 });
+  else { const s = list[0] || DEFAULT_SPOT; lmap.setView([s.lat, s.lon], 14); }
+}
+function renderSpot() {
+  const list = spotsSorted(), now = Date.now(), sel = currentSpot(), p = mapPref();
   app.innerHTML = heroSmall('Spot', `${list.length} ${list.length === 1 ? 'salvato' : 'salvati'} tra Chioggia e Sottomarina`, `<button class="act" data-act="mapadd">${S.mapAdd ? 'Annulla' : '+ Nuovo'}</button>`) + `
   <div class="wrap gut">
-  <div class="mapbox">
-    <svg id="map" viewBox="${viewBox()}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Mappa degli spot tra Chioggia e Sottomarina"><rect x="-500" y="-500" width="1000" height="1000" fill="var(--sea)"/><g id="layers">${mapLayers()}</g></svg>
-    <div class="mapctl"><button data-act="zoom" data-z="0.7" aria-label="Ingrandisci">+</button><button data-act="zoom" data-z="1.43" aria-label="Riduci">−</button><button data-act="locate-map" aria-label="La mia posizione"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button></div>
+  <div class="mapbox" id="mapbox">
+    ${window.L ? '' : '<p class="hint" style="padding:18px">La mappa non si è caricata. Controlla la connessione e riapri l\'app.</p>'}
+    <div class="maplayers" role="group" aria-label="Tipo di mappa"><button data-act="maplayer" data-v="mappa" aria-pressed="${p.base === 'mappa'}">Mappa</button><button data-act="maplayer" data-v="satellite" aria-pressed="${p.base === 'satellite'}">Satellite</button><button data-act="mapsea" aria-pressed="${!!p.nautica}">Nautica</button></div>
+    <div class="mapctl"><button data-act="zoomin" aria-label="Ingrandisci">+</button><button data-act="zoomout" aria-label="Riduci">−</button><button data-act="locate-map" aria-label="La mia posizione">${CROSS}</button></div>
     ${S.mapAdd ? '<div class="maptip">Tocca la mappa nel punto esatto dello spot</div>' : ''}
   </div>
-  <p class="hint">Trascina per spostarti, pizzica o usa + e − per lo zoom. Il numero sul segnaposto è l'indice di adesso.</p>
+  <p class="hint">«Nautica» aggiunge boe, fari e segnali di OpenSeaMap. Il numero sul segnaposto è l'indice di adesso, che cambia con il tipo di spot.</p>
   ${list.length ? list.map(s => {
     const sc = PE.scoreAt(now, s, { cond: condAt(now, s), model: getModel() }).v;
     const nx = PE.tideExtremes(now, now + DAY, s)[0];
@@ -1658,46 +1916,18 @@ function renderSpot() {
       <div class="spotrow"><div style="min-width:0"><h3>${esc(s.nome)}</h3><span class="small muted" style="font-weight:600">${TIPI[s.tipo] || 'Spot'}${nx ? ` · ${nx.alta ? 'alta' : 'bassa'} alle ${fT(nx.t)} (${cm(nx.h)})` : ''}</span></div>${ringHTML(sc, 50)}</div>
       <div class="chips"><span class="chip">${n} ${n === 1 ? 'cattura' : 'catture'}</span>${s.id === sel.id ? '<span class="chip acc">In uso su Oggi</span>' : ''}</div>
       ${s.note ? `<p class="small muted" style="margin:0">${esc(s.note)}</p>` : ''}
-      <div class="acts">${s.id !== sel.id ? `<button class="btn pri" data-act="usespot" data-id="${esc(s.id)}">Usa per Oggi</button>` : ''}<a class="btn" href="https://maps.apple.com/?ll=${s.lat},${s.lon}&q=${encodeURIComponent(s.nome)}&t=k" target="_blank" rel="noopener">Apri in Mappe ↗</a><button class="btn" data-act="editspot" data-id="${esc(s.id)}">Modifica</button></div>
+      <div class="acts">${s.id !== sel.id ? `<button class="btn pri" data-act="usespot" data-id="${esc(s.id)}">Usa per Oggi</button>` : ''}<button class="btn" data-act="showspot" data-id="${esc(s.id)}">Sulla mappa</button><a class="btn" href="https://maps.apple.com/?ll=${s.lat},${s.lon}&q=${encodeURIComponent(s.nome)}&t=k" target="_blank" rel="noopener">Apri in Mappe ↗</a><button class="btn" data-act="editspot" data-id="${esc(s.id)}">Modifica</button></div>
     </section>`;
   }).join('') : `<section class="card empty"><span class="ic">${PIN}</span><h3>${S.spotsLoaded ? 'Nessuno spot salvato' : 'Carico i tuoi spot…'}</h3><p class="muted small" style="margin:0">Tocca “+ Nuovo” e poi il punto sulla mappa: diga, spiaggia o foce. Ogni spot ha la sua marea e il suo indice.</p></section>`}
   </div>`;
-  bindMap();
-}
-function bindMap() {
-  const svg = $('#map'); if (!svg) return;
-  const rect = () => svg.getBoundingClientRect();
-  const fit = () => { const r = rect(); S.view.h = S.view.w * r.height / Math.max(1, r.width); svg.setAttribute('viewBox', viewBox()); };
-  fit();
-  const ptrs = new Map(); let moved = false, start = null, pinch = null, downPin = null;
-  const toWorld = (cx, cy) => { const r = rect(), v = S.view; return [v.cx - v.w / 2 + (cx - r.left) / r.width * v.w, v.cy - v.h / 2 + (cy - r.top) / r.height * v.h]; };
-  const redraw = (full) => { svg.setAttribute('viewBox', viewBox()); if (full) $('#layers', svg).innerHTML = mapLayers(); };
-  let zt = null; const zoomDone = () => { clearTimeout(zt); zt = setTimeout(() => redraw(true), 120); };
-  svg.addEventListener('pointerdown', e => { downPin = e.target.closest ? e.target.closest('[data-spot]') : null; try { svg.setPointerCapture(e.pointerId); } catch (err) { /* ignora */ } ptrs.set(e.pointerId, [e.clientX, e.clientY]); moved = false; start = [e.clientX, e.clientY, S.view.cx, S.view.cy]; if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), w: S.view.w }; } });
-  svg.addEventListener('pointermove', e => {
-    if (!ptrs.has(e.pointerId)) return;
-    ptrs.set(e.pointerId, [e.clientX, e.clientY]);
-    if (ptrs.size === 2 && pinch) {
-      const [a, b] = [...ptrs.values()]; const d = Math.hypot(a[0] - b[0], a[1] - b[1]);
-      const ratio = S.view.h / S.view.w;
-      S.view.w = Math.max(8, Math.min(260, pinch.w * pinch.d / Math.max(10, d))); S.view.h = S.view.w * ratio; moved = true; redraw(false); zoomDone(); return;
-    }
-    const r = rect(); const dx = e.clientX - start[0], dy = e.clientY - start[1];
-    if (Math.abs(dx) + Math.abs(dy) > 6) moved = true;
-    if (moved && ptrs.size === 1) { S.view.cx = start[2] - dx / r.width * S.view.w; S.view.cy = start[3] - dy / r.height * S.view.h; redraw(false); }
-  });
-  const end = e => {
-    const was = ptrs.has(e.pointerId); ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch = null;
-    if (!was || moved || e.type === 'pointercancel') { if (ptrs.size === 1) { const [p] = [...ptrs.values()]; start = [p[0], p[1], S.view.cx, S.view.cy]; } return; }
-    const pin = downPin; downPin = null;
-    if (S.mapAdd) {
-      const [wx, wy] = toWorld(e.clientX, e.clientY);
-      S.pending = { lat: +unpy(wy).toFixed(5), lon: +unpx(wx).toFixed(5) }; S.mapAdd = false;
-      redraw(true); openSpotSheet(null, S.pending);
-    } else if (pin) { openSpotSheet(pin.getAttribute('data-spot')); }
-  };
-  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
-  svg.addEventListener('wheel', e => { e.preventDefault(); const ratio = S.view.h / S.view.w; S.view.w = Math.max(8, Math.min(260, S.view.w * (e.deltaY > 0 ? 1.15 : 0.87))); S.view.h = S.view.w * ratio; redraw(false); zoomDone(); }, { passive: false });
+  if (!window.L) return;
+  const box = $('#mapbox');
+  if (!mapEl) { mapEl = document.createElement('div'); mapEl.className = 'lmap'; }
+  box.insertBefore(mapEl, box.firstChild);
+  if (!lmap) { createMap(); initialView(); }
+  else lmap.invalidateSize(false);
+  mapEl.classList.toggle('adding', !!S.mapAdd);
+  drawSpots();
 }
 
 /* ---------- vista: Diario ---------- */
@@ -1772,6 +2002,77 @@ function renderSpecie() {
   </section>
   <p class="hint">Misure minime da Reg. UE 2019/1241 dove indicate. Controlla sempre le regole locali e il limite giornaliero della pesca sportiva.</p>
   </div>`;
+}
+
+/* ---------- vista: Catture (riconoscimento e misure minime) ---------- */
+const CAMERA = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.6"/></svg>';
+const fmtCm = n => String(Math.round(n * 10) / 10).replace('.', ',');
+function verdictHTML(g, cmTxt) {
+  const n = Number(String(cmTxt || '').replace(',', '.'));
+  if (!g) return '';
+  if (!g.min) return `<div class="verdict"><div class="big">—<small>misura</small></div><div><b>Nessuna misura minima nazionale</b><p>Verifica eventuali ordinanze locali e rilascia gli esemplari piccoli.</p></div></div>`;
+  if (!cmTxt || !isFinite(n) || n <= 0) return `<div class="verdict"><div class="big">${g.min}<small>cm minimi</small></div><div><b>${esc(g.nome)}</b><p>Lunghezza totale, dalla punta del muso alla fine della coda.</p></div></div>`;
+  const ok = n >= g.min;
+  return `<div class="verdict ${ok ? 'ok' : 'bad'}"><div class="big">${g.min}<small>cm minimi</small></div><div><b>${ok ? 'Sopra misura' : 'Sotto misura: rilascialo'}</b><p>${esc(g.nome)} di ${fmtCm(n)} cm${ok ? '' : `, mancano ${fmtCm(g.min - n)} cm`}.</p></div></div>`;
+}
+function guideCardHTML(g) {
+  return `<button class="gcard" data-act="guide" data-id="${g.id}">${taxonImg(g.lat)}<span class="gtx"><span class="nm">${esc(g.nome)}</span><span class="lat">${esc(g.lat)}</span><span>${g.min ? `<span class="minb">min ${g.min} cm</span>` : '<span class="minb none">nessuna minima</span>'}${g.pericolo && g.id === 'tracina' ? '<span class="minb danger">velenosa</span>' : ''}</span></span></button>`;
+}
+function guideMatch(q) {
+  q = q.trim().toLowerCase();
+  return GUIDE.filter(g => !q || (g.nome + ' ' + g.lat + ' ' + (g.alias || '')).toLowerCase().includes(q));
+}
+function renderCatture() {
+  const conMin = GUIDE.filter(g => g.min).sort((a, b) => a.nome.localeCompare(b.nome));
+  if (!S.mqSp) S.mqSp = 'orata';
+  const list = guideMatch(S.cq || '');
+  app.innerHTML = heroSmall('Catture', 'Riconosci i pesci e controlla le misure minime') + `
+  <div class="wrap gut">
+  <section class="card recog">
+    <div class="recog-in"><span class="ric-ic">${CAMERA}</span><div style="min-width:0"><h2>Riconosci da foto</h2><p class="small muted" style="margin:3px 0 0;font-weight:600">Scatta o scegli una foto: Claude ti dice che pesce è e se è sopra misura.</p></div></div>
+    <a class="btn pri block" href="${RICONOSCI_URL}" target="_blank" rel="noopener">${CAMERA} Apri il riconoscimento</a>
+    <p class="hint">Si apre in Claude con il tuo account e serve la rete.</p>
+  </section>
+  <section class="card">
+    <h2>È sopra misura?</h2>
+    <div class="row2">
+      <div class="field"><label for="mq-sp">Specie</label><select id="mq-sp">${conMin.map(g => `<option value="${g.id}" ${S.mqSp === g.id ? 'selected' : ''}>${esc(g.nome)}</option>`).join('')}</select></div>
+      <div class="field"><label for="mq-cm">Misura (cm)</label><input id="mq-cm" type="number" inputmode="decimal" min="0" step="0.5" placeholder="Es. 22" value="${esc(S.mqCm || '')}"></div>
+    </div>
+    <div id="mq-out">${verdictHTML(GUIDE_BY_ID[S.mqSp], S.mqCm)}</div>
+  </section>
+  <div class="search"><input id="cq" type="search" placeholder="Cerca un pesce: orata, sarago, cefalo…" value="${esc(S.cq || '')}" aria-label="Cerca un pesce" autocomplete="off"></div>
+  <div class="guide" id="guide">${list.map(guideCardHTML).join('') || '<p class="muted">Nessun pesce trovato.</p>'}</div>
+  <section class="card rules">
+    <h2>Regole da ricordare</h2>
+    <p>La misura è la lunghezza totale, dalla punta del muso all'estremità della coda.</p>
+    <p>Pesca sportiva in mare: al massimo 5 kg di pescato al giorno a persona, salvo un singolo pesce più pesante, e una sola cernia al giorno.</p>
+    <p>Controlla sempre anche le ordinanze della Capitaneria di porto di Chioggia per zone e periodi vietati.</p>
+    <p class="hint">Misure minime dal Reg. (UE) 2019/1241, allegato IX, e dal D.P.R. 1639/1968. Foto delle specie da iNaturalist.</p>
+  </section>
+  </div>`;
+  const out = $('#mq-out');
+  $('#mq-sp').addEventListener('change', e => { S.mqSp = e.target.value; out.innerHTML = verdictHTML(GUIDE_BY_ID[S.mqSp], S.mqCm); });
+  $('#mq-cm').addEventListener('input', e => { S.mqCm = e.target.value; out.innerHTML = verdictHTML(GUIDE_BY_ID[S.mqSp], S.mqCm); });
+  $('#cq').addEventListener('input', e => { S.cq = e.target.value; $('#guide').innerHTML = guideMatch(S.cq).map(guideCardHTML).join('') || '<p class="muted">Nessun pesce trovato.</p>'; });
+}
+function openGuide(id) {
+  const g = GUIDE_BY_ID[id]; if (!g) return;
+  const mo = new Date().getMonth();
+  const st = g.stag ? SPECIE_BY_ID[g.stag] : null;
+  const tec = st ? st.tecniche.map(t => { const ge = gearFor(t); const items = [...ge.canne.map(c => c.nome), ...ge.mulinelli.map(m => m.nome + (m.note ? ' (' + m.note + ')' : ''))]; return `<div class="sp"><b>${PE.TECNICHE[t]}</b><p>${items.length ? esc(items.join(' + ')) : 'Nessuna attrezzatura salvata per questa tecnica'}</p></div>`; }).join('') : '';
+  sheet(top(esc(g.nome)) + `
+    <div class="gphoto">${taxonImg(g.lat, 'big')}${taxonCredit(g.lat)}</div>
+    <p class="muted" style="margin:-4px 0 0"><i>${esc(g.lat)}</i></p>
+    ${g.pericolo ? `<div class="warnbox">⚠ ${esc(g.pericolo)}</div>` : ''}
+    ${verdictHTML(g, '')}
+    <div class="kv"><span class="k">Come riconoscerlo</span><span>${esc(g.riconosci)}</span></div>
+    <div class="kv"><span class="k">Da non confondere</span><span>${esc(g.simili)}</span></div>
+    <div class="kv"><span class="k">Dove</span><span>${esc(g.dove)}</span></div>
+    ${st ? `<div class="cgroup"><span class="flabel">Stagione</span><div class="calwrap"><table class="cal"><thead><tr>${MESI.map((m, i) => `<th class="${i === mo ? 'now' : ''}">${m}</th>`).join('')}</tr></thead><tbody><tr>${st.mesi.map((v, i) => `<td class="c ${i === mo ? 'now' : ''}" style="background:${v ? ['', 'var(--q2)', 'var(--q3)', 'var(--q5)'][v] : 'var(--surface-2)'};opacity:${v ? 1 : .6}"></td>`).join('')}</tr></tbody></table></div></div>
+    <div class="kv"><span class="k">Esche</span><span>${esc(st.esche)}</span></div>
+    <div><p class="flabel" style="margin:0 0 2px">Con la tua attrezzatura</p>${tec}</div>` : ''}
+    <a class="btn block" href="${RICONOSCI_URL}" target="_blank" rel="noopener">${CAMERA} Riconosci da foto</a>`);
 }
 
 /* ---------- fogli ---------- */
@@ -1856,8 +2157,10 @@ function openSpecies(id) {
     const items = [...g.canne.map(c => c.nome + (c.note ? ' (' + c.note + ')' : '')), ...g.mulinelli.map(m => m.nome + (m.note ? ' (' + m.note + ')' : ''))];
     return `<div class="sp" style="grid-template-columns:1fr"><b>${PE.TECNICHE[t]}</b><p>${items.length ? esc(items.join(' + ')) : 'Nessuna attrezzatura salvata per questa tecnica'}</p></div>`;
   }).join('');
+  const gg = GUIDE.find(x => x.stag === s.id);
   sheet(top(esc(s.nome)) + `
-    <p class="muted" style="margin:-8px 0 0"><i>${esc(s.lat)}</i>${s.min ? ` · misura minima ${s.min} cm` : ''}</p>
+    ${gg ? `<div class="gphoto">${taxonImg(gg.lat, 'big')}${taxonCredit(gg.lat)}</div>` : ''}
+    <p class="muted" style="margin:-4px 0 0"><i>${esc(s.lat)}</i>${s.min ? ` · misura minima ${s.min} cm` : ''}</p>
     <div class="calwrap"><table class="cal" style="min-width:0"><thead><tr>${MESI.map((m, i) => `<th class="${i === mo ? 'now' : ''}">${m}</th>`).join('')}</tr></thead><tbody><tr>${s.mesi.map((v, i) => `<td class="c ${i === mo ? 'now' : ''}" style="background:${v ? ['', 'var(--q2)', 'var(--q3)', 'var(--q5)'][v] : 'var(--surface-2)'};opacity:${v ? 1 : .5}"></td>`).join('')}</tr></tbody></table></div>
     <div class="kv"><span class="k">Dove</span><span>${esc(s.dove)}</span></div>
     <div class="kv"><span class="k">Esche</span><span>${esc(s.esche)}</span></div>
@@ -1949,7 +2252,7 @@ function openTripForm(id) {
       <div class="subform" id="cform">
         <span class="flabel">Aggiungi una cattura</span>
         <div class="row2">
-          <div class="field"><label for="c-sp">Specie</label><select id="c-sp">${PE.SPECIE.map(s => `<option value="${s.id}">${esc(s.nome)}</option>`).join('')}<option value="_altro">Altra specie…</option></select></div>
+          <div class="field"><label for="c-sp">Specie</label><select id="c-sp">${GUIDE.slice().sort((a, b) => a.nome.localeCompare(b.nome)).map(s => `<option value="${s.id}"${s.id === 'orata' ? ' selected' : ''}>${esc(s.nome)}</option>`).join('')}<option value="_altro">Altra specie…</option></select></div>
           <div class="field"><label for="c-ora">Ora</label><input id="c-ora" type="time" value="${esc(draft.fine || '')}"></div>
         </div>
         <div class="field" id="c-altro-w" hidden><label for="c-altro">Nome della specie</label><input id="c-altro" maxlength="40" placeholder="Es. Pagello"></div>
@@ -1989,13 +2292,13 @@ function openTripForm(id) {
       if (!e.target.closest('[data-act="addcatch"]')) return;
       if (uploading) { toast('Aspetta che finisca il caricamento della foto'); return; }
       const spv = $('#c-sp', el).value;
-      const nome = spv === '_altro' ? ($('#c-altro', el).value.trim() || 'Altra specie') : SPECIE_BY_ID[spv].nome;
+      const nome = spv === '_altro' ? ($('#c-altro', el).value.trim() || 'Altra specie') : GUIDE_BY_ID[spv].nome;
       draft.catture.push({
         id: uid(), specie: spv === '_altro' ? '' : spv, nome, ora: $('#c-ora', el).value,
         cm: $('#c-cm', el).value ? Number($('#c-cm', el).value) : null, g: $('#c-g', el).value ? Number($('#c-g', el).value) : null,
         esca: $('#c-esca', el).value.trim(), canna: $('#c-canna', el).value, rilasciato: $('#c-ril', el).checked, foto: pendingPhotos.slice(),
       });
-      const s = SPECIE_BY_ID[spv];
+      const s = GUIDE_BY_ID[spv];
       if (s && s.min && draft.catture[draft.catture.length - 1].cm && draft.catture[draft.catture.length - 1].cm < s.min) toast(`Sotto misura: per ${s.nome} il minimo è ${s.min} cm`);
       pendingPhotos = [];
       for (const k of ['#c-cm', '#c-g', '#c-altro']) $(k, el).value = '';
@@ -2158,6 +2461,7 @@ function render() {
   if (S.tab === 'oggi') renderOggi();
   else if (S.tab === 'spot') renderSpot();
   else if (S.tab === 'diario') renderDiario();
+  else if (S.tab === 'catture') renderCatture();
   else renderSpecie();
   if (S._renderedTab === S.tab) window.scrollTo(0, y); else window.scrollTo(0, 0);
   S._renderedTab = S.tab;
@@ -2165,7 +2469,7 @@ function render() {
 }
 function route() {
   const h = (location.hash || '#oggi').slice(1);
-  S.tab = ['oggi', 'spot', 'diario', 'specie'].includes(h) ? h : 'oggi';
+  S.tab = ['oggi', 'spot', 'diario', 'catture', 'specie'].includes(h) ? h : 'oggi';
   if (S.tab !== 'spot') { S.mapAdd = false; }
   render();
 }
@@ -2185,7 +2489,7 @@ document.addEventListener('click', async e => {
     case 'welcome-skip': try { await Store.setRoot({ benvenuto: true }); } catch (err) { toast(errMsg(err)); } break;
     case 'refresh-meteo': Meteo.refresh(currentSpot(), true); break;
     case 'locate-map':
-      try { toast('Cerco la tua posizione…'); const p = await locate(); S.me = p; if (S.view) { S.view.cx = px(p.lon); S.view.cy = py(p.lat); } render(); toast('Sei qui'); }
+      try { toast('Cerco la tua posizione…'); const p = await locate(); S.me = p; if (lmap) lmap.setView([p.lat, p.lon], Math.max(lmap.getZoom(), 15)); drawMe(); toast('Sei qui'); }
       catch (err) { toast(geoErr(err)); }
       break;
     case 'nearest':
@@ -2201,7 +2505,12 @@ document.addEventListener('click', async e => {
       break;
     case 'editspot': openSpotSheet(el.dataset.id); break;
     case 'mapadd': S.mapAdd = !S.mapAdd; render(); break;
-    case 'zoom': { const r = S.view.h / S.view.w; S.view.w = Math.max(8, Math.min(260, S.view.w * +el.dataset.z)); S.view.h = S.view.w * r; render(); break; }
+    case 'zoomin': if (lmap) lmap.zoomIn(); break;
+    case 'zoomout': if (lmap) lmap.zoomOut(); break;
+    case 'maplayer': { const p = mapPref(); p.base = el.dataset.v; setMapPref(p); applyMapPref(); render(); break; }
+    case 'mapsea': { const p = mapPref(); p.nautica = !p.nautica; setMapPref(p); applyMapPref(); render(); break; }
+    case 'showspot': { const sp = S.spots.find(x => x.id === el.dataset.id); if (sp && lmap) { lmap.setView([sp.lat, sp.lon], Math.max(lmap.getZoom(), 15)); $('#mapbox').scrollIntoView({ behavior: 'smooth', block: 'center' }); } break; }
+    case 'guide': openGuide(el.dataset.id); break;
     case 'cond': {
       const c = Object.assign({}, condToday()); const g = el.dataset.g, v = el.dataset.v;
       c[g] = c[g] === v ? '' : v;
@@ -2221,6 +2530,7 @@ setInterval(() => { if (!$('#sheet-root').firstChild && S.tab === 'oggi' && S.da
 
 Store.load();
 Meteo.load();
+Taxa.load();
 route();
 Meteo.refresh(currentSpot());
 document.addEventListener('visibilitychange', () => {
@@ -2228,7 +2538,7 @@ document.addEventListener('visibilitychange', () => {
   if (!$('#sheet-root').firstChild) render();
   Meteo.refresh(currentSpot());
 });
-window.addEventListener('online', () => Meteo.refresh(currentSpot(), true));
+window.addEventListener('online', () => { Meteo.refresh(currentSpot(), true); Taxa.pump(); });
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('./sw.js').catch(() => {});
 try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) { /* facoltativo */ }
 })();
