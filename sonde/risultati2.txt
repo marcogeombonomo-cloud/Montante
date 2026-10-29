@@ -1,0 +1,750 @@
+### PAGINA https://www.comune.venezia.it/it/content/centro-previsioni-e-segnalazioni-maree-beta
+stato 200 | text/html; charset=utf-8 | 103021 char
+  /content/dati-dalle-stazioni-rilevamento
+  /content/la-marea
+  /content/la-previsione
+  /content/previsioni-onda-alto-adriatico-0
+  /it/content/centro-previsioni-e-segnalazioni-mar%C3%A9e
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/manifest.json
+  https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.11/jquery-ui.js
+  https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.js
+  https://www.comune.venezia.it/it/content/centro-previsioni-e-segnalazioni-maree-beta
+  SCRIPT https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.7/esri-leaflet.js: http://esri.github.io/esri-leaflet/api-reference/request.html
+  SCRIPT https://www.comune.venezia.it/sites/comune.venezia.it/themes/comunevenezia/assets/esri_map/js/mappa-maree.js?v=22052910: https://www.comune.venezia.it/dati.venezia.it/sites/default/files/dataset/opendata/mappa.json
+  SCRIPT https://www.comune.venezia.it/sites/comune.venezia.it/themes/comunevenezia/assets/js/scripts.js?tno8ov: //www.facebook.com/sharer/sharer.php?u= | http://vimeo.com/api/v2/video/
+### PAGINA https://www.comune.venezia.it/content/previsioni-onda-alto-adriatico-0
+stato 200 | text/html; charset=utf-8 | 61208 char
+  //send?text=Previsioni+di+onda+per+oggi%2C+domani+e+dopodomani%20https%3A%2F%2Fwww.comune.venezia.it%2Fit%2Fcontent%2Fprevisioni-onda-alto-adriatico-0
+  /it/content/centro-previsioni-e-segnalazioni-mar%C3%A9e
+  /it/content/la-previsione
+  /it/content/previsioni-altezza-onda-nellalto-adriatico-0
+  /it/content/previsioni-meteo-0
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/manifest.json
+  https://www.comune.venezia.it/it/content/previsioni-onda-alto-adriatico-0
+  SCRIPT https://www.comune.venezia.it/sites/comune.venezia.it/themes/comunevenezia/assets/js/scripts.js?tno8ov: //www.facebook.com/sharer/sharer.php?u= | http://vimeo.com/api/v2/video/
+### PAGINA https://www.comune.venezia.it/content/dati-meteorologici-venezia
+stato 200 | text/html; charset=utf-8 | 56438 char
+  /it/content/centro-previsioni-e-segnalazioni-mar%C3%A9e
+  /it/content/stazione-automatica-da9000
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/manifest.json
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/stazioni/trimestrale/Dati_Meteo_paginaWeb.csv
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/stazioni/trimestrale/Stazione_PalazzoCavalli_pg.csv
+  SCRIPT https://www.comune.venezia.it/sites/comune.venezia.it/themes/comunevenezia/assets/js/scripts.js?tno8ov: //www.facebook.com/sharer/sharer.php?u= | http://vimeo.com/api/v2/video/
+### PAGINA https://www.comune.venezia.it/it/content/centro-previsioni-e-segnalazioni-maree
+stato 200 | text/html; charset=utf-8 | 12594 char
+  
+### PAGINA https://www.comune.venezia.it/it/content/la-previsione
+stato 200 | text/html; charset=utf-8 | 51438 char
+  //send?text=La+previsione%20https%3A%2F%2Fwww.comune.venezia.it%2Fit%2Fcontent%2Fla-previsione
+  /it/content/centro-previsioni-e-segnalazioni-mar%C3%A9e
+  /it/content/i-modelli-previsione
+  /it/content/il-bollettino-marea-venezia
+  /it/content/previsioni-altezza-onda-nellalto-adriatico-0
+  /it/content/previsioni-meteo-0
+  /it/content/tavolo-tecnico-le-previsioni
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/manifest.json
+  http://www.comune.venezia.it/sites/default/files/publicCPSM/segretel/testoSegreteria.txt
+  https://www.comune.venezia.it/it/content/la-previsione
+  SCRIPT https://www.comune.venezia.it/sites/comune.venezia.it/themes/comunevenezia/assets/js/scripts.js?tno8ov: //www.facebook.com/sharer/sharer.php?u= | http://vimeo.com/api/v2/video/
+### PAGINA https://www.venezia.isprambiente.it/rete-meteo-mareografica
+stato 200 | text/html; charset=UTF-8 | 81206 char
+  ///C:DOCUME~1FrancoIMPOST~1Tempmsohtml1clip_filelist.xml
+  http://www.venezia.isprambiente.it/ispra/index.php?action=download&amp;upload_id=61630
+  https://www.comune.venezia.it/content/dati-dalle-stazioni-rilevamento
+  webgis/temporeale2.js?v=2
+  SCRIPT https://www.venezia.isprambiente.it/webgis/temporeale2.js?v=2: /ispra/webgis/marea.php | /ispra/webgis/mareaadr.php | /ispra/webgis/vento.php | /ispra/webgis/ventoadr.php | http://acx.lnxserv.net/ispra/webgis/marea.html | http://acx.lnxserv.net/ispra/webgis/mareaadr.html
+### PAGINA https://www.venezia.isprambiente.it/webgis/temporeale2.js?v=2
+stato 200 | application/javascript | 1521 char
+  /ispra/webgis/marea.php
+  /ispra/webgis/mareaadr.php
+  /ispra/webgis/vento.php
+  /ispra/webgis/ventoadr.php
+  http://acx.lnxserv.net/ispra/webgis/marea.html
+  http://acx.lnxserv.net/ispra/webgis/mareaadr.html
+### PAGINA https://dati.venezia.it/?q=ente-gestore/icpsm-istituzione-centro-previsioni-e-segnalazioni-maree
+stato 200 | text/html; charset=utf-8 | 39762 char
+  /?q=ente-gestore/icpsm-istituzione-centro-previsioni-e-segnalazioni-maree
+  /?q=formato/geojson
+  /?q=formato/json
+  /?q=tag/manifestazioni
+  /?q=taxonomy/term/573/feed
+  /?q=voglio-capire#main-content
+  https://dati.venezia.it/?q=taxonomy/term/573/feed
+### PAGINA https://dati.venezia.it/?q=formato/json
+stato 200 | text/html; charset=utf-8 | 41018 char
+  /?q=ente-gestore/icpsm-istituzione-centro-previsioni-e-segnalazioni-maree
+  /?q=formato/geojson
+  /?q=formato/json
+  /?q=tag/manifestazioni
+  /?q=taxonomy/term/266/feed
+  /?q=voglio-capire#main-content
+  https://dati.venezia.it/?q=taxonomy/term/266/feed
+### PAGINA https://www.mareografico.it/
+stato 200 | text/html; charset=UTF-8 | 11854 char
+  
+  SCRIPT https://www.mareografico.it/A4Ix/xjq.js?v=1665405039: /service.php?form= | /service.php?xKey=A4IxAuthCron&FUP=1
+  SCRIPT https://www.mareografico.it/APPS/apps.js?v=1665405039: /APPS/mareo_data.php? | /APPS/mareo_data.php?k= | /APPS/mareo_sensor.php?show= | /service.php?img=
+
+=========== PROVE DEI DATI ===========
+### http://esri.github.io/esri-leaflet/api-reference/request.html
+stato 200 | text/html; charset=utf-8 | CORS * | 15233 char
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>request | Esri Leaflet</title>
+  
+
+  
+    <meta name="description" content="A lightweight set of tools for using ArcGIS services with Leaflet.">
+  
+
+  
+    <meta http-equiv="refresh" content="0;URL='https://developers.arcgis.com/esri-leaflet/api-reference/request/'" />
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--[if lt IE 9
+
+### https://www.comune.venezia.it/dati.venezia.it/sites/default/files/dataset/opendata/mappa.json
+stato 200 | text/html; charset=utf-8 | CORS None | 39444 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### http://vimeo.com/api/v2/video/
+stato 404 | text/html; charset=UTF-8 | CORS None | 3000 char
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+<meta charset="utf-8">
+<meta property="fb:app_id" content="19884028963">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="//player.vimeo.com">
+<link rel="preconnect" href="//i.vimeocdn.com">
+<link rel="preconnect" href="//f.vimeocdn.com">
+<link rel="search" type="application/opensearchdescription+xml" href="/search/opensearch.xml" title="Vimeo">
+<link rel="logo" type="image/svg" href="https://f.vimeocdn.com/logo.svg">
+
+
+            <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+    
+
+                <meta name="description" content
+
+### https://www.comune.venezia.it/content/dati-dalle-stazioni-rilevamento
+stato 200 | text/html; charset=utf-8 | CORS None | 56284 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/content/la-marea
+stato 200 | text/html; charset=utf-8 | CORS None | 51606 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/content/la-previsione
+stato 200 | text/html; charset=utf-8 | CORS None | 51435 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/content/previsioni-onda-alto-adriatico-0
+stato 200 | text/html; charset=utf-8 | CORS None | 61209 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/it/content/centro-previsioni-e-segnalazioni-mar%C3%A9e
+stato 200 | text/html; charset=utf-8 | CORS None | 69555 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/sites/comune.venezia.it/themes/comunevenezia/assets/icons/manifest.json
+stato 200 | application/json | CORS None | 205 char
+�      �л� ����0{�H�t�;t��� �	j|�5�BR:����/�A�d#��ڋ�d���I����򶗓�w���il�z�4��=�Q�{��,WY�3��_���l8�e�M���M�����v���>�ß"))]��b��X����{���U��Q�A�ǥ�(=.�H�d�IVX�q���OCB��;|$^�  
+
+### https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.11/jquery-ui.js
+stato 200 | application/javascript | CORS * | 200000 char
+/*!
+ * jQuery UI 1.8.11
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI
+ */
+(function( $, undefined ) {
+
+// prevent duplicate loading
+// this is only a problem because we proxy existing functions
+// and we don't want to double proxy them
+$.ui = $.ui || {};
+if ( $.ui.version ) {
+	return;
+}
+
+$.extend( $.ui, {
+	version: "1.8.11",
+
+	keyCode: {
+		ALT: 18,
+		BACKSPACE: 8,
+		CAPS_LOCK: 20,
+		COMMA: 188,
+		COMMAND: 91,
+		COMMAND_LEFT: 91, // COMMAND
+		COMMAND_RIGHT: 93,
+		CONTROL: 17,
+		DELETE: 46,
+		DOWN: 40,
+		END: 35,
+		ENTER: 13,
+		ESCAPE: 27,
+		HOME: 36,
+		INSERT:
+
+### https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.js
+stato 200 | application/javascript; charset=utf-8 | CORS * | 144271 char
+/*
+ Leaflet 1.0.2, a JS library for interactive maps. http://leafletjs.com
+ (c) 2010-2016 Vladimir Agafonkin, (c) 2010-2011 CloudMade
+*/
+!function(t,e,i){function n(){var e=t.L;o.noConflict=function(){return t.L=e,this},t.L=o}var o={version:"1.0.2"};"object"==typeof module&&"object"==typeof module.exports?module.exports=o:"function"==typeof define&&define.amd&&define(o),"undefined"!=typeof t&&n(),o.Util={extend:function(t){var e,i,n,o;for(i=1,n=arguments.length;i<n;i++){o=arguments[i];for(e in o)t[e]=o[e]}return t},create:Object.create||function(){function t(){}return function(e){return t.prototype=e,new t}}(),bind:function(t,e){var i=Array.prototype.slice;if(t.bind)return t.bind.apply(t,i.c
+
+### https://www.comune.venezia.it/it/content/centro-previsioni-e-segnalazioni-maree-beta
+stato 200 | text/html; charset=utf-8 | CORS None | 103022 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://send?text=Previsioni+di+onda+per+oggi%2C+domani+e+dopodomani%20https%3A%2F%2Fwww.comune.venezia.it%2Fit%2Fcontent%2Fprevisioni-onda-alto-adriatico-0
+stato None | None | CORS None | 62 char
+URLError(gaierror(-3, 'Temporary failure in name resolution'))
+
+### https://www.comune.venezia.it/it/content/la-previsione
+stato 200 | text/html; charset=utf-8 | CORS None | 51438 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/it/content/previsioni-altezza-onda-nellalto-adriatico-0
+stato 200 | text/html; charset=utf-8 | CORS None | 58628 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/it/content/previsioni-meteo-0
+stato 200 | text/html; charset=utf-8 | CORS None | 50953 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/it/content/previsioni-onda-alto-adriatico-0
+stato 200 | text/html; charset=utf-8 | CORS None | 61212 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/it/content/stazione-automatica-da9000
+stato 200 | text/html; charset=utf-8 | CORS None | 64906 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/sites/default/files/publicCPSM2/stazioni/trimestrale/Dati_Meteo_paginaWeb.csv
+stato 200 | application/octet-stream | CORS None | 200000 char
+Data;Palazzo Cavalli Pressione;Palazzo Cavalli Temperatura;Palazzo Cavalli Umidita';San Giorgio Radiazione solare;San Giorgio D.Vento med. 10m;San Giorgio V.Vento med.10m;San Giorgio V.Vento max;P. Salute Temp. Acqua
+2026-07-29 00:00:00;1019.3;26.4;77;;347;0.0;0.0;27.2
+2026-07-29 00:05:00;1019.3;26.2;78;;351;0.0;0.0;27.3
+2026-07-29 00:10:00;1019.3;26.1;78;0;342;0.0;0.0;27.2
+2026-07-29 00:15:00;1019.3;25.9;79;;347;0.0;0.0;27.2
+2026-07-29 00:20:00;1019.3;25.9;79;0;344;0.0;0.0;27.3
+2026-07-29 00:25:00;1019.3;26.0;79;0;341;0.0;0.0;27.2
+2026-07-29 00:30:00;1019.3;26.0;79;;340;0.0;0.0;27.3
+2026-07-29 00:35:00;1019.3;25.9;80;0;342;0.0;0.0;27.3
+2026-07-29 00:40:00;1019.2;25.8;80;;345;0.0;0.
+
+### https://www.comune.venezia.it/sites/default/files/publicCPSM2/stazioni/trimestrale/Stazione_PalazzoCavalli_pg.csv
+stato 200 | application/octet-stream | CORS None | 55265 char
+Data;Palazzo Cavalli Pioggia 5m
+2026-07-29 00:00:00;0.0
+2026-07-29 01:00:00;0.0
+2026-07-29 02:00:00;0.0
+2026-07-29 03:00:00;0.0
+2026-07-29 04:00:00;0.0
+2026-07-29 05:00:00;0.0
+2026-07-29 06:00:00;0.0
+2026-07-29 07:00:00;0.0
+2026-07-29 08:00:00;0.0
+2026-07-29 09:00:00;0.0
+2026-07-29 10:00:00;0.0
+2026-07-29 11:00:00;0.0
+2026-07-29 12:00:00;0.0
+2026-07-29 13:00:00;0.0
+2026-07-29 14:00:00;0.0
+2026-07-29 15:00:00;0.0
+2026-07-29 16:00:00;0.0
+2026-07-29 17:00:00;0.0
+2026-07-29 18:00:00;0.0
+2026-07-29 19:00:00;0.0
+2026-07-29 20:00:00;0.0
+2026-07-29 21:00:00;0.0
+2026-07-29 22:00:00;0.0
+2026-07-29 23:00:00;0.0
+2026-07-30 00:00:00;0.0
+2026-07-30 01:00:00;0.0
+2026-07-30 02:00:
+
+### https://send?text=La+previsione%20https%3A%2F%2Fwww.comune.venezia.it%2Fit%2Fcontent%2Fla-previsione
+stato None | None | CORS None | 62 char
+URLError(gaierror(-3, 'Temporary failure in name resolution'))
+
+### https://www.comune.venezia.it/it/content/i-modelli-previsione
+stato 200 | text/html; charset=utf-8 | CORS None | 57262 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/it/content/il-bollettino-marea-venezia
+stato 200 | text/html; charset=utf-8 | CORS None | 51638 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### https://www.comune.venezia.it/it/content/tavolo-tecnico-le-previsioni
+stato 200 | text/html; charset=utf-8 | CORS None | 51325 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'+++++`       .+++++++++++++++     .::::::::::,     ++++++  '+++++++++'   
+ +++++;       ++++++++++++++++    ::::::::::::::    ++++++ +++++++++++++  
+ ++++++       ++++++++++++++++   ::::::::::::::::   ++++++'+++++++++++++' 
+ '+++++       ++++++++++++++++  ,::::::::::::::::,  ++++++++++++.`;++++++ 
+ `+++++.     ,++++++++          :::::::    :::::::  +++++++++++     +++++ 
+  +++++'     +++++++++          ::::::      ::::::  ++++++++++      +++++ 
+  '+++++     +++++++++         `:::::,      .:::::. ++++++++++:           
+  `+++++     +++++++++         `:::::        :::::, +++++++++++:          
+   
+
+### http://www.comune.venezia.it/sites/default/files/publicCPSM/segretel/testoSegreteria.txt
+stato 200 | text/plain | CORS None | 563 char
+Centro Previsioni e Segnalazioni Maree
+
+Previsione delle ore 17:00 del giorno 29 ottobre
+
+Da giovedì 29 ottobre a domenica 1 novembre: marea normale.
+
+Valori di marea massimi e minimi previsti
+
+29 ottobre
+ ore 18:45, minimo, -20 cm.
+
+30 ottobre
+ ore 01:30, massimo, 50 cm.
+ ore 06:15, minimo, 35 cm.
+ ore 12:10, massimo, 70 cm.
+ ore 19:35, minimo, -10 cm.
+
+31 ottobre
+ ore 02:50, massimo, 50 cm.
+ ore 07:15, minimo, 35 cm.
+ ore 12:50, massimo, 60 cm.
+ ore 20:40, minimo, 0 cm.
+
+Prossimo aggiornamento  alle ore 10:30 del 30 ottobre
+
+ 
+
+
+
+### https://www.venezia.isprambiente.it/ispra/webgis/marea.php
+stato 200 | text/html; charset=UTF-8 | CORS None | 4588 char
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>ISPRA Servizio Laguna di Venezia - Tempo reale</title>
+<link rel="shortcut icon" href="../favicon.ico" />
+<link rel="stylesheet" type="text/css" href="../css/960.css?v=2" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/typography.css?v=2" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="temporeale2.css?v=4" charset="utf-8" />
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<script src="https://code.jquery.com/ui/1
+
+### https://www.venezia.isprambiente.it/ispra/webgis/mareaadr.php
+stato 200 | text/html; charset=UTF-8 | CORS None | 5375 char
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+
+<title>ISPRA Servizio Laguna di Venezia - Tempo reale</title>
+<link rel="shortcut icon" href="../favicon.ico" />
+<link rel="stylesheet" type="text/css" href="../css/960.css?v=2" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/typography.css?v=2" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="temporeale2.css?v=10" charset="utf-8" />
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<script src="https://code.jquery.com/ui/
+
+### https://www.venezia.isprambiente.it/ispra/webgis/vento.php
+stato 200 | text/html; charset=UTF-8 | CORS None | 5128 char
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+
+<title>ISPRA Servizio Laguna di Venezia - Tempo reale</title>
+<link rel="shortcut icon" href="../favicon.ico" />
+<link rel="stylesheet" type="text/css" href="../css/960.css?v=2" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/typography.css?v=2" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="temporeale2.css?v=10" charset="utf-8" />
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<script src="https://code.jquery.com/ui/
+
+### https://www.venezia.isprambiente.it/ispra/webgis/ventoadr.php
+stato 200 | text/html; charset=UTF-8 | CORS None | 2484 char
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+
+<title>ISPRA Servizio Laguna di Venezia - Tempo reale</title>
+<link rel="shortcut icon" href="../favicon.ico" />
+<link rel="stylesheet" type="text/css" href="../css/960.css" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/typography.css" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="temporeale.css" charset="utf-8" />
+<!--[if IE]>
+	<link rel="stylesheet" href="../css/ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]
+
+### http://acx.lnxserv.net/ispra/webgis/marea.html
+stato None | None | CORS None | 51 char
+URLError(gaierror(-2, 'Name or service not known'))
+
+### http://acx.lnxserv.net/ispra/webgis/mareaadr.html
+stato None | None | CORS None | 51 char
+URLError(gaierror(-2, 'Name or service not known'))
+
+### https://www.venezia.isprambiente.it/C:DOCUME~1FrancoIMPOST~1Tempmsohtml1clip_filelist.xml
+stato None | None | CORS None | 138 char
+InvalidURL("URL can't contain control characters. '/C:DOCUME~1FrancoIMPOST~1Tempmsohtml1\\x01clip_filelist.xml' (found at least '\\x01')")
+
+### http://www.venezia.isprambiente.it/ispra/index.php?action=download&amp;upload_id=61630
+stato 200 | text/html; charset=UTF-8 | CORS None | 0 char
+
+
+### https://www.venezia.isprambiente.it/webgis/temporeale2.js?v=2
+stato 200 | application/javascript | CORS None | 1521 char
+function temporeale(){
+    var options = {
+        slideshowDelay:20,
+		counterType:'skip',
+        displayNav: true,
+		continuous:true,
+		animSequence:'sync',
+        counterLabel: ['marea laguna', 'vento', 'marea litorale']
+    };
+
+    var marea = {
+        player:     'iframe',
+        content:    '/ispra/webgis/marea.php',
+		//			'http://acx.lnxserv.net/ispra/webgis/marea.html',
+        height:     828,
+        width:      1024,
+        title:      'Livelli di marea (cm)',
+        options:    options
+    };
+
+    var vento = {
+        player:     'iframe',
+        content:    '/ispra/webgis/vento.php',
+		//			'http://acx.lnxserv.net/ispra/webgis/vento.html',
+      
+
+### https://dati.venezia.it/?q=ente-gestore/icpsm-istituzione-centro-previsioni-e-segnalazioni-maree
+stato 200 | text/html; charset=utf-8 | CORS None | 39761 char
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
+<html lang="Italian" dir="ltr" version="HTML+RDFa 1.1"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:sioc="http://rdfs.org/sioc/ns#"
+  xmlns:sioct="http://rdfs.org/sioc/types#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="https://dati.venezia.it/s
+
+### https://dati.venezia.it/?q=formato/geojson
+stato 200 | text/html; charset=utf-8 | CORS None | 39464 char
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
+<html lang="Italian" dir="ltr" version="HTML+RDFa 1.1"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:sioc="http://rdfs.org/sioc/ns#"
+  xmlns:sioct="http://rdfs.org/sioc/types#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="https://dati.venezia.it/s
+
+### https://dati.venezia.it/?q=formato/json
+stato 200 | text/html; charset=utf-8 | CORS None | 41018 char
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
+<html lang="Italian" dir="ltr" version="HTML+RDFa 1.1"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:sioc="http://rdfs.org/sioc/ns#"
+  xmlns:sioct="http://rdfs.org/sioc/types#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="https://dati.venezia.it/s
+
+### https://dati.venezia.it/?q=tag/manifestazioni
+stato 200 | text/html; charset=utf-8 | CORS None | 44290 char
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
+<html lang="Italian" dir="ltr" version="HTML+RDFa 1.1"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:sioc="http://rdfs.org/sioc/ns#"
+  xmlns:sioct="http://rdfs.org/sioc/types#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="https://dati.venezia.it/s
+
+### https://dati.venezia.it/?q=taxonomy/term/573/feed
+stato 200 | application/rss+xml; charset=utf-8 | CORS None | 29920 char
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xml:base="https://dati.venezia.it"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+ <title>dati.venezia.it - ICPSM - Istituzione Centro Previsioni e Segnalazioni Maree</title>
+ <link>https://dati.venezia.it/?q=ente-gestore/icpsm-istituzione-centro-previsioni-e-segnalazioni-maree</link>
+ <description></description>
+ <language>Italian</language>
+<item>
+ <title>CPSM: dati meteomarini laguna e litorale veneziano</title>
+ <link>https://dati.venezia.it/?q=content/cpsm-dati-meteomarini-laguna-e-litorale-veneziano</link>
+ <description>&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&l
+
+### https://dati.venezia.it/?q=voglio-capire#main-content
+stato 200 | text/html; charset=utf-8 | CORS None | 42136 char
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
+<html lang="Italian" dir="ltr" version="HTML+RDFa 1.1"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:sioc="http://rdfs.org/sioc/ns#"
+  xmlns:sioct="http://rdfs.org/sioc/types#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initia
+
+### https://dati.venezia.it/?q=taxonomy/term/266/feed
+stato 200 | application/rss+xml; charset=utf-8 | CORS None | 38299 char
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xml:base="https://dati.venezia.it"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+ <title>dati.venezia.it - JSON</title>
+ <link>https://dati.venezia.it/?q=formato/json</link>
+ <description>Acronimo di JavaScript Object Notation, il JSON è un formato adatto per lo scambio dei dati in applicazioni client-server.
+</description>
+ <language>Italian</language>
+<item>
+ <title>Elezioni europee 2014</title>
+ <link>https://dati.venezia.it/?q=content/elezioni-europee-2014</link>
+ <description>&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;di
+
+### https://www.mareografico.it/service.php?form=
+stato 200 | text/html; charset=UTF-8 | CORS None | 783 char
+<!DOCTYPE html><html lang='it'><head><meta charset='UTF-8'><link rel='preload' href='/DATA/A4I.css?v=1665405039' as='style'>
+<link rel='stylesheet' href='/DATA/A4I.css?v=1665405039'>
+<link rel='stylesheet' href='/APPS/apps.css?v=1665405039'>
+<style type='text/css'>.sebody {margin:auto;padding:20px}</style>
+<title></title></head><body id='_page' class='sebody'><div id='container'>
+</div>
+<script src='/A4Ix/xjs.js?v=1665405039'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'></script>
+<script src='/A4Ix/xjq.js?v=1665405039'></script>
+<script src='/APPS/apps.js?v=1665405039'></script>
+<script>$(document).ready(function(){
+jQsamewidthmulti('.__button');
+
+### https://www.mareografico.it/service.php?xKey=A4IxAuthCron&FUP=1
+stato 200 | text/html; charset=UTF-8 | CORS None | 6 char
+0@@711
+
+### https://www.mareografico.it/APPS/mareo_data.php
+stato 400 | text/html; charset=UTF-8 | CORS None | 0 char
+
+
+### https://www.mareografico.it/APPS/mareo_data.php?k=
+stato 422 | text/html; charset=UTF-8 | CORS None | 0 char
+
