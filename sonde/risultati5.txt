@@ -1,0 +1,7 @@
+200 https://www.comune.venezia.it/maree -> https://www.comune.venezia.it/content/centro-previsioni-e-segnalazioni-maree | Centro Previsioni e Segnalazioni Maree | Comune di Venezia.
+200 https://www.comune.venezia.it/it/content/centro-previsioni-e-segnalazioni-maree -> https://www.comune.venezia.it/it/content/centro-previsioni-e-segnalazioni-maree | Centro Previsioni e Segnalazioni Maree | Comune di Venezia.
+200 https://www.comune.venezia.it/it/content/centro-maree -> https://www.comune.venezia.it/it/content/centro-maree | Centro maree | Comune di Venezia.
+200 https://dati.venezia.it/ -> https://dati.venezia.it/ | dati.venezia.it | Dati della Città di Venezia
+200 https://open-meteo.com/en/docs/marine-weather-api -> https://open-meteo.com/en/docs/marine-weather-api | 🌊 Marine Weather API | Open-Meteo.com
+200 https://open-meteo.com/en/docs/flood-api -> https://open-meteo.com/en/docs/flood-api | Flood API | Open-Meteo.com
+200 https://github.com/cosinekitty/astronomy -> https://github.com/cosinekitty/astronomy | GitHub - cosinekitty/astronomy: Astronomy Engine: multi-language calculation of Sun, Moon, and planet positions. Predict
