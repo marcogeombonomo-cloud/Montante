@@ -412,6 +412,19 @@ nav.tabs a { font-size: .64rem; }
 .fimg.has img { object-fit: contain; padding: 6px; }
 .fimg.big.has img { padding: 10px; }
 .credits { gap: 6px; }
+/* 1.3: misure dal vivo, fonti dei dati */
+.livebox { display: grid; gap: 8px; }
+.flabel.live { display: flex; align-items: center; gap: 7px; margin: 2px 0 0; }
+.dotlive { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px var(--ok-soft); flex: none; }
+.notebox { padding: 11px 14px; border-radius: 14px; background: var(--accent-soft); font-size: .86rem; font-weight: 600; line-height: 1.4; }
+.notebox b { font-weight: 800; }
+.fonti { display: grid; gap: 8px; }
+.fonte { display: grid; gap: 2px; padding: 11px 13px; border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
+.sgroup { scroll-margin-top: 76px; }
+.fonte b { font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 800; }
+.fonte span { font-weight: 700; font-size: .92rem; }
+.fonte small { font-size: .76rem; color: var(--muted); font-weight: 600; line-height: 1.35; }
+.fonte a { color: var(--accent); font-weight: 700; }
 
 </style>
 </head>
@@ -429,331 +442,13 @@ nav.tabs a { font-size: .64rem; }
 <div id="sheet-root"></div>
 <div id="toast-root"></div>
 <script src="leaflet.js"></script>
-<script>
-/*
- (c) 2011-2015, Vladimir Agafonkin
- SunCalc is a JavaScript library for calculating sun/moon position and light phases.
- https://github.com/mourner/suncalc
-*/
-
-(function () { 'use strict';
-
-// shortcuts for easier to read formulas
-
-var PI   = Math.PI,
-    sin  = Math.sin,
-    cos  = Math.cos,
-    tan  = Math.tan,
-    asin = Math.asin,
-    atan = Math.atan2,
-    acos = Math.acos,
-    rad  = PI / 180;
-
-// sun calculations are based on http://aa.quae.nl/en/reken/zonpositie.html formulas
-
-
-// date/time constants and conversions
-
-var dayMs = 1000 * 60 * 60 * 24,
-    J1970 = 2440588,
-    J2000 = 2451545;
-
-function toJulian(date) { return date.valueOf() / dayMs - 0.5 + J1970; }
-function fromJulian(j)  { return new Date((j + 0.5 - J1970) * dayMs); }
-function toDays(date)   { return toJulian(date) - J2000; }
-
-
-// general calculations for position
-
-var e = rad * 23.4397; // obliquity of the Earth
-
-function rightAscension(l, b) { return atan(sin(l) * cos(e) - tan(b) * sin(e), cos(l)); }
-function declination(l, b)    { return asin(sin(b) * cos(e) + cos(b) * sin(e) * sin(l)); }
-
-function azimuth(H, phi, dec)  { return atan(sin(H), cos(H) * sin(phi) - tan(dec) * cos(phi)); }
-function altitude(H, phi, dec) { return asin(sin(phi) * sin(dec) + cos(phi) * cos(dec) * cos(H)); }
-
-function siderealTime(d, lw) { return rad * (280.16 + 360.9856235 * d) - lw; }
-
-function astroRefraction(h) {
-    if (h < 0) // the following formula works for positive altitudes only.
-        h = 0; // if h = -0.08901179 a div/0 would occur.
-
-    // formula 16.4 of "Astronomical Algorithms" 2nd edition by Jean Meeus (Willmann-Bell, Richmond) 1998.
-    // 1.02 / tan(h + 10.26 / (h + 5.10)) h in degrees, result in arc minutes -> converted to rad:
-    return 0.0002967 / Math.tan(h + 0.00312536 / (h + 0.08901179));
-}
-
-// general sun calculations
-
-function solarMeanAnomaly(d) { return rad * (357.5291 + 0.98560028 * d); }
-
-function eclipticLongitude(M) {
-
-    var C = rad * (1.9148 * sin(M) + 0.02 * sin(2 * M) + 0.0003 * sin(3 * M)), // equation of center
-        P = rad * 102.9372; // perihelion of the Earth
-
-    return M + C + P + PI;
-}
-
-function sunCoords(d) {
-
-    var M = solarMeanAnomaly(d),
-        L = eclipticLongitude(M);
-
-    return {
-        dec: declination(L, 0),
-        ra: rightAscension(L, 0)
-    };
-}
-
-
-var SunCalc = {};
-
-
-// calculates sun position for a given date and latitude/longitude
-
-SunCalc.getPosition = function (date, lat, lng) {
-
-    var lw  = rad * -lng,
-        phi = rad * lat,
-        d   = toDays(date),
-
-        c  = sunCoords(d),
-        H  = siderealTime(d, lw) - c.ra;
-
-    return {
-        azimuth: azimuth(H, phi, c.dec),
-        altitude: altitude(H, phi, c.dec)
-    };
-};
-
-
-// sun times configuration (angle, morning name, evening name)
-
-var times = SunCalc.times = [
-    [-0.833, 'sunrise',       'sunset'      ],
-    [  -0.3, 'sunriseEnd',    'sunsetStart' ],
-    [    -6, 'dawn',          'dusk'        ],
-    [   -12, 'nauticalDawn',  'nauticalDusk'],
-    [   -18, 'nightEnd',      'night'       ],
-    [     6, 'goldenHourEnd', 'goldenHour'  ]
-];
-
-// adds a custom time to the times config
-
-SunCalc.addTime = function (angle, riseName, setName) {
-    times.push([angle, riseName, setName]);
-};
-
-
-// calculations for sun times
-
-var J0 = 0.0009;
-
-function julianCycle(d, lw) { return Math.round(d - J0 - lw / (2 * PI)); }
-
-function approxTransit(Ht, lw, n) { return J0 + (Ht + lw) / (2 * PI) + n; }
-function solarTransitJ(ds, M, L)  { return J2000 + ds + 0.0053 * sin(M) - 0.0069 * sin(2 * L); }
-
-function hourAngle(h, phi, d) { return acos((sin(h) - sin(phi) * sin(d)) / (cos(phi) * cos(d))); }
-function observerAngle(height) { return -2.076 * Math.sqrt(height) / 60; }
-
-// returns set time for the given sun altitude
-function getSetJ(h, lw, phi, dec, n, M, L) {
-
-    var w = hourAngle(h, phi, dec),
-        a = approxTransit(w, lw, n);
-    return solarTransitJ(a, M, L);
-}
-
-
-// calculates sun times for a given date, latitude/longitude, and, optionally,
-// the observer height (in meters) relative to the horizon
-
-SunCalc.getTimes = function (date, lat, lng, height) {
-
-    height = height || 0;
-
-    var lw = rad * -lng,
-        phi = rad * lat,
-
-        dh = observerAngle(height),
-
-        d = toDays(date),
-        n = julianCycle(d, lw),
-        ds = approxTransit(0, lw, n),
-
-        M = solarMeanAnomaly(ds),
-        L = eclipticLongitude(M),
-        dec = declination(L, 0),
-
-        Jnoon = solarTransitJ(ds, M, L),
-
-        i, len, time, h0, Jset, Jrise;
-
-
-    var result = {
-        solarNoon: fromJulian(Jnoon),
-        nadir: fromJulian(Jnoon - 0.5)
-    };
-
-    for (i = 0, len = times.length; i < len; i += 1) {
-        time = times[i];
-        h0 = (time[0] + dh) * rad;
-
-        Jset = getSetJ(h0, lw, phi, dec, n, M, L);
-        Jrise = Jnoon - (Jset - Jnoon);
-
-        result[time[1]] = fromJulian(Jrise);
-        result[time[2]] = fromJulian(Jset);
-    }
-
-    return result;
-};
-
-
-// moon calculations, based on http://aa.quae.nl/en/reken/hemelpositie.html formulas
-
-function moonCoords(d) { // geocentric ecliptic coordinates of the moon
-
-    var L = rad * (218.316 + 13.176396 * d), // ecliptic longitude
-        M = rad * (134.963 + 13.064993 * d), // mean anomaly
-        F = rad * (93.272 + 13.229350 * d),  // mean distance
-
-        l  = L + rad * 6.289 * sin(M), // longitude
-        b  = rad * 5.128 * sin(F),     // latitude
-        dt = 385001 - 20905 * cos(M);  // distance to the moon in km
-
-    return {
-        ra: rightAscension(l, b),
-        dec: declination(l, b),
-        dist: dt
-    };
-}
-
-SunCalc.getMoonPosition = function (date, lat, lng) {
-
-    var lw  = rad * -lng,
-        phi = rad * lat,
-        d   = toDays(date),
-
-        c = moonCoords(d),
-        H = siderealTime(d, lw) - c.ra,
-        h = altitude(H, phi, c.dec),
-        // formula 14.1 of "Astronomical Algorithms" 2nd edition by Jean Meeus (Willmann-Bell, Richmond) 1998.
-        pa = atan(sin(H), tan(phi) * cos(c.dec) - sin(c.dec) * cos(H));
-
-    h = h + astroRefraction(h); // altitude correction for refraction
-
-    return {
-        azimuth: azimuth(H, phi, c.dec),
-        altitude: h,
-        distance: c.dist,
-        parallacticAngle: pa
-    };
-};
-
-
-// calculations for illumination parameters of the moon,
-// based on http://idlastro.gsfc.nasa.gov/ftp/pro/astro/mphase.pro formulas and
-// Chapter 48 of "Astronomical Algorithms" 2nd edition by Jean Meeus (Willmann-Bell, Richmond) 1998.
-
-SunCalc.getMoonIllumination = function (date) {
-
-    var d = toDays(date || new Date()),
-        s = sunCoords(d),
-        m = moonCoords(d),
-
-        sdist = 149598000, // distance from Earth to Sun in km
-
-        phi = acos(sin(s.dec) * sin(m.dec) + cos(s.dec) * cos(m.dec) * cos(s.ra - m.ra)),
-        inc = atan(sdist * sin(phi), m.dist - sdist * cos(phi)),
-        angle = atan(cos(s.dec) * sin(s.ra - m.ra), sin(s.dec) * cos(m.dec) -
-                cos(s.dec) * sin(m.dec) * cos(s.ra - m.ra));
-
-    return {
-        fraction: (1 + cos(inc)) / 2,
-        phase: 0.5 + 0.5 * inc * (angle < 0 ? -1 : 1) / Math.PI,
-        angle: angle
-    };
-};
-
-
-function hoursLater(date, h) {
-    return new Date(date.valueOf() + h * dayMs / 24);
-}
-
-// calculations for moon rise/set times are based on http://www.stargazing.net/kepler/moonrise.html article
-
-SunCalc.getMoonTimes = function (date, lat, lng, inUTC) {
-    var t = new Date(date);
-    if (inUTC) t.setUTCHours(0, 0, 0, 0);
-    else t.setHours(0, 0, 0, 0);
-
-    var hc = 0.133 * rad,
-        h0 = SunCalc.getMoonPosition(t, lat, lng).altitude - hc,
-        h1, h2, rise, set, a, b, xe, ye, d, roots, x1, x2, dx;
-
-    // go in 2-hour chunks, each time seeing if a 3-point quadratic curve crosses zero (which means rise or set)
-    for (var i = 1; i <= 24; i += 2) {
-        h1 = SunCalc.getMoonPosition(hoursLater(t, i), lat, lng).altitude - hc;
-        h2 = SunCalc.getMoonPosition(hoursLater(t, i + 1), lat, lng).altitude - hc;
-
-        a = (h0 + h2) / 2 - h1;
-        b = (h2 - h0) / 2;
-        xe = -b / (2 * a);
-        ye = (a * xe + b) * xe + h1;
-        d = b * b - 4 * a * h1;
-        roots = 0;
-
-        if (d >= 0) {
-            dx = Math.sqrt(d) / (Math.abs(a) * 2);
-            x1 = xe - dx;
-            x2 = xe + dx;
-            if (Math.abs(x1) <= 1) roots++;
-            if (Math.abs(x2) <= 1) roots++;
-            if (x1 < -1) x1 = x2;
-        }
-
-        if (roots === 1) {
-            if (h0 < 0) rise = i + x1;
-            else set = i + x1;
-
-        } else if (roots === 2) {
-            rise = i + (ye < 0 ? x2 : x1);
-            set = i + (ye < 0 ? x1 : x2);
-        }
-
-        if (rise && set) break;
-
-        h0 = h2;
-    }
-
-    var result = {};
-
-    if (rise) result.rise = hoursLater(t, rise);
-    if (set) result.set = hoursLater(t, set);
-
-    if (!rise && !set) result[ye > 0 ? 'alwaysUp' : 'alwaysDown'] = true;
-
-    return result;
-};
-
-
-// export as Node module / AMD module / browser variable
-if (typeof exports === 'object' && typeof module !== 'undefined') module.exports = SunCalc;
-else if (typeof define === 'function' && define.amd) define(SunCalc);
-else window.SunCalc = SunCalc;
-
-}());
-
-</script>
+<script src="astronomy.browser.min.js"></script>
 <script>
 /* ===== Motore: marea astronomica, sole/luna, indice di pescosità, specie ===== */
 (function (root) {
   'use strict';
-  const SC = root.SunCalc || (typeof require === 'function' ? require('./npmchk/package/suncalc.js') : null);
+  // Astronomy Engine (D. Cross, MIT): sole e luna con precisione verificata sull'Osservatorio Navale USA
+  const AE = root.Astronomy || (typeof require === 'function' ? require('./astro/ae/package/astronomy.js') : null);
   const D2R = Math.PI / 180;
   const norm = a => ((a % 360) + 360) % 360;
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
@@ -810,7 +505,12 @@ else window.SunCalc = SunCalc;
     return h;
   }
   // livello in uno spot: la marea arriva "anticipo" minuti prima che a Punta Salute
-  const tideAt = (ms, spot) => saluteLevel(ms + (spot && spot.anticipo != null ? spot.anticipo : 47) * MIN);
+  // effetto meteo (sovralzo) ricavato dalla previsione ufficiale del Centro Maree; null = solo marea astronomica
+  let SURGE = null;
+  const setSurge = f => { SURGE = typeof f === 'function' ? f : null; };
+  const tideAstro = (ms, spot) => saluteLevel(ms + (spot && spot.anticipo != null ? spot.anticipo : 47) * MIN);
+  // il sovralzo è riferito a Punta della Salute: allo spot vale con lo stesso anticipo della marea
+  const tideAt = (ms, spot) => { const t = ms + (spot && spot.anticipo != null ? spot.anticipo : 47) * MIN; return saluteLevel(t) + (SURGE ? SURGE(t) : 0); };
   const tideRate = (ms, spot) => (tideAt(ms + 15 * MIN, spot) - tideAt(ms - 15 * MIN, spot)) * 2; // cm/h
 
   function tideExtremes(fromMs, toMs, spot) {
@@ -834,40 +534,44 @@ else window.SunCalc = SunCalc;
     return r > 0 ? 'montante' : 'calante';
   }
 
-  /* --- Sole e luna (SunCalc) --- */
+  /* --- Sole e luna (Astronomy Engine) --- */
   function dayStart(ms) { const d = new Date(ms); d.setHours(0, 0, 0, 0); return d.getTime(); }
   const dayCache = new Map();
   function dayAstro(ms, lat, lon) {
     const d0 = dayStart(ms), key = d0 + '|' + lat.toFixed(3) + '|' + lon.toFixed(3);
     if (dayCache.has(key)) return dayCache.get(key);
-    const mid = new Date(d0 + 12 * HOUR);
-    const st = SC.getTimes(mid, lat, lon);
-    const mt = SC.getMoonTimes(new Date(d0), lat, lon);
-    // transiti lunari (superiore e inferiore) da campionamento dell'altezza, finestra allargata
+    const obs = new AE.Observer(lat, lon, 0);
+    const T = t => (t ? Math.round(t.date.getTime() / MIN) * MIN : null); // al minuto più vicino, come le effemeridi ufficiali
+    const riseSet = (body, dir, from) => { try { return T(AE.SearchRiseSet(body, obs, dir, new Date(from), 1)); } catch (e) { return null; } };
+    const inDay = t => (t != null && t >= d0 && t < d0 + DAY ? t : null);
+    const sunrise = riseSet(AE.Body.Sun, +1, d0), sunset = riseSet(AE.Body.Sun, -1, d0);
+    let dawn = null, dusk = null;
+    try { dawn = T(AE.SearchAltitude(AE.Body.Sun, obs, +1, new Date(d0), 1, -6)); dusk = T(AE.SearchAltitude(AE.Body.Sun, obs, -1, new Date(d0), 1, -6)); } catch (e) { /* niente crepuscolo */ }
+    const moonrise = inDay(riseSet(AE.Body.Moon, +1, d0)), moonset = inDay(riseSet(AE.Body.Moon, -1, d0));
+    // transiti lunari al meridiano (superiore e inferiore) in una finestra allargata
     const trans = [];
-    const step = 10 * MIN;
-    let a0 = SC.getMoonPosition(new Date(d0 - 13 * HOUR - step), lat, lon).altitude;
-    let a1 = SC.getMoonPosition(new Date(d0 - 13 * HOUR), lat, lon).altitude;
-    for (let t = d0 - 13 * HOUR + step; t <= d0 + 37 * HOUR; t += step) {
-      const a2 = SC.getMoonPosition(new Date(t), lat, lon).altitude;
-      if (a1 > a0 && a1 >= a2) trans.push({ t: t - step, tipo: 'sup' });
-      if (a1 < a0 && a1 <= a2) trans.push({ t: t - step, tipo: 'inf' });
-      a0 = a1; a1 = a2;
+    for (const [ha, tipo] of [[0, 'sup'], [12, 'inf']]) {
+      let t = d0 - 13 * HOUR;
+      for (let k = 0; k < 3; k++) {
+        let r; try { r = AE.SearchHourAngle(AE.Body.Moon, obs, ha, new Date(t), +1); } catch (e) { break; }
+        const tt = Math.round(r.time.date.getTime() / MIN) * MIN;
+        if (tt > d0 + 37 * HOUR) break;
+        trans.push({ t: tt, tipo }); t = tt + HOUR;
+      }
     }
-    const ill = SC.getMoonIllumination(mid);
+    trans.sort((a, b) => a.t - b.t);
+    const mid = new Date(d0 + 12 * HOUR);
+    const phase = norm(AE.MoonPhase(mid)) / 360;
+    const fraction = AE.Illumination(AE.Body.Moon, mid).phase_fraction;
     const rs = [];
-    // sorgere/tramonto della luna anche dei giorni adiacenti per i periodi minori a cavallo della mezzanotte
     for (const off of [-1, 0, 1]) {
-      const m = off === 0 ? mt : SC.getMoonTimes(new Date(d0 + off * DAY), lat, lon);
-      if (m.rise) rs.push({ t: m.rise.getTime(), tipo: 'sorge' });
-      if (m.set) rs.push({ t: m.set.getTime(), tipo: 'tramonta' });
+      const a = d0 + off * DAY;
+      const r1 = riseSet(AE.Body.Moon, +1, a), s1 = riseSet(AE.Body.Moon, -1, a);
+      if (r1 != null && r1 < a + DAY) rs.push({ t: r1, tipo: 'sorge' });
+      if (s1 != null && s1 < a + DAY) rs.push({ t: s1, tipo: 'tramonta' });
     }
-    const r = {
-      d0, sunrise: st.sunrise.getTime(), sunset: st.sunset.getTime(), dawn: st.dawn.getTime(), dusk: st.dusk.getTime(),
-      moonrise: mt.rise ? mt.rise.getTime() : null, moonset: mt.set ? mt.set.getTime() : null,
-      transits: trans, moonEvents: rs, phase: ill.phase, fraction: ill.fraction,
-    };
-    // periodi solunari del giorno
+    const r = { d0, sunrise, sunset, dawn, dusk, moonrise, moonset, transits: trans, moonEvents: rs, phase, fraction };
+    // periodi solunari: maggiori ±1 h attorno ai transiti, minori ±40 min attorno a sorgere e tramonto della luna
     r.maggiori = trans.filter(x => x.t >= d0 - HOUR && x.t < d0 + DAY + HOUR).map(x => ({ da: x.t - HOUR, a: x.t + HOUR, centro: x.t, tipo: x.tipo }));
     r.minori = rs.filter(x => x.t >= d0 - 30 * MIN && x.t < d0 + DAY + 30 * MIN).map(x => ({ da: x.t - 40 * MIN, a: x.t + 40 * MIN, centro: x.t, tipo: x.tipo }));
     dayCache.set(key, r);
@@ -1071,7 +775,7 @@ else window.SunCalc = SunCalc;
     const g = (t0, s) => Math.exp(-0.5 * Math.pow((ms - t0) / (s * MIN), 2));
     const isDay = ms > da.sunrise && ms < da.sunset;
     const cLuce = Math.max(g(da.sunrise, 55), g(da.sunset, 55), isDay ? 0.22 : 0.5);
-    const ph = SC.getMoonIllumination(new Date(ms)).phase;
+    const ph = da.phase;
     const cLuna = 0.3 + 0.7 * Math.abs(Math.cos(2 * Math.PI * ph));
     const month = new Date(ms).getMonth();
     const cStag = 0.15 + 0.85 * seasonScore(month);
@@ -1120,7 +824,7 @@ else window.SunCalc = SunCalc;
   }
 
   const API = {
-    saluteLevel, tideAt, tideRate, tideExtremes, tidePhase, dayAstro, dayStart, moonPhaseName, moonBucket,
+    saluteLevel, tideAt, tideAstro, setSurge, tideRate, tideExtremes, tidePhase, dayAstro, dayStart, moonPhaseName, moonBucket,
     lightBucket, solunarAt, scoreAt, dayCurve, bestWindows, speciesNow, label, learnModel, personalModifier,
     SPECIE, TECNICHE, COND, EXPECT, W, condModifier, seasonScore, MIN, HOUR, DAY,
   };
@@ -1136,12 +840,12 @@ const $ = (s, el) => (el || document).querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const app = $('#app');
 
-if (!window.PE || !window.SunCalc) {
+if (!window.PE || !window.Astronomy) {
   app.innerHTML = '<div class="card"><h2>Calcoli astronomici non caricati</h2><p class="muted">Non sono riuscito a caricare la libreria per sole e luna. Controlla la connessione e riapri la pagina.</p></div>';
   return;
 }
 const { MIN, HOUR, DAY } = PE;
-const APP_VERSION = '1.2';
+const APP_VERSION = '1.3';
 
 /* ---------- formattazione ---------- */
 const TZ = { hour: '2-digit', minute: '2-digit' };
@@ -1261,29 +965,63 @@ const distM = (la1, lo1, la2, lo2) => {
 };
 const fmtDist = m => m < 1000 ? Math.round(m / 10) * 10 + ' m' : (m / 1000).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + ' km';
 const f1 = x => (Math.round(x * 10) / 10).toLocaleString('it-IT', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+// Modelli scelti: ItaliaMeteo ICON-2I (servizio meteo nazionale, 2,2 km) per i primi 2-3 giorni, poi ECMWF IFS 9 km;
+// onde DWD EWAM (5 km, Europa) poi ECMWF WAM 9 km; temperatura del mare Météo-France; portata del Brenta GloFAS (Copernicus).
+const MODELLI = { meteo: ['italia_meteo_arpae_icon_2i', 'ecmwf_ifs'], onde: ['dwd_ewam', 'ecmwf_wam'] };
+const NOMI_MODELLO = { italia_meteo_arpae_icon_2i: 'ICON-2I ItaliaMeteo', ecmwf_ifs: 'ECMWF IFS', dwd_ewam: 'DWD EWAM', ecmwf_wam: 'ECMWF WAM' };
+const BRENTA = { lat: 45.175, lon: 12.275 }; // cella del modello GloFAS sulla foce del Brenta
+function mergeModels(hourly, vars, models) {
+  // per ogni ora prende il primo modello (in ordine di preferenza) che ha il dato
+  const out = { time: hourly.time, src: [] };
+  for (const v of vars) out[v] = [];
+  for (let i = 0; i < hourly.time.length; i++) {
+    let src = null;
+    for (const m of models) {
+      const k = vars[0] + '_' + m;
+      if (hourly[k] && hourly[k][i] != null) { src = m; break; }
+    }
+    out.src.push(src);
+    for (const v of vars) {
+      let val = null;
+      if (src) { const a = hourly[v + '_' + src]; val = a ? a[i] : null; }
+      if (val == null) for (const m of models) { const a = hourly[v + '_' + m]; if (a && a[i] != null) { val = a[i]; break; } }
+      out[v].push(val);
+    }
+  }
+  return out;
+}
 const Meteo = {
-  KEY: 'montante:meteo', d: null, h: null, cond: [], t0: 0, stamp: 0, loading: false, failed: false,
+  KEY: 'montante:meteo2', d: null, h: null, cond: [], t0: 0, stamp: 0, loading: false, failed: false,
   load() {
-    try { this.d = JSON.parse(localStorage.getItem(this.KEY) || 'null'); } catch (e) { this.d = null; }
+    try { localStorage.removeItem('montante:meteo'); this.d = JSON.parse(localStorage.getItem(this.KEY) || 'null'); } catch (e) { this.d = null; }
     this.index();
   },
   index() {
-    this.h = null; this.cond = []; this.stamp = 0;
+    this.h = null; this.cond = []; this.stamp = 0; this.fiume = null;
     const d = this.d;
-    if (!d || !d.f || !d.f.hourly || !d.f.hourly.time) return;
-    const f = d.f.hourly, m = d.m && d.m.hourly && d.m.hourly.time ? d.m.hourly : null;
-    const mi = m ? new Map(m.time.map((t, i) => [t, i])) : null;
+    if (!d || !d.f || !d.f.time) return;
+    const f = d.f, m = d.m && d.m.time ? d.m : null, sst = d.s && d.s.time ? d.s : null;
+    const mi = m ? new Map(m.time.map((t, i) => [t, i])) : null, si = sst ? new Map(sst.time.map((t, i) => [t, i])) : null;
     const g = (arr, i) => (arr && i != null && arr[i] != null ? arr[i] : null);
     this.h = f.time.map((t, i) => {
-      const j = mi ? mi.get(t) : null;
+      const j = mi ? mi.get(t) : null, k = si ? si.get(t) : null;
       return {
         t: t * 1000, temp: g(f.temperature_2m, i), p: g(f.pressure_msl, i), ws: g(f.wind_speed_10m, i), wd: g(f.wind_direction_10m, i),
-        wg: g(f.wind_gusts_10m, i), wc: g(f.weather_code, i), pp: g(f.precipitation_probability, i),
-        wh: m ? g(m.wave_height, j) : null, wp: m ? g(m.wave_period, j) : null, sst: m ? g(m.sea_surface_temperature, j) : null,
+        wg: g(f.wind_gusts_10m, i), wc: g(f.weather_code, i), pr: g(f.precipitation, i), mod: f.src[i],
+        wh: m ? g(m.wave_height, j) : null, wp: m ? g(m.wave_period, j) : null, wdir: m ? g(m.wave_direction, j) : null, modOnde: m ? m.src[j] : null,
+        sst: sst ? g(sst.sea_surface_temperature, k) : null,
       };
     });
     this.t0 = this.h.length ? this.h[0].t : 0;
     this.stamp = d.at || 0;
+    // portata del Brenta: confronto con la mediana degli ultimi 60 giorni
+    if (d.r && d.r.time && d.r.river_discharge && distM(d.lat, d.lon, BRENTA.lat, BRENTA.lon) < 30000) {
+      const q = d.r.river_discharge, tt = d.r.time.map(x => x * 1000), now = Date.now();
+      let iNow = -1; for (let i = 0; i < tt.length; i++) if (tt[i] <= now) iNow = i;
+      const past = q.slice(0, Math.max(0, iNow + 1)).filter(x => x != null).sort((a, b) => a - b);
+      const med = past.length ? past[past.length >> 1] : null;
+      if (med && iNow >= 0 && q[iNow] != null) this.fiume = { q: q[iNow], med, ratio: q[iNow] / med, serie: q.map((v, i) => ({ t: tt[i], q: v })), iNow };
+    }
     this.cond = this.h.map((h, i) => this.derive(i));
   },
   derive(i) {
@@ -1301,6 +1039,9 @@ const Meteo = {
       if (mx >= 0.7 && h.wh <= 0.7 * mx && w3 != null && h.wh < w3 && h.wh >= 0.12) c.mare = 'scaduta';
       else c.mare = h.wh < 0.25 ? 'calmo' : h.wh < 0.75 ? 'pocomosso' : 'mosso';
     }
+    // Brenta sopra il normale (mediana degli ultimi 60 giorni): stima dell'acqua alle foci e sotto costa.
+    // Il dato è giornaliero; quello che segni tu a mano ha sempre la precedenza.
+    if (this.fiume) { const r = this.fiume.ratio; if (r >= 2) c.acqua = 'torbida'; else if (r >= 1.4) c.acqua = 'velata'; }
     return c;
   },
   idx(ms) { if (!this.h || !this.h.length) return -1; const i = Math.round((ms - this.t0) / HOUR); return i >= 0 && i < this.h.length ? i : -1; },
@@ -1309,21 +1050,92 @@ const Meteo = {
   near(sp) { const d = this.d; return !!(d && this.h && distM(d.lat, d.lon, sp.lat, sp.lon) < 25000); },
   stale(sp) { const d = this.d; return !d || Date.now() - (d.at || 0) > 45 * MIN || distM(d.lat, d.lon, sp.lat, sp.lon) > 10000; },
   async refresh(sp, force) {
+    Uff.refresh(force);
     if (this.loading || (!force && !this.stale(sp))) return;
     if (!navigator.onLine) { this.failed = true; render(); return; }
     this.loading = true; this.failed = false; if (S.tab === 'oggi') render();
     const la = sp.lat.toFixed(4), lo = sp.lon.toFixed(4);
-    const fu = `https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&hourly=temperature_2m,pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,precipitation_probability&past_days=1&forecast_days=7&timeformat=unixtime&wind_speed_unit=kmh&timezone=GMT`;
-    const mu = `https://marine-api.open-meteo.com/v1/marine?latitude=${la}&longitude=${lo}&hourly=wave_height,wave_period,sea_surface_temperature&past_days=1&forecast_days=7&timeformat=unixtime&cell_selection=sea`;
+    const VARS_F = ['wind_speed_10m', 'wind_direction_10m', 'wind_gusts_10m', 'temperature_2m', 'pressure_msl', 'weather_code', 'precipitation'];
+    const VARS_M = ['wave_height', 'wave_period', 'wave_direction'];
+    const fu = `https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&hourly=${VARS_F.join(',')}&models=${MODELLI.meteo.join(',')}&past_days=1&forecast_days=7&timeformat=unixtime&wind_speed_unit=kmh&timezone=GMT`;
+    const mu = `https://marine-api.open-meteo.com/v1/marine?latitude=${la}&longitude=${lo}&hourly=${VARS_M.join(',')}&models=${MODELLI.onde.join(',')}&past_days=1&forecast_days=7&timeformat=unixtime&cell_selection=sea`;
+    const su = `https://marine-api.open-meteo.com/v1/marine?latitude=${la}&longitude=${lo}&hourly=sea_surface_temperature&past_days=1&forecast_days=7&timeformat=unixtime&cell_selection=sea`;
+    const ru = `https://flood-api.open-meteo.com/v1/flood?latitude=${BRENTA.lat}&longitude=${BRENTA.lon}&daily=river_discharge&past_days=60&forecast_days=7&timeformat=unixtime`;
     const get = async (u) => { const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 15000); try { const r = await fetch(u, { signal: ctl.signal }); if (!r.ok) throw new Error('http ' + r.status); return await r.json(); } finally { clearTimeout(tm); } };
     try {
-      const [f, m] = await Promise.all([get(fu), get(mu).catch(() => null)]);
+      const [f, m, s, r] = await Promise.all([get(fu), get(mu).catch(() => null), get(su).catch(() => null), get(ru).catch(() => null)]);
       if (!f || !f.hourly) throw new Error('vuoto');
-      this.d = { at: Date.now(), lat: sp.lat, lon: sp.lon, f, m };
+      this.d = {
+        at: Date.now(), lat: sp.lat, lon: sp.lon,
+        f: mergeModels(f.hourly, VARS_F, MODELLI.meteo),
+        m: m && m.hourly ? mergeModels(m.hourly, VARS_M, MODELLI.onde) : null,
+        s: s && s.hourly ? { time: s.hourly.time, sea_surface_temperature: s.hourly.sea_surface_temperature } : null,
+        r: r && r.daily ? { time: r.daily.time, river_discharge: r.daily.river_discharge } : null,
+      };
       try { localStorage.setItem(this.KEY, JSON.stringify(this.d)); } catch (e) { /* senza cache: pazienza */ }
       this.index(); curveCache.clear();
     } catch (e) { this.failed = true; }
     finally { this.loading = false; render(); }
+  },
+};
+
+/* ---------- dati ufficiali del Centro Maree di Venezia (previsione, livelli, vento, onde) ---------- */
+const UFF_URL = 'https://raw.githubusercontent.com/marcogeombonomo-cloud/Montante/dati/venezia.json';
+const Uff = {
+  KEY: 'montante:uff', d: null, loading: false, stamp: 0, surge: null,
+  load() { try { this.d = JSON.parse(localStorage.getItem(this.KEY) || 'null'); } catch (e) { this.d = null; } this.build(); },
+  fresh() { return !!(this.d && Date.now() - this.d.creato < 3 * HOUR); },
+  async refresh(force) {
+    if (this.loading || !navigator.onLine) return;
+    if (!force && this.d && Date.now() - (this.d._preso || 0) < 15 * MIN) return;
+    this.loading = true;
+    try {
+      const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 12000);
+      const r = await fetch(UFF_URL + '?t=' + Math.floor(Date.now() / (5 * MIN)), { signal: ctl.signal, cache: 'no-store' });
+      clearTimeout(tm);
+      if (!r.ok) throw new Error('http ' + r.status);
+      const d = await r.json();
+      if (!d || !d.creato) throw new Error('vuoto');
+      d._preso = Date.now();
+      this.d = d;
+      try { localStorage.setItem(this.KEY, JSON.stringify(d)); } catch (e) { /* niente cache */ }
+      this.build(); curveCache.clear(); render();
+    } catch (e) { /* resta l'ultima copia o la sola marea astronomica */ }
+    finally { this.loading = false; }
+  },
+  station(kind, id) { const d = this.d; return d && d[kind] && d[kind][id] ? d[kind][id] : null; },
+  vicino(sp) { return !!(this.d && sp && distM(sp.lat, sp.lon, 45.2283, 12.3125) < 35000); }, // stazioni utili per Chioggia e Sottomarina
+  fine() { return this.pts && this.pts.length ? this.pts[this.pts.length - 1].t : 0; },
+  build() {
+    // sovralzo meteorologico = previsione ufficiale - marea astronomica, agli estremi; in mezzo si interpola.
+    // Dopo l'ultima previsione si torna gradualmente alla sola marea astronomica in 24 ore.
+    // In più l'ultima misura a Diga sud Chioggia corregge le ore vicine (lo scarto si dimezza ogni 3 ore circa).
+    this.surge = null; this.stamp = 0;
+    const d = this.d;
+    const est = d && d.previsione && d.previsione.estremi ? d.previsione.estremi.filter(e => e.t && isFinite(e.cm)) : [];
+    const pts = est.map(e => ({ t: e.t, s: e.cm - PE.saluteLevel(e.t) }));
+    let obs = null;
+    const ds = this.station('livelli', '1024'); // Diga sud Chioggia
+    if (ds && Date.now() - ds.t < 6 * HOUR) obs = ds;
+    if (!pts.length && !obs) { PE.setSurge(null); return; }
+    const base = t => {
+      if (!pts.length) return 0;
+      if (t <= pts[0].t) return pts[0].s * Math.max(0, 1 - (pts[0].t - t) / (12 * HOUR));
+      const last = pts[pts.length - 1];
+      if (t >= last.t) return last.s * Math.max(0, 1 - (t - last.t) / (24 * HOUR));
+      for (let i = 1; i < pts.length; i++) if (t <= pts[i].t) { const a = pts[i - 1], b = pts[i]; return a.s + (b.s - a.s) * (t - a.t) / (b.t - a.t); }
+      return 0;
+    };
+    let res = 0, tObs = 0;
+    if (obs) {
+      // la misura è alla diga (anticipo 47 min): la riporto all'ora di Punta della Salute
+      tObs = obs.t + 47 * MIN;
+      res = obs.cm - (PE.saluteLevel(tObs) + base(tObs));
+    }
+    const f = t => base(t) + (obs ? res * Math.exp(-Math.abs(t - tObs) / (4.3 * HOUR)) : 0);
+    this.surge = f; this.obs = obs; this.res = res; this.pts = pts;
+    this.stamp = (d.creato || 0);
+    PE.setSurge(f);
   },
 };
 const VENTI = ['Tramontana', 'Bora', 'Levante', 'Scirocco', 'Ostro', 'Libeccio', 'Ponente', 'Maestrale'];
@@ -1387,7 +1199,7 @@ function condAt(ms, sp) {
 }
 function curve(d0, sp) {
   const m = getModel();
-  const key = [d0, sp.id, sp.lat, sp.lon, sp.anticipo, Meteo.stamp, JSON.stringify(condToday()), m.n].join('|');
+  const key = [d0, sp.id, sp.lat, sp.lon, sp.anticipo, sp.tipo, Meteo.stamp, Uff.stamp, Uff.res, JSON.stringify(condToday()), m.n].join('|');
   let c = curveCache.get(key);
   if (!c) {
     if (curveCache.size > 80) curveCache.clear();
@@ -1626,6 +1438,30 @@ function readoutHTML(t, sp) {
   return `<span><b class="num">${fT(t)}</b></span><span>indice <b class="num" style="color:${qCol(s.v)}">${s.v}</b></span><span>marea <b class="num">${cm(h)}</b> ${ph}</span>` +
     (w && w.ws != null ? `<span>vento <b class="num">${Math.round(w.ws)}</b> km/h</span>` : '') + (w && w.wh != null ? `<span>onde <b class="num">${f1(w.wh)}</b> m</span>` : '');
 }
+// costa di Sottomarina e Chioggia: il mare aperto è verso est (circa 100°)
+const COSTA = { lat: 45.21, lon: 12.31, mare: 100 };
+function ventoCosta(wd, sp) {
+  if (wd == null || !sp || sp.tipo === 'laguna' || distM(sp.lat, sp.lon, COSTA.lat, COSTA.lon) > 30000) return '';
+  const d = Math.abs(((wd - COSTA.mare) % 360 + 540) % 360 - 180);
+  return d <= 55 ? 'di mare' : d >= 125 ? 'di terra' : 'lungo costa';
+}
+// misure in tempo reale delle stazioni del Centro Maree vicine a Chioggia
+function liveHTML(sp) {
+  if (!Uff.vicino(sp)) return '';
+  const now = Date.now(), ok = x => x && now - x.t < 3 * HOUR ? x : null;
+  const v = ok(Uff.station('vento', '1024')) || ok(Uff.station('vento', '1033')), o = ok(Uff.station('onde', '1021'));
+  const l = ok(Uff.station('livelli', '1024')), a = ok(Uff.station('acqua', '1025'));
+  if (!v && !o && !l && !a) return '';
+  const tMax = Math.max(...[v, o, l, a].filter(Boolean).map(x => x.t));
+  const tile = (k, val, sub) => `<div class="mt"><span class="k">${k}</span><span class="v num">${val}</span><span class="s">${sub}</span></div>`;
+  const rel = v ? ventoCosta(v.dir, sp) : '';
+  return `<div class="livebox"><p class="flabel live"><span class="dotlive"></span>Misurato alle ${fT(tMax)} · Centro Maree</p><div class="meteo">` +
+    (v ? tile(`<span class="arr">${arrowSVG(v.dir, 13)}</span>Vento`, `${Math.round(v.kmh)} <small>km/h</small>`, `${esc(windName(v.dir))}${v.raffica_kmh != null ? ' · raffiche ' + Math.round(v.raffica_kmh) : ''}${rel ? ' · ' + rel : ''}<br>${esc(v.nome === 'Diga sud Chioggia' ? 'diga sud di Chioggia' : v.nome)}`) : '') +
+    (o ? tile('Onde al largo', `${f1(o.hs)} <small>m</small>`, `max ${f1(o.hmax)} m<br>piattaforma Acqua Alta`) : '') +
+    (l ? tile('Livello', `${l.cm > 0 ? '+' : ''}${Math.round(l.cm)} <small>cm</small>`, `${(() => { const d = Math.round(l.cm - PE.tideAstro(l.t, { anticipo: 47 })); return d ? 'effetto meteo ' + (d > 0 ? '+' : '−') + Math.abs(d) + ' cm' : 'come la marea astronomica'; })()}<br>diga sud di Chioggia`) : '') +
+    (a ? tile('Acqua in laguna', `${f1(a.c)} <small>°C</small>`, 'Punta della Salute') : '') +
+    '</div></div>';
+}
 function isNight(ms, sp) { const da = PE.dayAstro(ms, sp.lat, sp.lon); return ms < da.sunrise || ms > da.sunset; }
 function meteoCard(refMs, sp, isToday, d0) {
   const man = isToday ? condToday() : {};
@@ -1637,9 +1473,9 @@ function meteoCard(refMs, sp, isToday, d0) {
     const c = Meteo.cond[Meteo.idx(refMs)] || {};
     const dp = Meteo.dp3(refMs);
     const tile = (ic, k, v, s) => `<div class="mt"><span class="k">${ic}${k}</span><span class="v num">${v}</span><span class="s">${s}</span></div>`;
-    body += `<div class="wx">${wxIcon(h.wc, isNight(refMs, sp), 30)}<span>${isToday ? 'Adesso' : 'Alle ' + fT(refMs)} <b class="num">${h.temp != null ? Math.round(h.temp) + ' °C' : ''}</b> · ${esc(wxName(h.wc))}${h.pp != null ? ` · pioggia ${h.pp}%` : ''}</span></div>`;
+    body += `<div class="wx">${wxIcon(h.wc, isNight(refMs, sp), 30)}<span>${isToday ? 'Adesso' : 'Alle ' + fT(refMs)} <b class="num">${h.temp != null ? Math.round(h.temp) + ' °C' : ''}</b> · ${esc(wxName(h.wc))}${h.pr != null && h.pr >= 0.1 ? ` · pioggia ${f1(h.pr)} mm/h` : ''}</span></div>`;
     body += '<div class="meteo">' +
-      tile(h.wd != null ? `<span class="arr">${arrowSVG(h.wd, 13)}</span>` : '', 'Vento', h.ws != null ? `${Math.round(h.ws)} <small>km/h</small>` : '—', h.wd != null ? `${windName(h.wd)}${h.wg != null ? ' · raffiche ' + Math.round(h.wg) : ''}` : '') +
+      tile(h.wd != null ? `<span class="arr">${arrowSVG(h.wd, 13)}</span>` : '', 'Vento', h.ws != null ? `${Math.round(h.ws)} <small>km/h</small>` : '—', h.wd != null ? `${windName(h.wd)}${h.wg != null ? ' · raffiche ' + Math.round(h.wg) : ''}${ventoCosta(h.wd, sp) ? ' · ' + ventoCosta(h.wd, sp) : ''}` : '') +
       tile('', 'Onde', h.wh != null ? `${f1(h.wh)} <small>m</small>` : '—', h.wh != null ? `${PE.COND.mare[c.mare] || ''}${h.wp != null ? ' · periodo ' + Math.round(h.wp) + ' s' : ''}` : 'non disponibile') +
       tile('', 'Acqua', h.sst != null ? `${f1(h.sst)} <small>°C</small>` : '—', 'temperatura del mare') +
       tile('', 'Pressione', h.p != null ? `${Math.round(h.p)} <small>hPa</small>` : '—', c.pressione ? `${PE.COND.pressione[c.pressione].toLowerCase()}${dp != null ? ` (${dp >= 0 ? '+' : '−'}${f1(Math.abs(dp))} in 3 h)` : ''}` : '') +
@@ -1655,9 +1491,12 @@ function meteoCard(refMs, sp, isToday, d0) {
   } else {
     body += `<p class="hint">${Meteo.loading ? 'Sto scaricando le previsioni…' : !navigator.onLine ? 'Sei offline: le previsioni arrivano appena torni in rete. Intanto puoi segnare tu le condizioni.' : Meteo.failed ? 'Previsioni non raggiungibili in questo momento. Riprova o segna tu le condizioni.' : 'Previsioni non ancora scaricate.'}</p>`;
   }
+  if (isToday) body += liveHTML(sp);
+  const fi = Meteo.near(sp) ? Meteo.fiume : null;
+  if (fi && fi.ratio >= 1.4) body += `<div class="notebox"><b>Brenta ${fi.ratio >= 2 ? 'in piena' : 'sopra il normale'}</b>: ${Math.round(fi.q)} m³/s, ${f1(fi.ratio)} volte la portata tipica degli ultimi due mesi. Acqua ${fi.ratio >= 2 ? 'torbida' : 'velata'} probabile alla foce e lungo la spiaggia.</div>`;
   let manual = '';
   if (isToday) {
-    manual += seg('acqua', 'Acqua (la vedi solo tu)');
+    manual += seg('acqua', fi && fi.ratio >= 1.4 ? 'Acqua (correggi la stima se la vedi diversa)' : 'Acqua (la vedi solo tu)');
     const over = seg('mare', 'Mare') + seg('vento', 'Vento') + seg('pressione', 'Pressione');
     manual += h ? `<details class="fix"${['mare', 'vento', 'pressione'].some(k => man[k]) ? ' open' : ''}><summary>Correggi le condizioni di oggi</summary><div class="fixin">${over}</div></details>` : over;
   }
@@ -1668,7 +1507,7 @@ function meteoCard(refMs, sp, isToday, d0) {
     ${isToday && cMod ? `<p class="hint" style="margin:0">Effetto sull'indice di adesso: <b class="num" style="color:var(--accent)">${cMod > 0 ? '+' : ''}${cMod}</b></p>` : ''}
     ${manual}
     <div class="links"><a href="https://www.comune.venezia.it/maree" target="_blank" rel="noopener">Centro Maree ↗</a><a href="https://www.windy.com/?${sp.lat.toFixed(3)},${sp.lon.toFixed(3)},11" target="_blank" rel="noopener">Windy ↗</a></div>
-    <p class="hint">Previsioni Open-Meteo per lo spot selezionato.</p>
+    <p class="hint">${h ? `Meteo: ${esc(NOMI_MODELLO[h.mod] || 'Open-Meteo')}${h.modOnde ? ` · onde: ${esc(NOMI_MODELLO[h.modOnde] || '')}` : ''} · via Open-Meteo.` : 'Previsioni via Open-Meteo.'} <button class="linkbtn" data-act="settings" data-focus="fonti">Fonti</button></p>
   </section>`;
 }
 function renderOggi() {
@@ -1706,6 +1545,7 @@ function renderOggi() {
 
   const tidesHTML = ext.map(e => `<div class="tide"><span class="k">${e.alta ? UP + 'Alta' : DOWN + 'Bassa'}</span><span class="t num">${fT(e.t)}</span><span class="h num">${cm(e.h)}</span></div>`).join('');
   let nowTide = '';
+  const uffFine = Uff.fine(), uffOn = !!Uff.surge && uffFine > 0 && d0 + 6 * HOUR < uffFine;
   if (isToday) { const h = PE.tideAt(now, sp), r = PE.tideRate(now, sp); nowTide = `<div class="tidenow">${Math.abs(r) < 2.5 ? '<span style="color:var(--tide)">●</span>' : `<span style="color:var(--tide)">${r > 0 ? UP : DOWN}</span>`}<span>Adesso <b class="num">${cm(h)}</b> · ${Math.abs(r) < 2.5 ? 'marea ferma' : (r > 0 ? 'cresce' : 'cala') + ' di ' + Math.abs(Math.round(r)) + ' cm/h'}</span></div>`; }
 
   const sol = [...da.maggiori.map(p => ({ t: p.centro, k: 'M' })), ...da.minori.map(p => ({ t: p.centro, k: 'm' }))].filter(p => p.t >= d0 && p.t < d0 + DAY).sort((a, b) => a.t - b.t);
@@ -1751,7 +1591,8 @@ function renderOggi() {
     <div class="card-h"><h2>Marea</h2><span class="eyebrow">${esc(sp.nome)}</span></div>
     <div class="tides">${tidesHTML}</div>
     ${nowTide}
-    <p class="hint">Marea astronomica in cm sullo zero di Punta della Salute, anticipata di ${esc(sp.anticipo)} min per questo spot. Vento e pressione possono spostarla anche di decine di centimetri.</p>
+    ${isToday && Uff.surge ? (() => { const sg = Math.round(PE.tideAt(now, sp) - PE.tideAstro(now, sp)); return `<p class="small" style="margin:0;font-weight:600">${sg ? `Vento e pressione adesso: <b class="num">${sg > 0 ? '+' : '−'}${Math.abs(sg)} cm</b> rispetto alla marea astronomica.` : 'Adesso vento e pressione non spostano la marea.'}</p>`; })() : ''}
+    <p class="hint">${uffOn ? `Previsione ufficiale del Centro Maree di Venezia (emessa ${esc(fDay(Uff.d.previsione.emessa))} alle ${fT(Uff.d.previsione.emessa)}), corretta con l'ultima misura alla diga sud di Chioggia e riportata a questo spot con ${esc(sp.anticipo)} min di anticipo. In cm sullo zero di Punta della Salute.${uffFine < d0 + DAY ? ` La previsione arriva fino alle ${fT(uffFine)}, poi resta la marea astronomica.` : ''}` : `Marea astronomica in cm sullo zero di Punta della Salute, anticipata di ${esc(sp.anticipo)} min per questo spot. ${Uff.surge ? 'Oltre i giorni coperti dalla previsione ufficiale vento e pressione' : 'Vento e pressione'} possono spostarla anche di decine di centimetri.`}</p>
   </section>
 
   <section class="card">
@@ -2353,6 +2194,15 @@ async function applyBackup(d) {
   Store.replaceAll({ root, spots: d.spots, uscite: d.uscite });
   curveCache.clear();
 }
+const FONTI_DATI = [
+  { cosa: 'Vento, pioggia, temperatura, pressione', chi: 'ItaliaMeteo ICON-2I (2 km) per i primi giorni, poi ECMWF IFS (9 km)', nota: 'ICON-2I è il modello del servizio meteorologico nazionale, gestito da Arpae; ECMWF è il centro europeo. Via Open-Meteo, licenza CC BY 4.0', url: 'https://open-meteo.com/' },
+  { cosa: 'Onde', chi: 'DWD EWAM (5 km) poi ECMWF WAM', nota: 'Modello d\'onda europeo del servizio meteo tedesco. Via Open-Meteo, CC BY 4.0', url: 'https://open-meteo.com/en/docs/marine-weather-api' },
+  { cosa: 'Temperatura del mare', chi: 'Météo-France via Open-Meteo', nota: 'CC BY 4.0', url: 'https://open-meteo.com/en/docs/marine-weather-api' },
+  { cosa: 'Previsione di marea e misure dal vivo', chi: 'Centro Previsioni e Segnalazioni Maree, Comune di Venezia', nota: 'Previsione ufficiale a Punta della Salute; vento e livello alla diga sud di Chioggia, onde alla piattaforma Acqua Alta. Open data IODL 2.0, aggiornati ogni 20 minuti', url: 'https://www.comune.venezia.it/it/content/centro-previsioni-e-segnalazioni-maree' },
+  { cosa: 'Marea astronomica', chi: 'Costanti armoniche del Centro Maree per Punta della Salute', nota: 'Calcolata sul telefono, funziona anche offline', url: '' },
+  { cosa: 'Portata del Brenta', chi: 'GloFAS, servizio Copernicus per le piene', nota: 'Via Open-Meteo, CC BY 4.0. Serve a stimare l\'acqua torbida alla foce', url: 'https://open-meteo.com/en/docs/flood-api' },
+  { cosa: 'Sole e luna', chi: 'Astronomy Engine', nota: 'Orari al minuto, verificati con lo U.S. Naval Observatory. Licenza MIT', url: 'https://github.com/cosinekitty/astronomy' },
+];
 function openSettings(focus) {
   const nS = S.spots.length, nU = S.uscite.length;
   sheet(top('Impostazioni') + `
@@ -2369,9 +2219,11 @@ function openSettings(focus) {
       <details class="fix"><summary>Oppure incolla il testo del backup</summary><div class="fixin"><div class="field"><label for="imp-text">Testo del backup</label><textarea id="imp-text" rows="4" placeholder='{"app":"montante", …}'></textarea></div><button class="btn" type="button" data-x="paste">Usa questo testo</button></div></details>
       <div id="impconf"></div>
     </section>
-    <section class="sgroup">
-      <h3>Previsioni</h3>
-      <p class="hint">${Meteo.d ? `Ultimo aggiornamento ${fDay(Meteo.d.at)} alle ${fT(Meteo.d.at)}.` : 'Non ancora scaricate.'} Dati meteo e mare di Open-Meteo, marea calcolata sul telefono anche senza rete.</p>
+    <section class="sgroup" id="fonti">
+      <h3>Fonti dei dati</h3>
+      <p class="hint">Previsioni: ${Meteo.d ? `aggiornate ${fDay(Meteo.d.at)} alle ${fT(Meteo.d.at)}` : 'non ancora scaricate'}. Centro Maree: ${Uff.d ? `dati delle ${fT(Uff.d.creato)} di ${fDay(Uff.d.creato)}` : 'non ancora scaricati'}.</p>
+      <div class="fonti">${FONTI_DATI.map(f => `<div class="fonte"><b>${esc(f.cosa)}</b><span>${esc(f.chi)}</span><small>${esc(f.nota)}${f.url ? ` · <a href="${esc(f.url)}" target="_blank" rel="noopener">sito ↗</a>` : ''}</small></div>`).join('')}</div>
+      <p class="hint">Senza rete la marea astronomica, il sole e la luna si calcolano comunque sul telefono.</p>
       <button class="btn block" type="button" data-x="meteo">Aggiorna adesso</button>
     </section>
     <p class="hint" style="text-align:center">Montante · versione ${APP_VERSION}</p>`, el => {
@@ -2423,6 +2275,7 @@ function openSettings(focus) {
       }
     });
     if (focus === 'import') setTimeout(() => $('#impbox', el).scrollIntoView({ block: 'start' }), 60);
+    if (focus === 'fonti') setTimeout(() => $('#fonti', el).scrollIntoView({ block: 'start' }), 60);
   });
 }
 
@@ -2505,6 +2358,7 @@ setInterval(() => { if (!$('#sheet-root').firstChild && S.tab === 'oggi' && S.da
 Store.load();
 Meteo.load();
 Taxa.load();
+Uff.load();
 route();
 Meteo.refresh(currentSpot());
 document.addEventListener('visibilitychange', () => {

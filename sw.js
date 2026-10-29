@@ -1,6 +1,6 @@
 /* Montante – service worker: app disponibile anche senza rete */
-const VERSION = 'montante-1.2';
-const SHELL = ['./', './index.html', './manifest.webmanifest', './leaflet.js', './leaflet.css', './icon-180.png', './icon-192.png', './icon-512.png',
+const VERSION = 'montante-1.3';
+const SHELL = ['./', './index.html', './manifest.webmanifest', './leaflet.js', './leaflet.css', './astronomy.browser.min.js', './icon-180.png', './icon-192.png', './icon-512.png',
   './manrope-500.woff2', './manrope-600.woff2', './manrope-700.woff2', './manrope-800.woff2', './unbounded-600.woff2', './unbounded-700.woff2'].concat(["./foto/alletterato.jpg", "./foto/amia.jpg", "./foto/calamaro.jpg", "./foto/cefalo.jpg", "./foto/corvina.jpg", "./foto/fasciato.jpg", "./foto/fragolino.jpg", "./foto/gallinella.jpg", "./foto/go.jpg", "./foto/lanzardo.jpg", "./foto/leccia.jpg", "./foto/mafrone.jpg", "./foto/mormora.jpg", "./foto/ombrina.jpg", "./foto/orata.jpg", "./foto/pagro.jpg", "./foto/palamita.jpg", "./foto/passera.jpg", "./foto/pizzuto.jpg", "./foto/rombo.jpg", "./foto/sarago.jpg", "./foto/seppia.jpg", "./foto/serra.jpg", "./foto/sgombro.jpg", "./foto/sogliola.jpg", "./foto/sparaglione.jpg", "./foto/spigola.jpg", "./foto/sugarello.jpg", "./foto/tracina.jpg", "./foto/triglia.jpg"]);
 
 self.addEventListener('install', e => {
