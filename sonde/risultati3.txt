@@ -1,0 +1,668 @@
+### https://dati.venezia.it/?q=content/cpsm-dati-meteomarini-laguna-e-litorale-veneziano
+stato 200 | text/html; charset=utf-8 | CORS None | 60501 char
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
+<html lang="Italian" dir="ltr" version="HTML+RDFa 1.1"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/
+
+LINK DATASET:
+  /?q=cerca_dataset
+  /?q=formato/csv
+  /?q=formato/geojson
+  /?q=formato/json
+  /?q=formato/xml
+  /?q=formato/ziptxt
+  cerca_dataset
+  http://dati.venezia.it/sites/default/files/dataset/opendata/as2026est.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/as2026min.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/as2027est.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/as2027min.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/ascnr2026est.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/ascnr2026min.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/ascnr2027est.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/ascnr2027min.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/fluna2025.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/fluna2026.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/livello.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/onde_laguna.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/onde_mare.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/pressione.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/previsione.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/radiazione.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/tempacqua.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/temparia.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/umidita.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata/vento.json
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/burano.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/chioggia_digaS.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/chioggia_porto.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/chioggia_vigo.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/cnr.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/fusina.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/lido_diga_faro.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/malamocco_digaN.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/malamocco_porto.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/meda.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/misericordia.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/murano.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/pcavalli.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/saline.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/salute_canale.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/salute_giudecca.zip
+  http://dati.venezia.it/sites/default/files/dataset/opendata_archivio/san_giorgio.zip
+  https://dati.venezia.it/sites/default/files/favicon_0.ico
+### http://dati.venezia.it/sites/default/files/dataset/opendata/as2026est.json
+stato 200 | application/json | CORS None | 93817 char
+[{"DATA": "2026-01-01 02:35:00", "VALORE": "30.0", "minmax": "min"}, {"DATA": "2026-01-01 08:35:00", "VALORE": "76.0", "minmax": "max"}, {"DATA": "2026-01-01 15:50:00", "VALORE": "-21.0", "minmax": "min"}, {"DATA": "2026-01-01 22:40:00", "VALORE": "59.0", "minmax": "max"}, {"DATA": "2026-01-02 03:35:00", "VALORE": "29.0", "minmax": "min"}, {"DATA": "2026-01-02 09:20:00", "VALORE": "77.0", "minmax": "max"}, {"DATA": "2026-01-02 16:25:00", "VALORE": "-26.0", "minmax": "min"}, {"DATA": "2026-01-02 23:15:00", "VALORE": "64.0", "minmax": "max"}, {"DATA": "2026-01-03 04:20:00", "VALORE": "27.0", "minmax": "min"}, {"DATA": "2026-01-03 10:00:00", "VALORE": "77.0", "minmax": "max"}, {"DATA": "2026-01-03 17:00:00", "VALORE": "-28.0", "minmax": "min"}, {"DATA": "2026-01-03 23:55:00", "VALORE": "68.0", "minmax": "max"}, {"DATA": "2026-01-04 05:10:00", "VALORE": "26.0", "minmax": "min"}, {"DATA": "2026-01-04 10:40:00", "VALORE": "75.0", "minmax": "max"}, {"DATA": "2026-01-04 17:35:00", "VALORE": "-27.0", "minmax": "min"}, {"DATA": "2026-01-05 00:30:00", "VALORE": "70.0", "minmax": "max"}, {"DATA": "2026-01-05 05:50:00", "VALORE": "25.0", "minmax": "min"}, {"DATA": "2026-01-05 11:15:00", "VALORE": "71.0", "minmax": "max"}, {"DATA": "2026-01-05 18:10:00", "VALORE": "-24.0", "minmax": "min"}, {"DATA": "2026-01-06 01:00:00", "VALORE": "71.0", "minmax": "max"}, {"DATA": "2026-01-06 06:35:00", "VALORE": "25.0", "minmax": "min"}, {"DATA": "2026-01-06 11:55:00", "VALORE": "66.0", "minmax": "max"}, {"DATA": "2026-01-06 18:40:00", "VALORE": "-18.0", "minmax": "min"}, {"DATA": "2026-01-07 01:35:00", "VALORE": "70.0", "minmax": "max"}, {"DATA": "2026-01-07 07:15:00", "VALORE": "25.0", "minmax": "min"}, {"DATA": "2026-01-07 12:30:00", "VALORE": "59.0", "minmax": "max"}, {"DATA": "2026-01-07 19:1
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/as2026min.json
+stato 200 | application/json | CORS None | 800000 char
+[{"data": "2026-01-01 00:00:00", "valore": "43.0"}, {"data": "2026-01-01 00:05:00", "valore": "42.0"}, {"data": "2026-01-01 00:10:00", "valore": "42.0"}, {"data": "2026-01-01 00:15:00", "valore": "41.0"}, {"data": "2026-01-01 00:20:00", "valore": "40.0"}, {"data": "2026-01-01 00:25:00", "valore": "40.0"}, {"data": "2026-01-01 00:30:00", "valore": "39.0"}, {"data": "2026-01-01 00:35:00", "valore": "39.0"}, {"data": "2026-01-01 00:40:00", "valore": "38.0"}, {"data": "2026-01-01 00:45:00", "valore": "37.0"}, {"data": "2026-01-01 00:50:00", "valore": "37.0"}, {"data": "2026-01-01 00:55:00", "valore": "36.0"}, {"data": "2026-01-01 01:00:00", "valore": "36.0"}, {"data": "2026-01-01 01:05:00", "valore": "35.0"}, {"data": "2026-01-01 01:10:00", "valore": "35.0"}, {"data": "2026-01-01 01:15:00", "valore": "34.0"}, {"data": "2026-01-01 01:20:00", "valore": "34.0"}, {"data": "2026-01-01 01:25:00", "valore": "33.0"}, {"data": "2026-01-01 01:30:00", "valore": "33.0"}, {"data": "2026-01-01 01:35:00", "valore": "32.0"}, {"data": "2026-01-01 01:40:00", "valore": "32.0"}, {"data": "2026-01-01 01:45:00", "valore": "32.0"}, {"data": "2026-01-01 01:50:00", "valore": "31.0"}, {"data": "2026-01-01 01:55:00", "valore": "31.0"}, {"data": "2026-01-01 02:00:00", "valore": "31.0"}, {"data": "2026-01-01 02:05:00", "valore": "30.0"}, {"data": "2026-01-01 02:10:00", "valore": "30.0"}, {"data": "2026-01-01 02:15:00", "valore": "30.0"}, {"data": "2026-01-01 02:20:00", "valore": "30.0"}, {"data": "2026-01-01 02:25:00", "valore": "30.0"}, {"data": "2026-01-01 02:30:00", "valore": "30.0"}, {"data": "2026-01-01 02:35:00", "valore": "30.0"}, {"data": "2026-01-01 02:40:00", "valore": "30.0"}, {"data": "2026-01-01 02:45:00", "valore": "30.0"}, {"data": "2026-01-01 02:50:00", "valore": "30.0"}, {"data": "2026
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/as2027est.json
+stato 200 | application/json | CORS None | 93212 char
+[{"DATA": "2027-01-01 05:10:00", "VALORE": "64.0", "minmax": "max"}, {"DATA": "2027-01-01 13:10:00", "VALORE": "12.0", "minmax": "min"}, {"DATA": "2027-01-01 19:30:00", "VALORE": "31.0", "minmax": "max"}, {"DATA": "2027-01-01 22:35:00", "VALORE": "28.0", "minmax": "min"}, {"DATA": "2027-01-02 06:10:00", "VALORE": "64.0", "minmax": "max"}, {"DATA": "2027-01-02 14:10:00", "VALORE": "4.0", "minmax": "min"}, {"DATA": "2027-01-02 21:20:00", "VALORE": "38.0", "minmax": "max"}, {"DATA": "2027-01-03 00:25:00", "VALORE": "35.0", "minmax": "min"}, {"DATA": "2027-01-03 07:05:00", "VALORE": "65.0", "minmax": "max"}, {"DATA": "2027-01-03 14:55:00", "VALORE": "-4.0", "minmax": "min"}, {"DATA": "2027-01-03 22:05:00", "VALORE": "45.0", "minmax": "max"}, {"DATA": "2027-01-04 01:55:00", "VALORE": "37.0", "minmax": "min"}, {"DATA": "2027-01-04 07:55:00", "VALORE": "67.0", "minmax": "max"}, {"DATA": "2027-01-04 15:30:00", "VALORE": "-11.0", "minmax": "min"}, {"DATA": "2027-01-04 22:35:00", "VALORE": "51.0", "minmax": "max"}, {"DATA": "2027-01-05 02:55:00", "VALORE": "37.0", "minmax": "min"}, {"DATA": "2027-01-05 08:35:00", "VALORE": "68.0", "minmax": "max"}, {"DATA": "2027-01-05 16:00:00", "VALORE": "-16.0", "minmax": "min"}, {"DATA": "2027-01-05 23:05:00", "VALORE": "56.0", "minmax": "max"}, {"DATA": "2027-01-06 03:40:00", "VALORE": "35.0", "minmax": "min"}, {"DATA": "2027-01-06 09:15:00", "VALORE": "69.0", "minmax": "max"}, {"DATA": "2027-01-06 16:30:00", "VALORE": "-19.0", "minmax": "min"}, {"DATA": "2027-01-06 23:30:00", "VALORE": "60.0", "minmax": "max"}, {"DATA": "2027-01-07 04:20:00", "VALORE": "33.0", "minmax": "min"}, {"DATA": "2027-01-07 09:45:00", "VALORE": "70.0", "minmax": "max"}, {"DATA": "2027-01-07 16:55:00", "VALORE": "-21.0", "minmax": "min"}, {"DATA": "2027-01-07 23:50:0
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/as2027min.json
+stato 200 | application/json | CORS None | 800000 char
+[{"data": "2027-01-01 00:00:00", "valore": "29.0"}, {"data": "2027-01-01 00:05:00", "valore": "29.0"}, {"data": "2027-01-01 00:10:00", "valore": "30.0"}, {"data": "2027-01-01 00:15:00", "valore": "31.0"}, {"data": "2027-01-01 00:20:00", "valore": "31.0"}, {"data": "2027-01-01 00:25:00", "valore": "32.0"}, {"data": "2027-01-01 00:30:00", "valore": "33.0"}, {"data": "2027-01-01 00:35:00", "valore": "33.0"}, {"data": "2027-01-01 00:40:00", "valore": "34.0"}, {"data": "2027-01-01 00:45:00", "valore": "35.0"}, {"data": "2027-01-01 00:50:00", "valore": "36.0"}, {"data": "2027-01-01 00:55:00", "valore": "36.0"}, {"data": "2027-01-01 01:00:00", "valore": "37.0"}, {"data": "2027-01-01 01:05:00", "valore": "38.0"}, {"data": "2027-01-01 01:10:00", "valore": "39.0"}, {"data": "2027-01-01 01:15:00", "valore": "40.0"}, {"data": "2027-01-01 01:20:00", "valore": "40.0"}, {"data": "2027-01-01 01:25:00", "valore": "41.0"}, {"data": "2027-01-01 01:30:00", "valore": "42.0"}, {"data": "2027-01-01 01:35:00", "valore": "43.0"}, {"data": "2027-01-01 01:40:00", "valore": "43.0"}, {"data": "2027-01-01 01:45:00", "valore": "44.0"}, {"data": "2027-01-01 01:50:00", "valore": "45.0"}, {"data": "2027-01-01 01:55:00", "valore": "46.0"}, {"data": "2027-01-01 02:00:00", "valore": "47.0"}, {"data": "2027-01-01 02:05:00", "valore": "47.0"}, {"data": "2027-01-01 02:10:00", "valore": "48.0"}, {"data": "2027-01-01 02:15:00", "valore": "49.0"}, {"data": "2027-01-01 02:20:00", "valore": "50.0"}, {"data": "2027-01-01 02:25:00", "valore": "50.0"}, {"data": "2027-01-01 02:30:00", "valore": "51.0"}, {"data": "2027-01-01 02:35:00", "valore": "52.0"}, {"data": "2027-01-01 02:40:00", "valore": "53.0"}, {"data": "2027-01-01 02:45:00", "valore": "53.0"}, {"data": "2027-01-01 02:50:00", "valore": "54.0"}, {"data": "2027
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/ascnr2026est.json
+stato 200 | application/json | CORS None | 93140 char
+[{"data": "2026-01-01 01:45:00", "valore": "31.0", "minmax": "min"}, {"data": "2026-01-01 07:40:00", "valore": "77.0", "minmax": "max"}, {"data": "2026-01-01 14:55:00", "valore": "-23.0", "minmax": "min"}, {"data": "2026-01-01 21:45:00", "valore": "60.0", "minmax": "max"}, {"data": "2026-01-02 02:40:00", "valore": "30.0", "minmax": "min"}, {"data": "2026-01-02 08:20:00", "valore": "79.0", "minmax": "max"}, {"data": "2026-01-02 15:30:00", "valore": "-28.0", "minmax": "min"}, {"data": "2026-01-02 22:25:00", "valore": "66.0", "minmax": "max"}, {"data": "2026-01-03 03:25:00", "valore": "28.0", "minmax": "min"}, {"data": "2026-01-03 09:05:00", "valore": "78.0", "minmax": "max"}, {"data": "2026-01-03 16:05:00", "valore": "-30.0", "minmax": "min"}, {"data": "2026-01-03 23:00:00", "valore": "69.0", "minmax": "max"}, {"data": "2026-01-04 04:10:00", "valore": "27.0", "minmax": "min"}, {"data": "2026-01-04 09:40:00", "valore": "76.0", "minmax": "max"}, {"data": "2026-01-04 16:40:00", "valore": "-29.0", "minmax": "min"}, {"data": "2026-01-04 23:35:00", "valore": "71.0", "minmax": "max"}, {"data": "2026-01-05 04:55:00", "valore": "26.0", "minmax": "min"}, {"data": "2026-01-05 10:20:00", "valore": "72.0", "minmax": "max"}, {"data": "2026-01-05 17:10:00", "valore": "-25.0", "minmax": "min"}, {"data": "2026-01-06 00:05:00", "valore": "72.0", "minmax": "max"}, {"data": "2026-01-06 05:35:00", "valore": "26.0", "minmax": "min"}, {"data": "2026-01-06 10:55:00", "valore": "66.0", "minmax": "max"}, {"data": "2026-01-06 17:45:00", "valore": "-19.0", "minmax": "min"}, {"data": "2026-01-07 00:40:00", "valore": "71.0", "minmax": "max"}, {"data": "2026-01-07 06:20:00", "valore": "26.0", "minmax": "min"}, {"data": "2026-01-07 11:30:00", "valore": "59.0", "minmax": "max"}, {"data": "2026-01-07 18:1
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/ascnr2026min.json
+stato 200 | application/json | CORS None | 800000 char
+[{"data": "2026-01-01 00:00:00", "valore": "38.0"}, {"data": "2026-01-01 00:05:00", "valore": "37.0"}, {"data": "2026-01-01 00:10:00", "valore": "36.0"}, {"data": "2026-01-01 00:15:00", "valore": "36.0"}, {"data": "2026-01-01 00:20:00", "valore": "35.0"}, {"data": "2026-01-01 00:25:00", "valore": "35.0"}, {"data": "2026-01-01 00:30:00", "valore": "34.0"}, {"data": "2026-01-01 00:35:00", "valore": "34.0"}, {"data": "2026-01-01 00:40:00", "valore": "33.0"}, {"data": "2026-01-01 00:45:00", "valore": "33.0"}, {"data": "2026-01-01 00:50:00", "valore": "33.0"}, {"data": "2026-01-01 00:55:00", "valore": "32.0"}, {"data": "2026-01-01 01:00:00", "valore": "32.0"}, {"data": "2026-01-01 01:05:00", "valore": "32.0"}, {"data": "2026-01-01 01:10:00", "valore": "32.0"}, {"data": "2026-01-01 01:15:00", "valore": "31.0"}, {"data": "2026-01-01 01:20:00", "valore": "31.0"}, {"data": "2026-01-01 01:25:00", "valore": "31.0"}, {"data": "2026-01-01 01:30:00", "valore": "31.0"}, {"data": "2026-01-01 01:35:00", "valore": "31.0"}, {"data": "2026-01-01 01:40:00", "valore": "31.0"}, {"data": "2026-01-01 01:45:00", "valore": "31.0"}, {"data": "2026-01-01 01:50:00", "valore": "31.0"}, {"data": "2026-01-01 01:55:00", "valore": "31.0"}, {"data": "2026-01-01 02:00:00", "valore": "31.0"}, {"data": "2026-01-01 02:05:00", "valore": "31.0"}, {"data": "2026-01-01 02:10:00", "valore": "31.0"}, {"data": "2026-01-01 02:15:00", "valore": "32.0"}, {"data": "2026-01-01 02:20:00", "valore": "32.0"}, {"data": "2026-01-01 02:25:00", "valore": "32.0"}, {"data": "2026-01-01 02:30:00", "valore": "32.0"}, {"data": "2026-01-01 02:35:00", "valore": "33.0"}, {"data": "2026-01-01 02:40:00", "valore": "33.0"}, {"data": "2026-01-01 02:45:00", "valore": "34.0"}, {"data": "2026-01-01 02:50:00", "valore": "34.0"}, {"data": "2026
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/ascnr2027est.json
+stato 200 | application/json | CORS None | 93220 char
+[{"data": "2027-01-01 04:15:00", "valore": "65.0", "minmax": "max"}, {"data": "2027-01-01 12:25:00", "valore": "12.0", "minmax": "min"}, {"data": "2027-01-01 19:00:00", "valore": "31.0", "minmax": "max"}, {"data": "2027-01-01 21:35:00", "valore": "30.0", "minmax": "min"}, {"data": "2027-01-02 05:20:00", "valore": "65.0", "minmax": "max"}, {"data": "2027-01-02 13:20:00", "valore": "3.0", "minmax": "min"}, {"data": "2027-01-02 20:35:00", "valore": "39.0", "minmax": "max"}, {"data": "2027-01-02 23:40:00", "valore": "36.0", "minmax": "min"}, {"data": "2027-01-03 06:15:00", "valore": "66.0", "minmax": "max"}, {"data": "2027-01-03 14:00:00", "valore": "-6.0", "minmax": "min"}, {"data": "2027-01-03 21:15:00", "valore": "47.0", "minmax": "max"}, {"data": "2027-01-04 01:10:00", "valore": "38.0", "minmax": "min"}, {"data": "2027-01-04 07:00:00", "valore": "67.0", "minmax": "max"}, {"data": "2027-01-04 14:35:00", "valore": "-12.0", "minmax": "min"}, {"data": "2027-01-04 21:45:00", "valore": "53.0", "minmax": "max"}, {"data": "2027-01-05 02:05:00", "valore": "38.0", "minmax": "min"}, {"data": "2027-01-05 07:40:00", "valore": "69.0", "minmax": "max"}, {"data": "2027-01-05 15:05:00", "valore": "-18.0", "minmax": "min"}, {"data": "2027-01-05 22:10:00", "valore": "58.0", "minmax": "max"}, {"data": "2027-01-06 02:50:00", "valore": "36.0", "minmax": "min"}, {"data": "2027-01-06 08:15:00", "valore": "70.0", "minmax": "max"}, {"data": "2027-01-06 15:35:00", "valore": "-21.0", "minmax": "min"}, {"data": "2027-01-06 22:35:00", "valore": "61.0", "minmax": "max"}, {"data": "2027-01-07 03:25:00", "valore": "34.0", "minmax": "min"}, {"data": "2027-01-07 08:50:00", "valore": "71.0", "minmax": "max"}, {"data": "2027-01-07 16:00:00", "valore": "-23.0", "minmax": "min"}, {"data": "2027-01-07 22:55:0
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/ascnr2027min.json
+stato 200 | application/json | CORS None | 800000 char
+[{"data": "2027-01-01 00:00:00", "valore": "37.0"}, {"data": "2027-01-01 00:05:00", "valore": "38.0"}, {"data": "2027-01-01 00:10:00", "valore": "39.0"}, {"data": "2027-01-01 00:15:00", "valore": "39.0"}, {"data": "2027-01-01 00:20:00", "valore": "40.0"}, {"data": "2027-01-01 00:25:00", "valore": "41.0"}, {"data": "2027-01-01 00:30:00", "valore": "42.0"}, {"data": "2027-01-01 00:35:00", "valore": "43.0"}, {"data": "2027-01-01 00:40:00", "valore": "43.0"}, {"data": "2027-01-01 00:45:00", "valore": "44.0"}, {"data": "2027-01-01 00:50:00", "valore": "45.0"}, {"data": "2027-01-01 00:55:00", "valore": "46.0"}, {"data": "2027-01-01 01:00:00", "valore": "46.0"}, {"data": "2027-01-01 01:05:00", "valore": "47.0"}, {"data": "2027-01-01 01:10:00", "valore": "48.0"}, {"data": "2027-01-01 01:15:00", "valore": "49.0"}, {"data": "2027-01-01 01:20:00", "valore": "49.0"}, {"data": "2027-01-01 01:25:00", "valore": "50.0"}, {"data": "2027-01-01 01:30:00", "valore": "51.0"}, {"data": "2027-01-01 01:35:00", "valore": "52.0"}, {"data": "2027-01-01 01:40:00", "valore": "52.0"}, {"data": "2027-01-01 01:45:00", "valore": "53.0"}, {"data": "2027-01-01 01:50:00", "valore": "54.0"}, {"data": "2027-01-01 01:55:00", "valore": "54.0"}, {"data": "2027-01-01 02:00:00", "valore": "55.0"}, {"data": "2027-01-01 02:05:00", "valore": "56.0"}, {"data": "2027-01-01 02:10:00", "valore": "56.0"}, {"data": "2027-01-01 02:15:00", "valore": "57.0"}, {"data": "2027-01-01 02:20:00", "valore": "57.0"}, {"data": "2027-01-01 02:25:00", "valore": "58.0"}, {"data": "2027-01-01 02:30:00", "valore": "59.0"}, {"data": "2027-01-01 02:35:00", "valore": "59.0"}, {"data": "2027-01-01 02:40:00", "valore": "60.0"}, {"data": "2027-01-01 02:45:00", "valore": "60.0"}, {"data": "2027-01-01 02:50:00", "valore": "61.0"}, {"data": "2027
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/fluna2025.json
+stato 200 | application/json | CORS None | 3549 char
+[{"anno":"2025","fase":"LN","mese":"1","giorno":"29","orasolare":"13.37"},{"anno":"2025","fase":"LN","mese":"10","giorno":"21","orasolare":"13.26"},{"anno":"2025","fase":"LN","mese":"11","giorno":"20","orasolare":"7.48"},{"anno":"2025","fase":"LN","mese":"12","giorno":"20","orasolare":"2.44"},{"anno":"2025","fase":"LN","mese":"2","giorno":"28","orasolare":"1.47"},{"anno":"2025","fase":"LN","mese":"3","giorno":"29","orasolare":"12"},{"anno":"2025","fase":"LN","mese":"4","giorno":"27","orasolare":"20.33"},{"anno":"2025","fase":"LN","mese":"5","giorno":"27","orasolare":"4.04"},{"anno":"2025","fase":"LN","mese":"6","giorno":"25","orasolare":"11.34"},{"anno":"2025","fase":"LN","mese":"7","giorno":"24","orasolare":"20.12"},{"anno":"2025","fase":"LN","mese":"8","giorno":"23","orasolare":"7.07"},{"anno":"2025","fase":"LN","mese":"9","giorno":"21","orasolare":"20.55"},{"anno":"2025","fase":"LP","mese":"1","giorno":"13","orasolare":"23.28"},{"anno":"2025","fase":"LP","mese":"10","giorno":"7","orasolare":"4.49"},{"anno":"2025","fase":"LP","mese":"11","giorno":"5","orasolare":"14.2"},{"anno":"2025","fase":"LP","mese":"12","giorno":"5","orasolare":"0.15"},{"anno":"2025","fase":"LP","mese":"2","giorno":"12","orasolare":"14.54"},{"anno":"2025","fase":"LP","mese":"3","giorno":"14","orasolare":"7.56"},{"anno":"2025","fase":"LP","mese":"4","giorno":"13","orasolare":"1.24"},{"anno":"2025","fase":"LP","mese":"5","giorno":"12","orasolare":"17.58"},{"anno":"2025","fase":"LP","mese":"6","giorno":"11","orasolare":"8.46"},{"anno":"2025","fase":"LP","mese":"7","giorno":"10","orasolare":"21.39"},{"anno":"2025","fase":"LP","mese":"8","giorno":"9","orasolare":"8.57"},{"anno":"2025","fase":"LP","mese":"9","giorno":"7","orasolare":"19.11"},{"anno":"2025","fase":"PQ","mese":"1","giorno":"7","orasolare
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/fluna2026.json
+stato 200 | application/json | CORS None | 3623 char
+[{"anno":"2026","fase":"LN","mese":"1","giorno":"18","orasolare":"20.53"},{"anno":"2026","fase":"LN","mese":"10","giorno":"10","orasolare":"16.5"},{"anno":"2026","fase":"LN","mese":"11","giorno":"9","orasolare":"8.03"},{"anno":"2026","fase":"LN","mese":"12","giorno":"9","orasolare":"1.53"},{"anno":"2026","fase":"LN","mese":"2","giorno":"17","orasolare":"13.03"},{"anno":"2026","fase":"LN","mese":"3","giorno":"19","orasolare":"2.26"},{"anno":"2026","fase":"LN","mese":"4","giorno":"17","orasolare":"12.54"},{"anno":"2026","fase":"LN","mese":"5","giorno":"16","orasolare":"21.03"},{"anno":"2026","fase":"LN","mese":"6","giorno":"15","orasolare":"3.56"},{"anno":"2026","fase":"LN","mese":"7","giorno":"14","orasolare":"10.45"},{"anno":"2026","fase":"LN","mese":"8","giorno":"12","orasolare":"18.38"},{"anno":"2026","fase":"LN","mese":"9","giorno":"11","orasolare":"4.27"},{"anno":"2026","fase":"LP","mese":"1","giorno":"3","orasolare":"11.04"},{"anno":"2026","fase":"LP","mese":"10","giorno":"26","orasolare":"5.13"},{"anno":"2026","fase":"LP","mese":"11","giorno":"24","orasolare":"15.55"},{"anno":"2026","fase":"LP","mese":"12","giorno":"24","orasolare":"2.3"},{"anno":"2026","fase":"LP","mese":"2","giorno":"1","orasolare":"23.11"},{"anno":"2026","fase":"LP","mese":"3","giorno":"3","orasolare":"12.39"},{"anno":"2026","fase":"LP","mese":"4","giorno":"2","orasolare":"3.13"},{"anno":"2026","fase":"LP","mese":"5","giorno":"1","orasolare":"18.25"},{"anno":"2026","fase":"LP","mese":"5","giorno":"31","orasolare":"9.47"},{"anno":"2026","fase":"LP","mese":"6","giorno":"30","orasolare":"0.58"},{"anno":"2026","fase":"LP","mese":"7","giorno":"29","orasolare":"15.37"},{"anno":"2026","fase":"LP","mese":"8","giorno":"28","orasolare":"5.2"},{"anno":"2026","fase":"LP","mese":"9","giorno":"26","orasolare
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/livello.json
+stato 200 | application/json | CORS None | 2453 char
+[{"ID_stazione": "1025", "stazione": "Punta Salute Canal Grande", "latDDN": "45.4311", "lonDDE": "12.3364", "nome_abbr": "PSalute", "data": "2026-10-29 22:00:00", "valore": "0.19 m"}, {"ID_stazione": "1030", "stazione": "Burano", "latDDN": "45.4875", "lonDDE": "12.4155", "nome_abbr": "Burano", "data": "2026-10-29 22:00:00", "valore": "0.1 m"}, {"ID_stazione": "1033", "stazione": "Chioggia porto", "latDDN": "45.2325", "lonDDE": "12.2806", "nome_abbr": "Ch_Porto", "data": "2026-10-29 22:00:00", "valore": "0.26 m"}, {"ID_stazione": "1036", "stazione": "Chioggia Vigo", "latDDN": "45.2236", "lonDDE": "12.2804", "nome_abbr": "Ch_Vigo", "data": "2026-10-29 22:00:00", "valore": "0.26 m"}, {"ID_stazione": "1023", "stazione": "Diga nord Malamocco", "latDDN": "45.3344", "lonDDE": "12.3414", "nome_abbr": "Mal_DN", "data": "2026-10-29 22:00:00", "valore": "0.34 m"}, {"ID_stazione": "1024", "stazione": "Diga sud Chioggia", "latDDN": "45.2283", "lonDDE": "12.3125", "nome_abbr": "Ch_DS", "data": "2026-10-29 22:00:00", "valore": "0.32 m"}, {"ID_stazione": "1022", "stazione": "Diga sud Lido", "latDDN": "45.42", "lonDDE": "12.424", "nome_abbr": "Lido_DS", "data": "2026-10-29 22:00:00", "valore": "0.34 m"}, {"ID_stazione": "1037", "stazione": "Fusina", "latDDN": "45.412", "lonDDE": "12.2615", "nome_abbr": "Fusina", "data": "2026-10-29 22:00:00", "valore": "0.16 m"}, {"ID_stazione": "1028", "stazione": "Laguna nord Saline", "latDDN": "45.4956", "lonDDE": "12.4719", "nome_abbr": "Saline", "data": "2026-10-29 22:00:00", "valore": "0.09 m"}, {"ID_stazione": "1032", "stazione": "Malamocco Porto", "latDDN": "45.3397", "lonDDE": "12.2919", "nome_abbr": "Mal_Porto", "data": "2026-10-29 22:00:00", "valore": "0.17 m"}, {"ID_stazione": "1021", "stazione": "Piattaforma Acqua Alta Siap", "latDDN": "45.
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/onde_laguna.json
+stato 200 | application/json | CORS None | 926 char
+[{"ID_stazione": "1025", "stazione": "Punta Salute Canal Grande", "latDDN": "45.4311", "lonDDE": "12.3364", "nome_abbr": "PSalute", "data": "2026-10-29 21:35:00", "valore": "0.1 m, 0.17 m"}, {"ID_stazione": "1026", "stazione": "Palazzo Cavalli", "latDDN": "45.4364", "lonDDE": "12.3336", "nome_abbr": "P_Cavalli", "data": "2026-10-29 21:35:00", "valore": "0.06 m, 0.13 m"}, {"ID_stazione": "1029", "stazione": "Venezia Misericordia", "latDDN": "45.4453", "lonDDE": "12.3361", "nome_abbr": "Misericordia", "data": "2026-10-29 21:35:00", "valore": "0.1 m, 0.27 m"}, {"ID_stazione": "1037", "stazione": "Fusina", "latDDN": "45.412", "lonDDE": "12.2615", "nome_abbr": "Fusina", "data": "2026-10-29 21:35:00", "valore": "0.05 m, 0.16 m"}, {"ID_stazione": "1045", "stazione": "Punta Salute Canale Giudecca", "latDDN": "45.4306", "lonDDE": "12.3364", "nome_abbr": "PS_Giud", "data": "2026-10-29 21:35:00", "valore": "0.22 m, 0.4 m"}]
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/onde_mare.json
+stato 200 | application/json | CORS None | 197 char
+[{"ID_stazione": "1021", "stazione": "Piattaforma Acqua Alta Siap", "latDDN": "45.3231", "lonDDE": "12.5147", "nome_abbr": "Piattaforma", "data": "2026-10-29 22:00:00", "valore": "1.13 m, 2.04 m"}]
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/pressione.json
+stato 200 | application/json | CORS None | 487 char
+[{"ID_stazione": "1046", "stazione": "Meda Abate", "latDDN": "45.25", "lonDDE": "12.7727", "nome_abbr": "M_Abate"}, {"ID_stazione": "1026", "stazione": "Palazzo Cavalli", "latDDN": "45.4364", "lonDDE": "12.3336", "nome_abbr": "P_Cavalli", "data": "2026-10-29 22:00:00", "valore": "1022.9 hPa"}, {"ID_stazione": "1021", "stazione": "Piattaforma Acqua Alta Siap", "latDDN": "45.3231", "lonDDE": "12.5147", "nome_abbr": "Piattaforma", "data": "2026-10-29 22:00:00", "valore": "1022.5 hPa"}]
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/previsione.json
+stato 200 | application/json | CORS None | 4113 char
+[{"DATA_PREVISIONE": "2026-10-29 17:00:00", "DATA_ESTREMALE": "2026-10-29 18:45:00", "TIPO_ESTREMALE": "min", "VALORE": "-20.0", "TITOLO": "Marea percepita per l'estremale del 29/10 alle 18:45", "VIGNETTA": "080.gif", "DEFAULT_VIGNETTA": "0"}, {"DATA_PREVISIONE": "2026-10-29 17:00:00", "DATA_ESTREMALE": "2026-10-30 01:30:00", "TIPO_ESTREMALE": "max", "VALORE": "50.0", "TITOLO": "Marea percepita per l'estremale del 30/10 alle 01:30", "VIGNETTA": "080.gif", "DEFAULT_VIGNETTA": "0"}, {"DATA_PREVISIONE": "2026-10-29 17:00:00", "DATA_ESTREMALE": "2026-10-30 06:15:00", "TIPO_ESTREMALE": "min", "VALORE": "35.0", "TITOLO": "Marea percepita per l'estremale del 30/10 alle 06:15", "VIGNETTA": "080.gif", "DEFAULT_VIGNETTA": "0"}, {"DATA_PREVISIONE": "2026-10-29 17:00:00", "DATA_ESTREMALE": "2026-10-30 12:10:00", "TIPO_ESTREMALE": "max", "VALORE": "70.0", "TITOLO": "Marea percepita per l'estremale del 30/10 alle 12:10", "VIGNETTA": "080.gif", "DEFAULT_VIGNETTA": "1"}, {"DATA_PREVISIONE": "2026-10-29 17:00:00", "DATA_ESTREMALE": "2026-10-30 19:35:00", "TIPO_ESTREMALE": "min", "VALORE": "-10.0", "TITOLO": "Marea percepita per l'estremale del 30/10 alle 19:35", "VIGNETTA": "080.gif", "DEFAULT_VIGNETTA": "0"}, {"DATA_PREVISIONE": "2026-10-29 17:00:00", "DATA_ESTREMALE": "2026-10-31 02:50:00", "TIPO_ESTREMALE": "max", "VALORE": "50.0", "TITOLO": "Marea percepita per l'estremale del 31/10 alle 02:50", "VIGNETTA": "080.gif", "DEFAULT_VIGNETTA": "0"}, {"DATA_PREVISIONE": "2026-10-29 17:00:00", "DATA_ESTREMALE": "2026-10-31 07:15:00", "TIPO_ESTREMALE": "min", "VALORE": "35.0", "TITOLO": "Marea percepita per l'estremale del 31/10 alle 07:15", "VIGNETTA": "080.gif", "DEFAULT_VIGNETTA": "0"}, {"DATA_PREVISIONE": "2026-10-29 17:00:00", "DATA_ESTREMALE": "2026-10-31 12:50:00", "TIPO_ESTREMALE": "
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/radiazione.json
+stato 200 | application/json | CORS None | 284 char
+[{"ID_stazione": "1021", "stazione": "Piattaforma Acqua Alta Siap", "data": "2026-10-29 22:00:00", "valore": "0 W/mq"}, {"ID_stazione": "1026", "stazione": "Palazzo Cavalli", "data": "2026-10-29 22:00:00", "valore": "0 W/mq"}, {"ID_stazione": "1039", "stazione": "San Giorgio Isola"}]
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/tempacqua.json
+stato 200 | application/json | CORS None | 442 char
+[{"ID_stazione": "1025", "stazione": "Punta Salute Canal Grande", "latDDN": "45.4311", "lonDDE": "12.3364", "nome_abbr": "PSalute", "data": "2026-10-29 22:00:00", "valore": "16.9 \u00b0C"}, {"ID_stazione": "1046", "stazione": "Meda Abate", "latDDN": "45.25", "lonDDE": "12.7727", "nome_abbr": "M_Abate"}, {"ID_stazione": "1021", "stazione": "Piattaforma Acqua Alta Siap", "latDDN": "45.3231", "lonDDE": "12.5147", "nome_abbr": "Piattaforma"}]
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/temparia.json
+stato 200 | application/json | CORS None | 615 char
+[{"ID_stazione": "1046", "stazione": "Meda Abate", "latDDN": "45.25", "lonDDE": "12.7727", "nome_abbr": "M_Abate"}, {"ID_stazione": "1026", "stazione": "Palazzo Cavalli", "latDDN": "45.4364", "lonDDE": "12.3336", "nome_abbr": "P_Cavalli", "data": "2026-10-29 22:00:00", "valore": "15 \u00b0C"}, {"ID_stazione": "1021", "stazione": "Piattaforma Acqua Alta Siap", "latDDN": "45.3231", "lonDDE": "12.5147", "nome_abbr": "Piattaforma", "data": "2026-10-29 22:00:00", "valore": "17.8 \u00b0C"}, {"ID_stazione": "1039", "stazione": "San Giorgio Isola", "latDDN": "45.4283", "lonDDE": "12.3461", "nome_abbr": "S_Giorgio"}]
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/umidita.json
+stato 200 | application/json | CORS None | 650 char
+[{"ID_stazione": "1046", "stazione": "Meda Abate", "latDDN": "45.25", "lonDDE": "12.7727", "nome_abbr": "M_Abate"}, {"ID_stazione": "1026", "stazione": "Palazzo Cavalli", "latDDN": "45.4364", "lonDDE": "12.3336", "nome_abbr": "P_Cavalli", "data": "2026-10-29 22:00:00", "valore": "78 %"}, {"ID_stazione": "1021", "stazione": "Piattaforma Acqua Alta Siap", "latDDN": "45.3231", "lonDDE": "12.5147", "nome_abbr": "Piattaforma", "data": "2026-10-29 22:00:00", "valore": "65 %"}, {"ID_stazione": "1039", "stazione": "San Giorgio Isola", "latDDN": "45.4283", "lonDDE": "12.3461", "nome_abbr": "S_Giorgio", "data": "2026-10-29 22:00:00", "valore": "72 %"}]
+
+### http://dati.venezia.it/sites/default/files/dataset/opendata/vento.json
+stato 200 | application/json | CORS None | 2224 char
+[{"ID_stazione": "1021", "stazione": "Piattaforma Acqua Alta Siap", "data": "2026-10-29 22:00:00", "valore": "72 gradi, 10.3 m/s, 11.8 m/s"}, {"ID_stazione": "1024", "stazione": "Diga sud Chioggia", "data": "2026-10-29 22:00:00", "valore": "82 gradi, 8.4 m/s, 9.1 m/s"}, {"ID_stazione": "1028", "stazione": "Laguna nord Saline", "data": "2026-10-29 22:00:00", "valore": "56 gradi, 3.6 m/s, 4.5 m/s"}, {"ID_stazione": "1029", "stazione": "Venezia Misericordia", "data": "2026-10-29 22:00:00", "valore": "349 gradi, 1.7 m/s, 1.8 m/s"}, {"ID_stazione": "1032", "stazione": "Malamocco Porto", "data": "2026-10-29 22:00:00", "valore": "73 gradi, 6.1 m/s, 8.7 m/s"}, {"ID_stazione": "1033", "stazione": "Chioggia porto", "data": "2026-10-29 22:00:00", "valore": "96 gradi, 10.1 m/s, 11.7 m/s"}, {"ID_stazione": "1037", "stazione": "Fusina", "data": "2026-10-29 22:00:00", "valore": "10 gradi, 2.9 m/s, 3.5 m/s"}, {"ID_stazione": "1038", "stazione": "Diga Sud Lido Faro", "data": "2026-10-29 22:00:00", "valore": "68 gradi, 7.5 m/s, 9.6 m/s"}, {"ID_stazione": "1039", "stazione": "San Giorgio Isola", "data": "2026-10-29 22:00:00", "valore": "0 gradi, 2.7 m/s, 3.6 m/s"}, {"ID_stazione": "1046", "stazione": "Meda Abate"}, {"ID_stazione": "1047", "stazione": "Portuale_Marittima", "data": "2026-10-29 22:00:00", "valore": "47 gradi, 3.4 m/s, 3.6 m/s"}, {"ID_stazione": "1048", "stazione": "Portuale_SanServolo", "data": "2026-10-29 22:00:00", "valore": "6 gradi, 3.5 m/s, 3.8 m/s"}, {"ID_stazione": "1049", "stazione": "Portuale_SantAndrea", "data": "2026-10-29 22:00:00", "valore": "39 gradi, 2.1 m/s, 2.6 m/s"}, {"ID_stazione": "1051", "stazione": "Portuale_SanLeonardo", "data": "2026-10-29 22:00:00", "valore": "88 gradi, 8.2 m/s, 9.4 m/s"}, {"ID_stazione": "1052", "stazione": "Val_Da_Rio", "data": "20
+
+### https://www.venezia.isprambiente.it/ispra/webgis/marea.php
+stato 200 | text/html; charset=UTF-8 | CORS None | 4588 char
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>ISPRA Servizio Laguna di Venezia - Tempo reale</title>
+<link rel="shortcut icon" href="../favicon.ico" />
+<link rel="stylesheet" type="text/css" href="../css/960.css?v=2" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/typography.css?v=2" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="temporeale2.css?v=4" charset="utf-8" />
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+<script language="javascript">
+    $( function() {
+
+	$(".stazione").tooltip();
+
+      } );
+	
+	</script>
+
+<!--[if IE]>
+	<link rel="stylesheet" href="../css/ie.css?v=2" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<!--[if lt IE 7]>
+	<link rel="stylesheet" href="../css/ie6.css?v=2" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+</head>
+
+<body>
+<div id="mappa2">
+	<div id="mareaCA"><div title="CanalAncora" class="stazione ">4 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaCC"><div title="Cavallino Centro" class="stazione ">2 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaCD"><div title="Cavallino Darsena" class="stazione ">31 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaCH"><div title="Chioggia Vigo" class="stazione ">25 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaDS"><div title="Lido Diga Sud (RMN)" class="stazione ">31 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaFR"><div title="Faro Rocchetta" class="stazione ">20 <img src="../images/low.gif" alt="" /></div></div>
+	
+	<div id="mareaGB"><div title="Grassab�" class="stazione ">-2 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaMA"><div title="Marghera" class="stazione ">15 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaMB"><div title="Meda Bocca Lido" class="stazione ">23 <img src="../images/low.gif" alt="" /></div></div>
+	
+	<div id="mareaMU"><div title="Murano" class="stazione ">11 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaNM"><div title="Malamocco Diga Nord" class="stazione ">33 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaPB"><div title="Petta de B�" class="stazione ">10 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaPS"><div title="Punta della Salute" class="stazione ">19 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaSC"><div title="Chioggia Diga Sud" class="stazione ">32 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaSG"><div title="San Giorgio in Alga" class="stazione ">17 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaSE"><div title="Sant'Erasmo" class="stazione ">18 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaSN"><div title="San Nicolo'" class="stazione ">20 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaVA"><div title="Valle Averto" class="stazione ">5 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaTE"><div title="Tessera" class="stazione ">8 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaTR"><div title="Treporti" class="stazione ">13 <img src="../images/low.gif" alt="" /></div></div>
+	
+	<div id="legenda">
+		<h3>LAGUNA DI VENEZIA</h3>
+		<h4>LIVELLI DI MAREA SU ZMPS (cm)*</h4>
+		<img src="../images/marea.gif" alt="marea" class="mapicon" />
+		Ultima rilevazione:<br />
+		<strong>29/10/2026</strong> ore <strong>22:00:00</strong> (ora solare)<br />
+		<div><span><img src="../images/hi.gif" alt="hi" /> = livello crescente</span><span><img src="../images/low.gif" alt="low" /> = livello calante</span></div>
+		<table class="tabstazioni">
+			<tr>
+				<td width="150px"><img src="../images/warn0.gif" alt="" class="warn" /> inferiore a 90cm</td>
+				<td colspan="1" rowspan="3"><small>* Zero mareografico di Punta della Salute 1897</small></td>
+			</tr>
+			<tr><td><img src="../images/warn2.gif" alt="" class="warn" /> da 90cm a 110cm</td></tr>
+			<tr><td><img src="../images/warn1.gif" alt="" class="warn" /> superiore a 110cm</td></tr>
+		</table>
+	</div>
+</div>
+</body>
+
+</html>
+
+
+### https://www.venezia.isprambiente.it/ispra/webgis/mareaadr.php
+stato 200 | text/html; charset=UTF-8 | CORS None | 5375 char
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+
+<title>ISPRA Servizio Laguna di Venezia - Tempo reale</title>
+<link rel="shortcut icon" href="../favicon.ico" />
+<link rel="stylesheet" type="text/css" href="../css/960.css?v=2" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/typography.css?v=2" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="temporeale2.css?v=10" charset="utf-8" />
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+<script language="javascript">
+    $( function() {
+
+	$(".stazione").tooltip();
+
+      } );
+	
+	</script>
+
+<!--[if IE]>
+	<link rel="stylesheet" href="../css/ie.css?v=2" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<!--[if lt IE 7]>
+	<link rel="stylesheet" href="../css/ie6.css?v=2" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+</head>
+
+<body>
+<div id="mappaadr">
+	<div id="mareaadrCL"><div title="Caorle" class="stazione ">31 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrCD"><div title="Cavallino Darsena" class="stazione ">31 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrDS"><div title="Lido Diga Sud (RMN)" class="stazione ">31 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrGR"><div title="Grado" class="stazione ">25 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrNM"><div title="Malamocco Diga Nord" class="stazione ">33 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrPC"><div title="Porto Caleri" class="stazione ">26 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrPS"><div title="Punta della Salute" class="stazione ">19 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrRA"><div title="Ravenna (RMN)" class="stazione ">28 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrSC"><div title="Chioggia Diga Sud" class="stazione ">32 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrLV"><div title="Po a P.to Levante (ARPAV)" class="stazione ">10 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrBR"><div title="Po a P.to Barricata (ARPAV)" class="stazione ">26 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrPG"><div title="Pto Garibaldi (ARPAE)" class="stazione ">23 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrPF"><div title="Piattaforma CNR (CPSM)" class="stazione ">31 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrLG"><div title="Lignano (ARPAFVG)" class="stazione ">23 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrSS"><div title="Sacca Scardovari" class="stazione ">16 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrCM"><div title="Laguna Caleri - Moceniga" class="stazione3 ">22 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrSA"><div title="Sacca Canarin" class="stazione ">20 <img src="../images/hi.gif" alt="" /></div></div>
+	
+	<div id="mareaadrMF"><div title="Monfalcone (ARPAFVG)" class="stazione ">31 <img src="../images/hi.gif" alt="" /></div></div>
+
+	
+	<div id="legenda">
+		<h3>LITORALE ALTO ADRIATICO</h3>
+		<h4>LIVELLI DI MAREA SU ZMPS (cm)*</h4>
+		<img src="../images/marea.gif" alt="marea" class="mapicon" />
+		Ultima rilevazione:<br />
+		<strong>29/10/2026</strong> ore <strong>22:00:00</strong> (ora solare)<br />
+		<br />
+		<img src="../images/hi.gif" alt="hi" /> = livello crescente<br />
+		<img src="../images/low.gif" alt="low" /> = livello calante<br /><br />
+		<table class="tabstazioni">
+			<tr>
+				<td width="150px"><img src="../images/warn0.gif" alt="" class="warn" /> inferiore a 90cm</td>
+				<td colspan="1" rowspan="3"><small>* Zero mareografico di Punta della Salute 1897</small></td>
+			</tr>
+			<tr><td><img src="../images/warn2.gif" alt="" class="warn" /> da 90cm a 110cm</td></tr>
+			<tr><td><img src="../images/warn1.gif" alt="" class="warn" /> superiore a 110cm</td></tr>
+		</table>
+	<table class="tabstazioni">
+
+			<tr><td><img src="../images/greendot.png" alt=""  /> Stazioni ISPRA</td>
+	
+			<td><img src="../images/reddot-test.png" alt=""  /> <a href="https://www.arpa.veneto.it/bollettini/meteo/h24/img22/Mappa_LIVIDRO.htm?x=20576" target="_blank">Stazioni ARPAV</a></td></tr>
+	
+			<tr><td><img src="../images/whitedot.png" alt=""  /> <a href="https://www.osmer.fvg.it/anagrafe.php?ln=" target="_blank">Stazioni ARPAFVG</a></td>
+	
+			<td><img src="../images/purpledot.png" alt=""  /> <a href="https://www.arpae.it/it/temi-ambientali/mare/dati-e-indicatori/rete-di-monitoraggio-meteo-marina" target="_blank">Stazioni ARPAE</a></td></tr>
+	
+			<tr><td><img src="../images/blackdot-test.png" alt=""  /> <a href="https://www.comune.venezia.it/it/content/dati-dalle-stazioni-rilevamento" target="_blank">Stazioni CPSM</a></td><td></td></td></tr>
+
+	</table>
+	</div>
+</div>
+</body>
+
+</html>
+
+
+### https://www.comune.venezia.it/it/content/previsioni-altezza-onda-nellalto-adriatico-0
+stato 200 | text/html; charset=utf-8 | CORS None | 58628 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'++
+
+IMG/FILE onde:
+  /sites/comune.venezia.it/files/immagini/centro_maree/Wind3285032and32mslp_Europe_72.jpg
+  /sites/comune.venezia.it/files/immagini/centro_maree/libro1.jpg
+  /sites/comune.venezia.it/files/immagini/centro_maree/libro2.jpg
+  /sites/comune.venezia.it/files/immagini/centro_maree/libro3.jpg
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/android-chrome-192x192.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-114x114.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-120x120.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-144x144.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-152x152.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-180x180.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-57x57.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-60x60.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-72x72.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-76x76.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-16x16.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-32x32.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-96x96.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/manifest.json
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/041041np.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/IT_Funded_by_NextGenEU_vert_RGB_WHITE_OUTLINE.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/logocittabianco.png
+  http://onlinelibrary.wiley.com/doi/10.1002/qj.567/pdf
+  http://onlinelibrary.wiley.com/doi/10.1002/qj.861/pdf
+  http://test.comune.venezia.it/sites/comune.venezia.it/files/page/files/Manuale_di_gestione_dei_documenti_small.pdf
+  http://www.aeronautica.difesa.it/RivistaMeteo/ArchivioRivistaMeteo/Documents/F1%202010.pdf
+  http://www.ecmwf.int/research/ifsdocs/CY31r1/WAVES/IFSPart7.pdf
+  http://www.nat-hazards-earth-syst-sci.net/11/2965/2011/nhess-11-2965-2011.pdf
+  http://www.nat-hazards-earth-syst-sci.net/12/3433/2012/nhess-12-3433-2012.pdf
+### https://www.comune.venezia.it/it/content/previsioni-onda-alto-adriatico-0
+stato 200 | text/html; charset=utf-8 | CORS None | 61212 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'++
+
+IMG/FILE onde2:
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/android-chrome-192x192.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-114x114.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-120x120.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-144x144.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-152x152.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-180x180.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-57x57.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-60x60.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-72x72.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-76x76.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-16x16.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-32x32.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-96x96.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/manifest.json
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/041041np.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/IT_Funded_by_NextGenEU_vert_RGB_WHITE_OUTLINE.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/logocittabianco.png
+  http://test.comune.venezia.it/sites/comune.venezia.it/files/page/files/Manuale_di_gestione_dei_documenti_small.pdf
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.001.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.002.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.003.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.004.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.005.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.006.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.007.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.008.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.009.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.010.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.011.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.012.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.013.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.014.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.015.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.016.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.017.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.018.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.019.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.020.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.021.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.022.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.023.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.024.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.025.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.026.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.027.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.028.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.029.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.030.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.031.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.032.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.033.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.034.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.035.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.036.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.037.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.038.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.039.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.040.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.041.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.042.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.043.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.044.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.045.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.046.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.047.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.048.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.049.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.050.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.051.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.052.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.053.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.054.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.055.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.056.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.057.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.058.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.059.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.060.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.061.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.062.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.063.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.064.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.065.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.066.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.067.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.068.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.069.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.070.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.071.gif
+  https://www.comune.venezia.it/sites/default/files/publicCPSM2/onde/wave_PREV.072.gif
+### https://www.comune.venezia.it/it/content/il-bollettino-marea-venezia
+stato 200 | text/html; charset=utf-8 | CORS None | 51637 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'++
+
+FILE bollettino:
+  /sites/comune.venezia.it/files/immagini/centro_maree/bollettinoMaree.jpg
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/android-chrome-192x192.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-114x114.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-120x120.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-144x144.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-152x152.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-180x180.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-57x57.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-60x60.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-72x72.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-76x76.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-16x16.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-32x32.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-96x96.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/manifest.json
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/041041np.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/IT_Funded_by_NextGenEU_vert_RGB_WHITE_OUTLINE.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/logocittabianco.png
+  http://archive.comune.venezia.it/flex/Extensions/maree/ACROBAT-PDF-small.gif
+  http://test.comune.venezia.it/sites/comune.venezia.it/files/page/files/Manuale_di_gestione_dei_documenti_small.pdf
+  http://www.comune.venezia.it/sites/default/files/publicCPSM/bollettino/bollettinoMaree.pdf
+### https://www.comune.venezia.it/it/content/dati-dalle-stazioni-rilevamento
+stato 200 | text/html; charset=utf-8 | CORS None | 56287 char
+<!DOCTYPE html>
+<!--
+'+++++`        .+++++++++++++++       ,::::,        ++++++     .++++,      
+'++
+
+FILE stazioni:
+  #
+  #footer
+  #main
+  #page_top
+  /
+  /_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=4&cb=2076569045
+  /content/cookie-policy-informativa-sui-cookie
+  /content/iban-e-pagamenti-informatici
+  /content/indirizzi-pec-comune-venezia
+  /content/note-legali
+  /content/privacy-policy
+  /content/redazione-web
+  /content/servizi-spid
+  /it
+  /it/content/1-punta-salute-canal-grande
+  /it/content/10-misericordia
+  /it/content/11-burano
+  /it/content/12-murano
+  /it/content/13-malamocco-porto
+  /it/content/14-chioggia-porto
+  /it/content/15-ospedale-al-mare-lido
+  /it/content/16-fusina
+  /it/content/17-san-giorgio
+  /it/content/18-stazione-centrale
+  /it/content/19-stazione-ripetitrice
+  /it/content/2-punta-salute-canale-giudecca
+  /it/content/3-piattaforma-ismar-cnr
+  /it/content/4-diga-sud-lido-e-faro
+  /it/content/5-diga-nord-malamocco
+  /it/content/6-diga-sud-chioggia
+  /it/content/7-palazzo-cavalli
+  /it/content/8-chioggia-citt
+  /it/content/9-laguna-nord-saline
+  /it/content/ambiente
+  /it/content/amministrazione-trasparente-2
+  /it/content/anagrafe-stato-civile-elettorale
+  /it/content/associazionismo-home
+  /it/content/atti-e-regolamenti
+  /it/content/atti-notifica
+  /it/content/bandi-avvisi-e-concorsi
+  /it/content/benvenuti-venezia
+  /it/content/bilanci-e-indicatori
+  /it/content/casa
+  /it/content/casa-comunale
+  /it/content/centro-previsioni-e-segnalazioni-mar%C3%A9e
+  /it/content/concorsi-e-consulenze-1
+  /it/content/consiglio-comunale
+  /it/content/cultura
+  /it/content/dati-e-statistiche-
+  /it/content/demanio-marittimo
+  /it/content/descrizione-generale-0
+  /it/content/diritti-tutela-e-partecipazione
+  /it/content/europe-direct
+  /it/content/gare-di-appalto-ed-avvisi
+  /it/content/giunta-e-consiglieri-delegati
+  /it/content/home-page-scuola
+  /it/content/il-comune
+  /it/content/istituzione-bevilacqua-la-masa
+  /it/content/istituzione-centri-soggiorno
+  /it/content/mobilita-e-viabilita
+  /it/content/municipalita
+  /it/content/opere-pubbliche
+  /it/content/politiche-internazionali
+  /it/content/polizia-municipale-1
+  /it/content/serviziocivile
+  /it/content/sicurezza-e-tutela
+  /it/content/sindaco
+  /it/content/sistema-delle-partecipazioni
+  /it/content/sociale
+  /it/content/spazi-acquei-line
+  /it/content/sportregate
+  /it/content/stazione-automatica-da9000
+  /it/content/suap-commercio-e-attivita-produttive
+  /it/content/sviluppo-economico
+  /it/content/tributi
+  /it/content/urbanistica-e-territorio
+  /it/content/urp-ufficio-relazioni-con-il-pubblico
+  /it/content/venezia-italia-e-europa
+  /it/content/vivere-venezia
+  /it/content/webcam-0
+  /it/go/node__109
+  /it/go/node__4
+  /it/go/servizi-online
+  /it/politichedellaresidenza
+  /it/statistica
+  /node/49826
+  /sites/comune.venezia.it/files/immagini/centro_maree/rete_telemareografica/mappa%20stazioni%20rete%20telemareografica_sito.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/css/fonts.css
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/android-chrome-192x192.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-114x114.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-120x120.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-144x144.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-152x152.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-180x180.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-57x57.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-60x60.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-72x72.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/apple-touch-icon-76x76.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-16x16.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-32x32.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/favicon-96x96.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/icons/manifest.json
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/041041np.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/IT_Funded_by_NextGenEU_vert_RGB_WHITE_OUTLINE.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/come-di-venezia_logo.svg
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/logocittabianco.png
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/regione-veneto_logo.svg
+  /sites/comune.venezia.it/themes/comunevenezia/assets/img/spid_logo.svg
+  http://actv.avmspa.it/it
+  http://live.comune.venezia.it
+  http://test.comune.venezia.it/sites/comune.venezia.it/files/page/files/Manuale_di_gestione_dei_documenti_small.pdf
+  http://www.comune.venezia.it/it/EnjoyRespectVenezia
+  http://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.comune.venezia.it%2Fit%2Fcontent%2Fdati-dalle-stazioni-rilevamento
+  http://www.regione.veneto.it
+  http://www.twitter.com/share?text=Rete+telemareografica_dati+tempo+reale+e+archivio&url=https%3A%2F%2Fwww.comune.venezia.it%2Fit%2Fcontent%2Fdati-dalle-stazioni-rilevamento
+  http://www.veneziaunica.it
+  https://dime.comune.venezia.it/servizio/pagina-contribuente
+  https://form.agid.gov.it/view/3f96c12a-1c1f-40f5-8122-0a1708c7d276
+  https://it-it.facebook.com/ComunediVenezia
+  https://plus.google.com/share?url=https%3A%2F%2Fwww.comune.venezia.it%2Fit%2Fcontent%2Fdati-dalle-stazioni-rilevamento
+  https://twitter.com/comunevenezia
+  https://wa.me/?text=Ti consiglio questa pagina: https://www.comune.venezia.it/it/content/dati-dalle-stazioni-rilevamento
+  https://www.comune.venezia.it/it/content/albo-pretorio
+  https://www.comune.venezia.it/it/content/archivio-generale
+  https://www.comune.venezia.it/it/content/bandi-immobiliari
+  https://www.comune.venezia.it/it/content/dati-dalle-stazioni-rilevamento
+  https://www.comune.venezia.it/it/content/dati-meteorologici-venezia
+  https://www.comune.venezia.it/it/content/edilizia-1
+  https://www.comune.venezia.it/it/content/progetti-digitalizzazione-pnrr
+  https://www.comune.venezia.it/it/content/protocollo-generale
+  https://www.comune.venezia.it/it/content/sportello-cinema
+  https://www.comune.venezia.it/it/node/7498
+  https://www.comune.venezia.it/maree
+  https://www.comune.venezia.it/misc/drupal.js?tno8ov
+  https://www.comune.venezia.it/misc/jquery-extend-3.4.0.js?v=1.10.2
+  https://www.comune.venezia.it/misc/jquery-html-prefilter-3.5.0-backport.js?v=1.10.2
+  https://www.comune.venezia.it/misc/jquery.once.js?v=1.2
+  https://www.comune.venezia.it/sites/all/modules/Venis/vns_utilities/assets/cookiebar/askcookies.js?tno8ov
+  https://www.comune.venezia.it/sites/all/modules/Venis/vns_utilities/assets/cookiebar/jquery.cookieBar.js?tno8ov
+  https://www.comune.venezia.it/sites/all/modules/block_refresh/js/block_refresh.js?tno8ov
+  https://www.comune.venezia.it/sites/all/modules/jquery_update/replace/jquery/1.10/jquery.min.js?v=1.10.2
+  https://www.comune.venezia.it/sites/all/modules/webform_steps/webform_steps.js?tno8ov
+  https://www.comune.venezia.it/sites/comune.venezia.it/files/favicon.ico
+  https://www.comune.venezia.it/sites/comune.venezia.it/files/languages/it_8OZfg1bgUnpxdko8V4OQ6FEljLS8sk85xc6_yMrteiY.js?tno8ov
+  https://www.comune.venezia.it/sites/comune.venezia.it/themes/comunevenezia/assets/js/maree.js?tno8ov
+  https://www.comune.venezia.it/sites/comune.venezia.it/themes/comunevenezia/assets/js/menu_accessibilita.js?tno8ov
+  https://www.comune.venezia.it/sites/comune.venezia.it/themes/comunevenezia/assets/js/scripts.js?tno8ov
+  https://www.comune.venezia.it/sites/comune.venezia.it/themes/comunevenezia/assets/js/vendor/modernizr-2.6.2.min.js?tno8ov
+  https://www.comune.venezia.it/sites/comune.venezia.it/themes/comunevenezia/assets/js/vendor/respond.min.js?tno8ov
+  https://www.instagram.com/comunevenezia/
+  https://www.youtube.com/channel/UCHQPCBBahWU0G1SvQgjomHw
+  tel://+39041041
+  tel://+390412747070
+  whatsapp://send?text=Rete+telemareografica_dati+tempo+reale+e+archivio%20https%3A%2F%2Fwww.comune.venezia.it%2Fit%2Fcontent%2Fdati-dalle-stazioni-rilevamento
