@@ -425,6 +425,9 @@ nav.tabs a { font-size: .64rem; }
 .fonte span { font-weight: 700; font-size: .92rem; }
 .fonte small { font-size: .76rem; color: var(--muted); font-weight: 600; line-height: 1.35; }
 .fonte a { color: var(--accent); font-weight: 700; }
+/* 1.4 */
+.dotlive.old { background: var(--muted); box-shadow: none; }
+.warnbox b { font-weight: 800; }
 
 </style>
 </head>
@@ -845,7 +848,7 @@ if (!window.PE || !window.Astronomy) {
   return;
 }
 const { MIN, HOUR, DAY } = PE;
-const APP_VERSION = '1.3';
+const APP_VERSION = '1.4';
 
 /* ---------- formattazione ---------- */
 const TZ = { hour: '2-digit', minute: '2-digit' };
@@ -1020,7 +1023,12 @@ const Meteo = {
       let iNow = -1; for (let i = 0; i < tt.length; i++) if (tt[i] <= now) iNow = i;
       const past = q.slice(0, Math.max(0, iNow + 1)).filter(x => x != null).sort((a, b) => a - b);
       const med = past.length ? past[past.length >> 1] : null;
-      if (med && iNow >= 0 && q[iNow] != null) this.fiume = { q: q[iNow], med, ratio: q[iNow] / med, serie: q.map((v, i) => ({ t: tt[i], q: v })), iNow };
+      if (med && iNow >= 0 && q[iNow] != null) {
+        const serie = q.map((v, i) => ({ t: tt[i], q: v }));
+        // portata nel giorno richiesto (previsione compresa); l'acqua resta sporca anche il giorno dopo il colmo
+        const at = ms => { let k = -1; for (let i = 0; i < serie.length; i++) if (serie[i].t <= ms) k = i; if (k < 0) return null; const a = serie[k].q, b = k > 0 ? serie[k - 1].q : null; if (a == null) return null; const qq = b != null && b > a ? b : a; return { q: a, ratio: qq / med, calo: b != null && b > a }; };
+        this.fiume = { q: q[iNow], med, ratio: q[iNow] / med, serie, iNow, at };
+      }
     }
     this.cond = this.h.map((h, i) => this.derive(i));
   },
@@ -1041,7 +1049,7 @@ const Meteo = {
     }
     // Brenta sopra il normale (mediana degli ultimi 60 giorni): stima dell'acqua alle foci e sotto costa.
     // Il dato è giornaliero; quello che segni tu a mano ha sempre la precedenza.
-    if (this.fiume) { const r = this.fiume.ratio; if (r >= 2) c.acqua = 'torbida'; else if (r >= 1.4) c.acqua = 'velata'; }
+    if (this.fiume) { const f = this.fiume.at(h.t), r = f ? f.ratio : 0; if (r >= 2) c.acqua = 'torbida'; else if (r >= 1.4) c.acqua = 'velata'; }
     return c;
   },
   idx(ms) { if (!this.h || !this.h.length) return -1; const i = Math.round((ms - this.t0) / HOUR); return i >= 0 && i < this.h.length ? i : -1; },
@@ -1455,12 +1463,20 @@ function liveHTML(sp) {
   const tMax = Math.max(...[v, o, l, a].filter(Boolean).map(x => x.t));
   const tile = (k, val, sub) => `<div class="mt"><span class="k">${k}</span><span class="v num">${val}</span><span class="s">${sub}</span></div>`;
   const rel = v ? ventoCosta(v.dir, sp) : '';
-  return `<div class="livebox"><p class="flabel live"><span class="dotlive"></span>Misurato alle ${fT(tMax)} · Centro Maree</p><div class="meteo">` +
+  return `<div class="livebox"><p class="flabel live"><span class="dotlive${now - tMax > 45 * MIN ? ' old' : ''}"></span>Misurato alle ${fT(tMax)} · Centro Maree</p><div class="meteo">` +
     (v ? tile(`<span class="arr">${arrowSVG(v.dir, 13)}</span>Vento`, `${Math.round(v.kmh)} <small>km/h</small>`, `${esc(windName(v.dir))}${v.raffica_kmh != null ? ' · raffiche ' + Math.round(v.raffica_kmh) : ''}${rel ? ' · ' + rel : ''}<br>${esc(v.nome === 'Diga sud Chioggia' ? 'diga sud di Chioggia' : v.nome)}`) : '') +
     (o ? tile('Onde al largo', `${f1(o.hs)} <small>m</small>`, `max ${f1(o.hmax)} m<br>piattaforma Acqua Alta`) : '') +
     (l ? tile('Livello', `${l.cm > 0 ? '+' : ''}${Math.round(l.cm)} <small>cm</small>`, `${(() => { const d = Math.round(l.cm - PE.tideAstro(l.t, { anticipo: 47 })); return d ? 'effetto meteo ' + (d > 0 ? '+' : '−') + Math.abs(d) + ' cm' : 'come la marea astronomica'; })()}<br>diga sud di Chioggia`) : '') +
     (a ? tile('Acqua in laguna', `${f1(a.c)} <small>°C</small>`, 'Punta della Salute') : '') +
     '</div></div>';
+}
+// acqua alta: massimi ufficiali da 110 cm in su a Punta della Salute
+function acquaAltaHTML(sp, da, a) {
+  const est = Uff.d && Uff.d.previsione && Uff.d.previsione.estremi ? Uff.d.previsione.estremi : [];
+  const ant = (sp.anticipo != null ? sp.anticipo : 47) * MIN;
+  const hi = est.filter(e => e.tipo === 'max' && e.cm >= 110 && e.t - ant >= da && e.t - ant < a);
+  if (!hi.length) return '';
+  return `<div class="warnbox">⚠ Acqua alta prevista: ${hi.map(e => `<b class="num">${Math.round(e.cm)} cm</b> ${esc(fDay(e.t - ant))} verso le ${fT(e.t - ant)}`).join(', ')} (valore a Punta della Salute, ora riportata a questo spot). Da 110 cm può essere alzato il MOSE: alle bocche di porto la corrente si ferma.</div>`;
 }
 function isNight(ms, sp) { const da = PE.dayAstro(ms, sp.lat, sp.lon); return ms < da.sunrise || ms > da.sunset; }
 function meteoCard(refMs, sp, isToday, d0) {
@@ -1492,8 +1508,8 @@ function meteoCard(refMs, sp, isToday, d0) {
     body += `<p class="hint">${Meteo.loading ? 'Sto scaricando le previsioni…' : !navigator.onLine ? 'Sei offline: le previsioni arrivano appena torni in rete. Intanto puoi segnare tu le condizioni.' : Meteo.failed ? 'Previsioni non raggiungibili in questo momento. Riprova o segna tu le condizioni.' : 'Previsioni non ancora scaricate.'}</p>`;
   }
   if (isToday) body += liveHTML(sp);
-  const fi = Meteo.near(sp) ? Meteo.fiume : null;
-  if (fi && fi.ratio >= 1.4) body += `<div class="notebox"><b>Brenta ${fi.ratio >= 2 ? 'in piena' : 'sopra il normale'}</b>: ${Math.round(fi.q)} m³/s, ${f1(fi.ratio)} volte la portata tipica degli ultimi due mesi. Acqua ${fi.ratio >= 2 ? 'torbida' : 'velata'} probabile alla foce e lungo la spiaggia.</div>`;
+  const fi = Meteo.near(sp) && Meteo.fiume ? Meteo.fiume.at(refMs) : null;
+  if (fi && fi.ratio >= 1.4) body += `<div class="notebox"><b>Brenta ${fi.calo ? 'in calo dopo la piena' : fi.ratio >= 2 ? 'in piena' : 'sopra il normale'}</b>: ${isToday ? '' : 'previsti '}${Math.round(fi.q)} m³/s, contro i ${Math.round(Meteo.fiume.med)} tipici degli ultimi due mesi. Acqua ${fi.ratio >= 2 ? 'torbida' : 'velata'} probabile alla foce e lungo la spiaggia.</div>`;
   let manual = '';
   if (isToday) {
     manual += seg('acqua', fi && fi.ratio >= 1.4 ? 'Acqua (correggi la stima se la vedi diversa)' : 'Acqua (la vedi solo tu)');
@@ -1591,6 +1607,7 @@ function renderOggi() {
     <div class="card-h"><h2>Marea</h2><span class="eyebrow">${esc(sp.nome)}</span></div>
     <div class="tides">${tidesHTML}</div>
     ${nowTide}
+    ${isToday ? acquaAltaHTML(sp, now - 2 * HOUR, now + 4 * DAY) : acquaAltaHTML(sp, d0, d0 + DAY)}
     ${isToday && Uff.surge ? (() => { const sg = Math.round(PE.tideAt(now, sp) - PE.tideAstro(now, sp)); return `<p class="small" style="margin:0;font-weight:600">${sg ? `Vento e pressione adesso: <b class="num">${sg > 0 ? '+' : '−'}${Math.abs(sg)} cm</b> rispetto alla marea astronomica.` : 'Adesso vento e pressione non spostano la marea.'}</p>`; })() : ''}
     <p class="hint">${uffOn ? `Previsione ufficiale del Centro Maree di Venezia (emessa ${esc(fDay(Uff.d.previsione.emessa))} alle ${fT(Uff.d.previsione.emessa)}), corretta con l'ultima misura alla diga sud di Chioggia e riportata a questo spot con ${esc(sp.anticipo)} min di anticipo. In cm sullo zero di Punta della Salute.${uffFine < d0 + DAY ? ` La previsione arriva fino alle ${fT(uffFine)}, poi resta la marea astronomica.` : ''}` : `Marea astronomica in cm sullo zero di Punta della Salute, anticipata di ${esc(sp.anticipo)} min per questo spot. ${Uff.surge ? 'Oltre i giorni coperti dalla previsione ufficiale vento e pressione' : 'Vento e pressione'} possono spostarla anche di decine di centimetri.`}</p>
   </section>
@@ -2198,7 +2215,7 @@ const FONTI_DATI = [
   { cosa: 'Vento, pioggia, temperatura, pressione', chi: 'ItaliaMeteo ICON-2I (2 km) per i primi giorni, poi ECMWF IFS (9 km)', nota: 'ICON-2I è il modello del servizio meteorologico nazionale, gestito da Arpae; ECMWF è il centro europeo. Via Open-Meteo, licenza CC BY 4.0', url: 'https://open-meteo.com/' },
   { cosa: 'Onde', chi: 'DWD EWAM (5 km) poi ECMWF WAM', nota: 'Modello d\'onda europeo del servizio meteo tedesco. Via Open-Meteo, CC BY 4.0', url: 'https://open-meteo.com/en/docs/marine-weather-api' },
   { cosa: 'Temperatura del mare', chi: 'Météo-France via Open-Meteo', nota: 'CC BY 4.0', url: 'https://open-meteo.com/en/docs/marine-weather-api' },
-  { cosa: 'Previsione di marea e misure dal vivo', chi: 'Centro Previsioni e Segnalazioni Maree, Comune di Venezia', nota: 'Previsione ufficiale a Punta della Salute; vento e livello alla diga sud di Chioggia, onde alla piattaforma Acqua Alta. Open data IODL 2.0, aggiornati ogni 20 minuti', url: 'https://www.comune.venezia.it/it/content/centro-previsioni-e-segnalazioni-maree' },
+  { cosa: 'Previsione di marea e misure dal vivo', chi: 'Centro Previsioni e Segnalazioni Maree, Comune di Venezia', nota: 'Previsione ufficiale a Punta della Salute; vento e livello alla diga sud di Chioggia, onde alla piattaforma Acqua Alta. Open data IODL 2.0, aggiornati circa ogni ora', url: 'https://www.comune.venezia.it/it/content/centro-previsioni-e-segnalazioni-maree' },
   { cosa: 'Marea astronomica', chi: 'Costanti armoniche del Centro Maree per Punta della Salute', nota: 'Calcolata sul telefono, funziona anche offline', url: '' },
   { cosa: 'Portata del Brenta', chi: 'GloFAS, servizio Copernicus per le piene', nota: 'Via Open-Meteo, CC BY 4.0. Serve a stimare l\'acqua torbida alla foce', url: 'https://open-meteo.com/en/docs/flood-api' },
   { cosa: 'Sole e luna', chi: 'Astronomy Engine', nota: 'Orari al minuto, verificati con lo U.S. Naval Observatory. Licenza MIT', url: 'https://github.com/cosinekitty/astronomy' },

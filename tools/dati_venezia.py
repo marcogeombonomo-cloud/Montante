@@ -41,5 +41,14 @@ for name, key, conv in [('livello.json', 'livelli', lambda n: {'cm': round(n[0] 
         except Exception: continue
         rec.update({'t': t, 'nome': x.get('stazione'), 'lat': float(x['latDDN']) if x.get('latDDN') else None, 'lon': float(x['lonDDE']) if x.get('lonDDE') else None})
         out[key][x.get('ID_stazione') or x.get('nome_abbr')] = rec
+# se una fonte non risponde, tengo l'ultimo dato già pubblicato per quella parte (ogni misura porta il suo orario)
+prev = None
+if len(sys.argv) > 2:
+    try: prev = json.load(open(sys.argv[2]))
+    except Exception: prev = None
+if prev:
+    if not (out['previsione'] and out['previsione'].get('estremi')) and prev.get('previsione'): out['previsione'] = prev['previsione']; print('previsione: tengo la precedente')
+    for key in ('livelli', 'vento', 'onde', 'acqua', 'pressione'):
+        if not out[key] and prev.get(key): out[key] = prev[key]; print(key + ': tengo i precedenti')
 json.dump(out, open(sys.argv[1] if len(sys.argv) > 1 else 'venezia.json', 'w'), ensure_ascii=False, separators=(',', ':'))
 print('ok', len(out['livelli']), 'livelli', len(out['vento']), 'venti', 'previsione' if out['previsione'] else 'senza previsione')

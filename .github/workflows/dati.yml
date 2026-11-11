@@ -19,7 +19,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
-      - run: mkdir -p out && python tools/dati_venezia.py out/venezia.json
+      - run: |
+          mkdir -p out
+          curl -fsS --max-time 20 -o prev.json "https://raw.githubusercontent.com/${{ github.repository }}/dati/venezia.json" || rm -f prev.json
+          python tools/dati_venezia.py out/venezia.json prev.json
       - name: Pubblica sul ramo dati (un solo commit, sovrascritto ogni volta)
         run: |
           cd out
