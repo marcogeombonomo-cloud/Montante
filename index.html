@@ -472,6 +472,68 @@ button.win:active { background: var(--line); }
 .mod > b { font-weight: 800; font-size: 1rem; white-space: nowrap; }
 .mod.tot { font-weight: 800; }
 .mod.tot > b { font-family: var(--f-display); font-size: 1.25rem; }
+/* 1.6: settimana, piano, grafici, cattura rapida, statistiche, catture sugli spot */
+.weekbtn { justify-self: center; display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--glass-line); background: var(--glass); color: var(--on-hero); border-radius: 999px; padding: 7px 14px; font-weight: 800; font-size: .8rem; margin-top: -6px; }
+.wklist { display: grid; gap: 8px; }
+.wkrow { display: grid; grid-template-columns: 38px 46px 1fr auto; gap: 11px; align-items: center; width: 100%; text-align: left; border: 1.5px solid transparent; background: var(--surface-2); color: var(--ink); border-radius: 18px; padding: 10px 10px 10px 12px; font: inherit; }
+.wkrow.best { border-color: var(--accent); background: var(--accent-soft); }
+.wkd { display: grid; justify-items: center; gap: 1px; }
+.wkd .dw { font-size: .62rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); }
+.wkd b { font-family: var(--f-display); font-weight: 600; font-size: 1.1rem; line-height: 1.1; }
+.wkm { display: grid; gap: 1px; min-width: 0; }
+.wkm .wt { font-weight: 800; font-size: 1.02rem; letter-spacing: -.01em; }
+.wkm .wr { font-size: .78rem; color: var(--muted); font-weight: 600; }
+.wkx { display: flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 700; min-width: 0; }
+.wkx svg { flex: none; }
+.wkf { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
+.wkf i { font-style: normal; font-size: .68rem; font-weight: 800; border-radius: 999px; padding: 2px 7px; background: var(--bad-soft); color: var(--danger); }
+.wkrow .go { color: var(--muted); display: grid; }
+.planhead { display: grid; grid-template-columns: 54px 1fr; gap: 14px; align-items: center; }
+.planhead .wt { font-weight: 800; font-size: 1.3rem; letter-spacing: -.02em; line-height: 1.15; }
+.planhead .ring b { font-size: 1.05rem; }
+.plan { display: grid; border-radius: 16px; background: var(--surface-2); padding: 2px 14px; }
+.prow { display: grid; grid-template-columns: 92px 1fr; gap: 10px; padding: 10px 0; border-top: 1px solid var(--line); font-size: .9rem; align-items: baseline; }
+.prow:first-child { border-top: 0; }
+.prow .k { font-size: .66rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-weight: 800; }
+.prow .v { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.prow .v b { font-weight: 800; }
+.prow .linkbtn { font-size: .9rem; }
+.gchart svg { width: 100%; height: auto; display: block; }
+.gchart .gl { font-size: 9px; font-weight: 700; fill: var(--muted); font-family: var(--f-body); }
+.vh { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+.qphoto { display: grid; gap: 8px; position: relative; }
+.qphoto label.btn { cursor: pointer; }
+.qimg { width: 100%; max-height: 240px; object-fit: cover; border-radius: 18px; display: block; background: var(--surface-2); }
+.qauto { display: grid; gap: 4px; padding: 11px 14px; border-radius: 14px; background: var(--surface-2); font-size: .86rem; font-weight: 600; line-height: 1.45; }
+.qauto:empty { display: none; }
+.qauto b { font-weight: 800; }
+.okbox { padding: 11px 14px; border-radius: 14px; background: var(--ok-soft); color: var(--ok); font-weight: 700; font-size: .88rem; }
+.heroacts { display: flex; gap: 8px; flex: none; }
+.hero .act.alt { background: var(--glass-2); color: var(--on-hero); box-shadow: none; border: 1px solid var(--glass-line); }
+.recs { display: grid; border-radius: 16px; background: var(--surface-2); padding: 2px 14px; }
+.recrow { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font-size: .9rem; }
+.recrow:first-child { border-top: 0; }
+.recrow span { display: grid; min-width: 0; }
+.recrow span:last-child { text-align: right; justify-items: end; flex: none; }
+.recrow b { font-weight: 800; }
+.recrow small { font-size: .74rem; color: var(--muted); font-weight: 600; }
+.lift .row > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mbars { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; height: 96px; align-items: end; }
+.mbars span { display: grid; grid-template-rows: 14px 1fr auto; justify-items: center; height: 100%; min-height: 0; }
+.mbars i { display: block; width: 100%; align-self: end; min-height: 3px; border-radius: 5px 5px 2px 2px; background: linear-gradient(180deg, var(--q4), var(--q3)); }
+.mbars i.z { background: var(--surface-2); }
+.mbars b { font-size: .64rem; font-weight: 800; color: var(--muted); line-height: 14px; }
+.mbars u { text-decoration: none; font-size: .66rem; font-weight: 800; color: var(--muted); margin-top: 3px; }
+.mcs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+.mc { flex: none; display: grid; grid-template-columns: 44px auto; gap: 9px; align-items: center; border: 0; background: var(--surface-2); color: var(--ink); border-radius: 14px; padding: 6px 12px 6px 6px; text-align: left; font: inherit; }
+.mc img, .mc .mcph { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; background: var(--surface); display: grid; place-items: center; color: var(--tide); }
+.mc b { display: block; font-size: .82rem; font-weight: 800; white-space: nowrap; }
+.mc small { display: block; font-size: .72rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+.maplayers button { padding: 7px 9px; }
+.lift.wide .row { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) 44px; }
+.palt { display: block; margin-top: 3px; font-size: .8rem; color: var(--muted); font-weight: 600; }
+.palt b { color: var(--ink); }
+.spotpin .pinn { position: absolute; left: 26px; top: -7px; min-width: 19px; height: 19px; box-sizing: border-box; padding: 0 5px; border-radius: 999px; background: #F2552C; color: #FFFFFF; font: 800 .68rem/19px var(--f-body); text-align: center; border: 2px solid #FFFFFF; }
 
 </style>
 </head>
@@ -892,7 +954,7 @@ if (!window.PE || !window.Astronomy) {
   return;
 }
 const { MIN, HOUR, DAY } = PE;
-const APP_VERSION = '1.5';
+const APP_VERSION = '1.6';
 
 /* ---------- formattazione ---------- */
 const TZ = { hour: '2-digit', minute: '2-digit' };
@@ -1620,6 +1682,7 @@ function renderOggi() {
         <div class="toprow-r"><button class="glassbtn" data-act="pickspot" aria-label="Cambia spot">${PIN}<span>${esc(sp.nome)}</span></button><button class="glassbtn round" data-act="settings" aria-label="Impostazioni e backup"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg></button></div>
       </div>
       <div class="days">${days}</div>
+      <button class="weekbtn" data-act="week"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Confronta i 7 giorni</button>
       <div class="gaugebox">
         <div class="gauge">${gaugeSVG(hv)}<div class="gv"><b class="num">${hv}</b><span class="ql" style="color:${hqCol(hv)}">${PE.label(hv)}</span><span class="gs">${cur ? 'adesso · ' + fT(now) : 'miglior momento'}</span></div></div>
         <div class="hchips">${heroChips}</div>
@@ -1638,7 +1701,11 @@ function renderOggi() {
     <div class="wins">${winsHTML}</div>
   </section>
 
+  ${planCard(d0, sp, isToday)}
+
   ${meteoCard(refMs, sp, isToday, d0)}
+
+  ${graphCard(d0, sp, isToday)}
 
   <section class="card">
     <div class="card-h"><h2>Le 24 ore</h2><span class="eyebrow">tocca il grafico</span></div>
@@ -1755,11 +1822,11 @@ function drawSpots() {
     const sc = PE.scoreAt(now, s, { cond: condAt(now, s), model }).v;
     const icon = L.divIcon({
       className: 'spotpin', iconSize: [38, 38], iconAnchor: [19, 19],
-      html: `<span class="pinc${s.id === sel.id ? ' on' : ''}" style="background:${qCol(sc)};color:${qTxt(sc)}">${sc}</span><span class="pinl">${esc(s.nome)}</span>`,
+      html: `<span class="pinc${s.id === sel.id ? ' on' : ''}" style="background:${qCol(sc)};color:${qTxt(sc)}">${sc}</span>${(n => (n ? `<span class="pinn" title="${n} ${n === 1 ? 'cattura' : 'catture'}">${n}</span>` : ''))(mapPref().catture === false ? 0 : catchesOfSpot(s).length)}<span class="pinl">${esc(s.nome)}</span>`,
     });
     L.marker([s.lat, s.lon], { icon, title: s.nome, riseOnHover: true }).on('click', () => { if (!S.mapAdd) openSpotSheet(s.id); }).addTo(spotLayer);
   }
-  drawMe(); drawPending();
+  drawCatches(); drawMe(); drawPending();
 }
 function drawMe() {
   if (!lmap) return;
@@ -1784,11 +1851,11 @@ function renderSpot() {
   <div class="wrap gut">
   <div class="mapbox" id="mapbox">
     ${window.L ? '' : '<p class="hint" style="padding:18px">La mappa non si è caricata. Controlla la connessione e riapri l\'app.</p>'}
-    <div class="maplayers" role="group" aria-label="Tipo di mappa"><button data-act="maplayer" data-v="mappa" aria-pressed="${p.base === 'mappa'}">Mappa</button><button data-act="maplayer" data-v="satellite" aria-pressed="${p.base === 'satellite'}">Satellite</button><button data-act="mapsea" aria-pressed="${!!p.nautica}">Nautica</button></div>
+    <div class="maplayers" role="group" aria-label="Tipo di mappa"><button data-act="maplayer" data-v="mappa" aria-pressed="${p.base === 'mappa'}">Mappa</button><button data-act="maplayer" data-v="satellite" aria-pressed="${p.base === 'satellite'}">Satellite</button><button data-act="mapsea" aria-pressed="${!!p.nautica}">Nautica</button><button data-act="mapcatch" aria-pressed="${p.catture !== false}">Catture</button></div>
     <div class="mapctl"><button data-act="zoomin" aria-label="Ingrandisci">+</button><button data-act="zoomout" aria-label="Riduci">−</button><button data-act="locate-map" aria-label="La mia posizione">${CROSS}</button></div>
     ${S.mapAdd ? '<div class="maptip">Tocca la mappa nel punto esatto dello spot</div>' : ''}
   </div>
-  <p class="hint">«Nautica» aggiunge boe, fari e segnali di OpenSeaMap. Il numero sul segnaposto è l'indice di adesso, che cambia con il tipo di spot.</p>
+  <p class="hint">«Nautica» aggiunge boe, fari e segnali di OpenSeaMap, «Catture» mostra i pesci presi: il numero arancione sullo spot e un punto dove la foto aveva la posizione. Il numero sul segnaposto è l'indice di adesso, che cambia con il tipo di spot.</p>
   ${list.length ? list.map(s => {
     const sc = PE.scoreAt(now, s, { cond: condAt(now, s), model: getModel() }).v;
     const nx = PE.tideExtremes(now, now + DAY, s)[0];
@@ -1797,6 +1864,7 @@ function renderSpot() {
       <div class="spotrow"><div style="min-width:0"><h3>${esc(s.nome)}</h3><span class="small muted" style="font-weight:600">${TIPI[s.tipo] || 'Spot'}${nx ? ` · ${nx.alta ? 'alta' : 'bassa'} alle ${fT(nx.t)} (${cm(nx.h)})` : ''}</span></div>${ringHTML(sc, 50)}</div>
       <div class="chips"><span class="chip">${n} ${n === 1 ? 'cattura' : 'catture'}</span>${s.id === sel.id ? '<span class="chip acc">In uso su Oggi</span>' : ''}</div>
       ${s.note ? `<p class="small muted" style="margin:0">${esc(s.note)}</p>` : ''}
+      ${spotCatchesHTML(s)}
       <div class="acts">${s.id !== sel.id ? `<button class="btn pri" data-act="usespot" data-id="${esc(s.id)}">Usa per Oggi</button>` : ''}<button class="btn" data-act="showspot" data-id="${esc(s.id)}">Sulla mappa</button><a class="btn" href="https://maps.apple.com/?ll=${s.lat},${s.lon}&q=${encodeURIComponent(s.nome)}&t=k" target="_blank" rel="noopener">Apri in Mappe ↗</a><button class="btn" data-act="editspot" data-id="${esc(s.id)}">Modifica</button></div>
     </section>`;
   }).join('') : `<section class="card empty"><span class="ic">${PIN}</span><h3>${S.spotsLoaded ? 'Nessuno spot salvato' : 'Carico i tuoi spot…'}</h3><p class="muted small" style="margin:0">Tocca “+ Nuovo” e poi il punto sulla mappa: diga, spiaggia o foce. Ogni spot ha la sua marea e il suo indice.</p></section>`}
@@ -1825,7 +1893,7 @@ function renderDiario() {
     const share = (m.counts[dim][k] || 0) / m.n, exp = PE.EXPECT[dim][k];
     return `<div class="row"><span>${l}</span><span class="track"><i style="width:${Math.round(share * 100)}%"></i><u style="left:${Math.round(exp * 100)}%"></u></span><span class="num small" style="text-align:right;font-weight:800">${Math.round(share * 100)}%</span></div>`;
   }).join('')}</div>`).join('') : '';
-  app.innerHTML = heroSmall('Diario', `${list.length} ${list.length === 1 ? 'uscita' : 'uscite'} · ${all.length} ${all.length === 1 ? 'cattura' : 'catture'}`, '<button class="act" data-act="newtrip">+ Uscita</button>') + `
+  app.innerHTML = heroSmall('Diario', `${list.length} ${list.length === 1 ? 'uscita' : 'uscite'} · ${all.length} ${all.length === 1 ? 'cattura' : 'catture'}`, '<span class="heroacts"><button class="act" data-act="quickcatch">+ Cattura</button><button class="act alt" data-act="newtrip">+ Uscita</button></span>') + `
   <div class="wrap gut">
   
   ${all.length ? `<section class="card">
@@ -1836,7 +1904,8 @@ function renderDiario() {
   <section class="card"><h2>Quando prendi di più</h2>
     <p class="hint">La barra è la quota delle tue catture, il segno verticale è quanto ci si aspetterebbe a caso. Dove la barra lo supera, l'indice ti premia.</p>
     ${liftHTML}
-  </section>` : ''}
+  </section>
+  ${statsCard()}` : ''}
   ${list.length ? list.map(u => {
     const cs = u.catture || [];
     const sum = {}; for (const c of cs) { const k = c.nome || 'Altro'; (sum[k] = sum[k] || []).push(c.cm ? c.cm + ' cm' : ''); }
@@ -1849,7 +1918,7 @@ function renderDiario() {
       ${hasCond(cd) ? `<span class="chips">${Object.entries(cd).filter(([, v]) => v).map(([g, v]) => `<span class="chip">${PE.COND[g][v]}</span>`).join('')}</span>` : ''}
       ${photos.length ? `<span class="thumbs">${photos.slice(0, 6).map(id => `<img data-foto="${esc(id)}" alt="">`).join('')}</span>` : ''}
     </button>`;
-  }).join('') : `<section class="card empty"><span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3.5h11a1.5 1.5 0 0 1 1.5 1.5v15H7.5A2.5 2.5 0 0 1 5 17.5V4.5a1 1 0 0 1 1-1z"/><path d="M5 17.5A2.5 2.5 0 0 1 7.5 15h11"/></svg></span><h3>${S.uscLoaded ? 'Il diario è vuoto' : 'Carico il diario…'}</h3><p class="muted small" style="margin:0">Registra la prossima uscita: spot, orari, catture con misura, esca e canna, foto. Marea, luna e luce le aggiungo io in automatico, e da 3 catture l'indice inizia a imparare da te.</p><button class="btn pri" data-act="newtrip">Registra un'uscita</button></section>`}
+  }).join('') : `<section class="card empty"><span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3.5h11a1.5 1.5 0 0 1 1.5 1.5v15H7.5A2.5 2.5 0 0 1 5 17.5V4.5a1 1 0 0 1 1-1z"/><path d="M5 17.5A2.5 2.5 0 0 1 7.5 15h11"/></svg></span><h3>${S.uscLoaded ? 'Il diario è vuoto' : 'Carico il diario…'}</h3><p class="muted small" style="margin:0">Registra la prossima uscita: spot, orari, catture con misura, esca e canna, foto. Marea, luna e luce le aggiungo io in automatico, e da 3 catture l'indice inizia a imparare da te.</p><div class="acts" style="justify-content:center"><button class="btn pri" data-act="quickcatch">Aggiungi una cattura</button><button class="btn" data-act="newtrip">Registra un'uscita</button></div></section>`}
   </div>`;
 }
 
@@ -1857,6 +1926,8 @@ function renderDiario() {
 const GEAR_IC = {
   canna: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20 20 4"/><path d="M20 4v9a3 3 0 0 1-3 3"/><circle cx="7.5" cy="16.5" r="2"/></svg>',
   mulinello: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="12" r="6"/><circle cx="11" cy="12" r="2"/><path d="M17 12h4M21 9v6"/></svg>',
+  esca: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 9c3-4 6 4 9 0s5 3 7 0"/><path d="M4 15c3-4 6 4 9 0s5 3 7 0"/></svg>',
+  terminale: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11a4 4 0 0 1-8 0v-1"/><path d="M4 13l-1.5 2M4 13l2 1.5"/><circle cx="12" cy="3.5" r="1.2"/></svg>',
 };
 function renderSpecie() {
   const mo = new Date().getMonth();
@@ -1878,8 +1949,8 @@ function renderSpecie() {
   </section>
   <section class="card">
     <div class="card-h"><h2>La tua attrezzatura</h2><button class="linkbtn" data-act="gear">Modifica</button></div>
-    ${gear.length ? ['canna', 'mulinello'].map(t => `<div class="cgroup"><span class="flabel">${t === 'canna' ? 'Canne' : 'Mulinelli'}</span><div class="gearlist">${gear.filter(g => g.tipo === t).map(g => `<div class="gear"><span class="gi">${GEAR_IC[t]}</span><span style="min-width:0"><b>${esc(g.nome)}</b><span>${esc(t === 'canna' ? (PE.TECNICHE[g.cat] || '') : (g.usi || []).map(u => PE.TECNICHE[u]).join(', '))}${g.note ? ' · ' + esc(g.note) : ''}</span></span></div>`).join('')}</div></div>`).join('')
-      : '<p class="muted small" style="margin:0">Aggiungi canne e mulinelli: ti dirò quale usare per ogni specie e potrai segnarli nel diario.</p>'}
+    ${gear.length ? Object.keys(GEAR_GRUPPI).filter(t => gear.some(g => g.tipo === t)).map(t => `<div class="cgroup"><span class="flabel">${GEAR_GRUPPI[t]}</span><div class="gearlist">${gear.filter(g => g.tipo === t).map(g => `<div class="gear"><span class="gi">${GEAR_IC[t] || GEAR_IC.canna}</span><span style="min-width:0"><b>${esc(g.nome)}</b><span>${esc(t === 'canna' ? (PE.TECNICHE[g.cat] || '') : (g.usi || []).map(u => PE.TECNICHE[u]).join(', '))}${g.note ? ' · ' + esc(g.note) : ''}</span></span></div>`).join('')}</div></div>`).join('')
+      : '<p class="muted small" style="margin:0">Aggiungi canne, mulinelli, esche e terminali: ti dirò cosa usare per ogni specie e potrai segnarli nelle catture.</p>'}
   </section>
   <p class="hint">Misure minime da Reg. UE 2019/1241 dove indicate. Controlla sempre le regole locali e il limite giornaliero della pesca sportiva.</p>
   </div>`;
@@ -1906,7 +1977,7 @@ function renderCatture() {
   const conMin = GUIDE.filter(g => g.min).sort((a, b) => a.nome.localeCompare(b.nome));
   if (!S.mqSp) S.mqSp = 'orata';
   const list = guideMatch(S.cq || '');
-  app.innerHTML = heroSmall('Catture', 'Guida ai pesci e misure minime') + `
+  app.innerHTML = heroSmall('Catture', 'Guida ai pesci e misure minime', '<button class="act" data-act="quickcatch">+ Cattura</button>') + `
   <div class="wrap gut">
   <section class="card">
     <h2>È sopra misura?</h2>
@@ -2046,13 +2117,13 @@ function openSpecies(id) {
 
 function openGear() {
   const draft = JSON.parse(JSON.stringify(S.root.gear || []));
-  const rowHTML = () => draft.map((g, i) => `<div class="catch"><div class="ch"><b>${esc(g.nome)}</b><button class="linkbtn" type="button" data-rm="${i}" style="color:var(--danger)">Rimuovi</button></div><span class="small muted">${g.tipo === 'canna' ? 'Canna · ' + (PE.TECNICHE[g.cat] || '') : 'Mulinello · ' + (g.usi || []).map(u => PE.TECNICHE[u]).join(', ')}${g.note ? ' · ' + esc(g.note) : ''}</span></div>`).join('');
+  const rowHTML = () => draft.map((g, i) => `<div class="catch"><div class="ch"><b>${esc(g.nome)}</b><button class="linkbtn" type="button" data-rm="${i}" style="color:var(--danger)">Rimuovi</button></div><span class="small muted">${esc(gearLabel(g))}${g.note ? ' · ' + esc(g.note) : ''}</span></div>`).join('');
   sheet(top('Attrezzatura') + `
     <div id="glist" style="display:grid;gap:8px">${rowHTML()}</div>
     <form id="gform" class="subform">
       <span class="flabel">Aggiungi</span>
-      <div class="field"><label for="g-nome">Nome</label><input id="g-nome" required maxlength="80" placeholder="Es. Daiwa Legalist 4000"></div>
-      <div class="row2"><div class="field"><label for="g-tipo">Tipo</label><select id="g-tipo"><option value="canna">Canna</option><option value="mulinello">Mulinello</option></select></div>
+      <div class="field"><label for="g-nome">Nome</label><input id="g-nome" required maxlength="80" placeholder="Es. Daiwa Legalist 4000, cannolicchio, long arm"></div>
+      <div class="row2"><div class="field"><label for="g-tipo">Tipo</label><select id="g-tipo">${Object.entries(GEAR_TIPI).map(([k, l]) => `<option value="${k}">${l}</option>`).join('')}</select></div>
       <div class="field"><label for="g-cat">Tecnica</label><select id="g-cat">${Object.entries(PE.TECNICHE).map(([k, l]) => `<option value="${k}">${l}</option>`).join('')}</select></div></div>
       <div class="field"><label for="g-note">Nota</label><input id="g-note" maxlength="80" placeholder="Es. treccia 0,19"></div>
       <button class="btn" type="submit">Aggiungi alla lista</button>
@@ -2080,7 +2151,7 @@ function openTrip(id) {
     ${u.auto ? `<p class="small" style="margin:0">All'inizio: marea ${cm(u.auto.h)} ${u.auto.marea === 'stanca' ? 'ferma' : u.auto.marea}, ${esc(u.auto.lunaNome)}, ${u.auto.luce}.</p>` : ''}
     ${u.auto && u.auto.meteo ? `<p class="small" style="margin:0">Meteo: ${[u.auto.meteo.ws != null ? 'vento ' + Math.round(u.auto.meteo.ws) + ' km/h' + (u.auto.meteo.wd != null ? ' ' + windName(u.auto.meteo.wd).split(' · ')[1] : '') : '', u.auto.meteo.wh != null ? 'onde ' + f1(u.auto.meteo.wh) + ' m' : '', u.auto.meteo.sst != null ? 'acqua ' + f1(u.auto.meteo.sst) + ' °C' : '', u.auto.meteo.p != null ? Math.round(u.auto.meteo.p) + ' hPa' : ''].filter(Boolean).join(', ')}.</p>` : ''}
     ${cs.length ? cs.map(c => `<div class="catch"><div class="ch"><b>${esc(c.nome)}${c.cm ? ' · ' + esc(c.cm) + ' cm' : ''}${c.g ? ' · ' + esc(c.g) + ' g' : ''}</b><span class="small muted num">${esc(c.ora || '')}</span></div>
-      <span class="small muted">${[c.esca, c.canna, c.rilasciato ? 'rilasciato' : '', c.marea ? 'marea ' + (c.marea === 'stanca' ? 'ferma' : c.marea) : '', c.luce, c.solunare && c.solunare !== 'fuori' ? 'periodo ' + c.solunare : ''].filter(Boolean).map(esc).join(' · ')}</span>
+      <span class="small muted">${[c.esca, c.terminale, c.canna, c.rilasciato ? 'rilasciato' : '', c.marea ? 'marea ' + (c.marea === 'stanca' ? 'ferma' : c.marea) : '', c.luce, c.solunare && c.solunare !== 'fuori' ? 'periodo ' + c.solunare : ''].filter(Boolean).map(esc).join(' · ')}</span>
       ${(c.foto || []).length ? `<span class="thumbs">${c.foto.map(f => `<img data-foto="${esc(f)}" alt="Foto di ${esc(c.nome)}" style="width:110px;height:110px">`).join('')}</span>` : ''}</div>`).join('') : '<p class="muted">Nessuna cattura in questa uscita.</p>'}
     ${u.note ? `<p style="margin:0;white-space:pre-wrap">${esc(u.note)}</p>` : ''}
     <div class="acts"><button class="btn" data-act="edittrip" data-id="${esc(u.id)}">Modifica</button></div>
@@ -2112,7 +2183,7 @@ function openTripForm(id) {
   draft.cond = draft.cond || {}; draft.catture = draft.catture || [];
   const spots = spotsSorted();
   const rodOpts = rods();
-  const catchList = () => draft.catture.length ? draft.catture.map((c, i) => `<div class="catch"><div class="ch"><b>${esc(c.nome)}${c.cm ? ' · ' + esc(c.cm) + ' cm' : ''}</b><span><span class="small muted num">${esc(c.ora || '')}</span> <button class="linkbtn" type="button" data-rmc="${i}" style="color:var(--danger);margin-left:8px">Rimuovi</button></span></div><span class="small muted">${[c.esca, c.canna, c.rilasciato ? 'rilasciato' : '', (c.foto || []).length ? (c.foto.length + ' foto') : ''].filter(Boolean).map(esc).join(' · ')}</span></div>`).join('') : '<p class="hint">Nessuna cattura: se è stato cappotto salva pure così.</p>';
+  const catchList = () => draft.catture.length ? draft.catture.map((c, i) => `<div class="catch"><div class="ch"><b>${esc(c.nome)}${c.cm ? ' · ' + esc(c.cm) + ' cm' : ''}</b><span><span class="small muted num">${esc(c.ora || '')}</span> <button class="linkbtn" type="button" data-rmc="${i}" style="color:var(--danger);margin-left:8px">Rimuovi</button></span></div><span class="small muted">${[c.esca, c.terminale, c.canna, c.rilasciato ? 'rilasciato' : '', (c.foto || []).length ? (c.foto.length + ' foto') : ''].filter(Boolean).map(esc).join(' · ')}</span></div>`).join('') : '<p class="hint">Nessuna cattura: se è stato cappotto salva pure così.</p>';
   const segF = (grp, label) => `<div class="cgroup"><span class="flabel">${label}</span><div class="seg" data-grp="${grp}">${Object.entries(PE.COND[grp]).map(([k, l]) => `<button type="button" data-v="${k}" aria-pressed="${draft.cond[grp] === k}">${l}</button>`).join('')}</div></div>`;
   let pendingPhotos = []; let uploading = 0;
   sheet(top(u ? 'Modifica uscita' : 'Nuova uscita') + `
@@ -2136,8 +2207,9 @@ function openTripForm(id) {
           <div class="field"><label for="c-cm">Misura (cm)</label><input id="c-cm" type="number" inputmode="decimal" min="0" step="0.5"></div>
           <div class="field"><label for="c-g">Peso (g)</label><input id="c-g" type="number" inputmode="numeric" min="0" step="10"></div>
         </div>
-        <div class="field"><label for="c-esca">Esca</label><input id="c-esca" maxlength="60" list="esche-dl" placeholder="Es. cannolicchio"><datalist id="esche-dl">${ESCHE.map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
+        <div class="field"><label for="c-esca">Esca</label><input id="c-esca" maxlength="60" list="esche-dl" placeholder="Es. cannolicchio"><datalist id="esche-dl">${escheList().map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
         <div class="field"><label for="c-canna">Canna</label><select id="c-canna"><option value="">—</option>${rodOpts.map(r => `<option>${esc(r.nome)}</option>`).join('')}</select></div>
+        <div class="field"><label for="c-term">Terminale</label>${mieiTerminali().length ? `<select id="c-term"><option value="">—</option>${mieiTerminali().map(x => `<option>${esc(x)}</option>`).join('')}</select>` : `<input id="c-term" maxlength="60" placeholder="Es. long arm">`}</div>
         <label class="check"><input id="c-ril" type="checkbox"> Rilasciato</label>
         ${S.canPhoto ? `<div class="field"><label for="c-foto">Foto</label><input id="c-foto" type="file" accept="image/*" multiple><span class="hint" id="c-fst"></span></div>` : '<p class="hint">Questo browser non permette di salvare foto.</p>'}
         <button class="btn" type="button" data-act="addcatch">Aggiungi cattura</button>
@@ -2172,12 +2244,13 @@ function openTripForm(id) {
       draft.catture.push({
         id: uid(), specie: spv === '_altro' ? '' : spv, nome, ora: $('#c-ora', el).value,
         cm: $('#c-cm', el).value ? Number($('#c-cm', el).value) : null, g: $('#c-g', el).value ? Number($('#c-g', el).value) : null,
-        esca: $('#c-esca', el).value.trim(), canna: $('#c-canna', el).value, rilasciato: $('#c-ril', el).checked, foto: pendingPhotos.slice(),
+        esca: $('#c-esca', el).value.trim(), terminale: $('#c-term', el).value.trim(), canna: $('#c-canna', el).value, rilasciato: $('#c-ril', el).checked, foto: pendingPhotos.slice(),
       });
       const s = GUIDE_BY_ID[spv];
       if (s && s.min && draft.catture[draft.catture.length - 1].cm && draft.catture[draft.catture.length - 1].cm < s.min) toast(`Sotto misura: per ${s.nome} il minimo è ${s.min} cm`);
       pendingPhotos = [];
       for (const k of ['#c-cm', '#c-g', '#c-altro']) $(k, el).value = '';
+      if ($('#c-term', el).tagName === 'INPUT') $('#c-term', el).value = '';
       $('#c-ril', el).checked = false; const fst = $('#c-fst', el); if (fst) fst.textContent = '';
       $('#clist', el).innerHTML = catchList();
     });
@@ -2465,6 +2538,408 @@ function openWindow(da, a, at) {
     <p class="hint">${h ? `Meteo: ${esc(NOMI_MODELLO[h.mod] || 'Open-Meteo')}${h.modOnde ? ` · onde: ${esc(NOMI_MODELLO[h.modOnde] || '')}` : ''} · previsioni aggiornate ${esc(fDay(Meteo.d.at))} alle ${fT(Meteo.d.at)}. ` : ''}Sono previsioni: più la finestra è lontana, più possono cambiare.</p>
   `);
 }
+/* ---------- 1.6: settimana, piano d'uscita, grafici, cattura rapida, statistiche, cassetta delle esche ---------- */
+const GEAR_TIPI = { canna: 'Canna', mulinello: 'Mulinello', esca: 'Esca', terminale: 'Terminale' };
+const GEAR_GRUPPI = { canna: 'Canne', mulinello: 'Mulinelli', esca: 'Esche', terminale: 'Terminali' };
+function gearLabel(g) {
+  const tec = g.tipo === 'canna' ? (PE.TECNICHE[g.cat] || '') : (g.usi || []).map(u => PE.TECNICHE[u]).filter(Boolean).join(', ');
+  return [GEAR_TIPI[g.tipo] || 'Attrezzatura', tec].filter(Boolean).join(' · ');
+}
+function mieEsche() { return (S.root.gear || []).filter(g => g.tipo === 'esca').map(g => g.nome); }
+function mieiTerminali() { return (S.root.gear || []).filter(g => g.tipo === 'terminale').map(g => g.nome); }
+// le tue esche per prime, poi quelle comuni
+function escheList() { const mie = mieEsche(), low = new Set(mie.map(x => x.toLowerCase())); return mie.concat(ESCHE.filter(x => !low.has(x.toLowerCase()))); }
+function tripRange(u) {
+  const a = u.t0 || parseLocal(u.data || isoDay(Date.now()), u.inizio || '12:00');
+  let b = u.fine && u.data ? parseLocal(u.data, u.fine) : a;
+  if (b < a) b += DAY;
+  return [a, b];
+}
+const cap = s => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+
+/* --- la finestra migliore di un giorno per uno spot --- */
+function bestOfDay(d0, sp, from) {
+  const all = curve(d0, sp);
+  let pts = from ? all.filter(p => p.t >= from - 15 * MIN) : all;
+  if (pts.length < 3) pts = all;
+  const peak = pts.reduce((a, b) => (b.v > a.v ? b : a));
+  const win = PE.bestWindows(pts, 3).slice().sort((a, b) => b.top - a.top)[0] || null;
+  return { win, peak, top: win ? win.top : peak.v, at: win ? win.at : peak.t };
+}
+function acquaAltaNelGiorno(sp, da, a) {
+  const est = Uff.d && Uff.d.previsione && Uff.d.previsione.estremi ? Uff.d.previsione.estremi : [];
+  const ant = (sp.anticipo != null ? sp.anticipo : 47) * MIN;
+  return est.some(e => e.tipo === 'max' && e.cm >= 110 && e.t - ant >= da && e.t - ant < a);
+}
+
+/* --- vista settimana --- */
+function openWeek() {
+  const sp = currentSpot(), now = Date.now(), today0 = PE.dayStart(now), model = getModel();
+  const days = [];
+  for (let i = 0; i < 7; i++) { const d0 = today0 + i * DAY; days.push(Object.assign({ i, d0 }, bestOfDay(d0, sp, i === 0 ? now : 0))); }
+  const best = days.reduce((a, b) => (b.top > a.top ? b : a));
+  const rows = days.map(d => {
+    const s = PE.scoreAt(d.at, sp, { cond: condAt(d.at, sp), model });
+    const w = Meteo.near(sp) ? Meteo.at(d.at) : null, c = condAt(d.at, sp) || {};
+    const flags = [];
+    if (acquaAltaNelGiorno(sp, d.d0, d.d0 + DAY)) flags.push('acqua alta');
+    if (c.vento === 'forte') flags.push('vento forte');
+    if (c.mare === 'mosso') flags.push('mare mosso');
+    if (w && w.pr != null && w.pr >= 0.3) flags.push('pioggia');
+    const meteo = w ? `${wxIcon(w.wc, isNight(d.at, sp), 18)}<span>${w.temp != null ? Math.round(w.temp) + '° · ' : ''}${w.ws != null ? 'vento ' + Math.round(w.ws) + (w.wd != null ? ' ' + windName(w.wd).split(' · ')[0] : '') : ''}${w.wh != null ? ' · onde ' + f1(w.wh) + ' m' : ''}</span>` : '<span>meteo non ancora disponibile</span>';
+    return `<button class="wkrow${d.i === best.i ? ' best' : ''}" data-act="weekday" data-i="${d.i}" data-close="1" aria-label="${esc(fDayLong(d.d0))}, indice ${d.top}">
+      <span class="wkd"><span class="dw">${d.i === 0 ? 'Oggi' : new Date(d.d0).toLocaleDateString('it-IT', { weekday: 'short' }).replace('.', '')}</span><b class="num">${new Date(d.d0).getDate()}</b></span>
+      ${ringHTML(d.top, 46)}
+      <span class="wkm"><span class="wt num">${d.win ? fT(d.win.da) + ' – ' + fT(d.win.a + 15 * MIN) : 'picco alle ' + fT(d.at)}</span><span class="wr">${d.win ? reasons(s).slice(0, 2).map(esc).join(' · ') : 'Nessuna finestra sopra la media'}</span><span class="wkx">${meteo}</span>${flags.length ? `<span class="wkf">${flags.map(f => `<i>${esc(f)}</i>`).join('')}</span>` : ''}</span>
+      <span class="go">${CHEV}</span></button>`;
+  }).join('');
+  sheet(top('I prossimi 7 giorni') + `
+    <p class="muted small" style="margin:-10px 0 0;font-weight:600">${esc(sp.nome)} · la finestra migliore di ogni giorno</p>
+    <div class="wsum">Giorno migliore: <b>${esc(fDayLong(best.d0))}</b>${best.win ? `, dalle <b class="num">${fT(best.win.da)}</b> alle <b class="num">${fT(best.win.a + 15 * MIN)}</b>` : ''} (indice <b class="num">${best.top}</b>).</div>
+    <div class="wklist">${rows}</div>
+    <p class="hint">Tocca un giorno per aprirlo. Vento e onde sono quelli previsti al picco. Oltre i 3 giorni le previsioni sono meno precise e la marea torna quella astronomica.</p>`);
+}
+
+/* --- piano d'uscita per il giorno scelto --- */
+function escaDalDiario(s) {
+  const n = {};
+  for (const c of allCatches()) {
+    const g = c.specie ? GUIDE_BY_ID[c.specie] : null;
+    if (!c.esca || !((g && g.stag === s.id) || (c.nome || '').toLowerCase() === s.nome.toLowerCase())) continue;
+    const k = c.esca.trim().toLowerCase(); n[k] = (n[k] || 0) + 1;
+  }
+  return Object.entries(n).sort((a, b) => b[1] - a[1])[0] || null;
+}
+function planCard(d0, sp, isToday) {
+  const now = Date.now(), model = getModel();
+  const spots = S.spots.length ? spotsSorted() : [sp];
+  const opts = spots.map(s => Object.assign({ s }, bestOfDay(d0, s, isToday ? now : 0))).sort((a, b) => b.top - a.top || ((b.s.id === sp.id) - (a.s.id === sp.id)));
+  const o = opts[0];
+  const head = `<div class="card-h"><h2>Piano d'uscita</h2><span class="eyebrow">${esc(fDay(d0))}</span></div>`;
+  if (!o.win) return `<section class="card">${head}<p class="small" style="margin:0;font-weight:600">${isToday ? 'Per il resto di oggi' : 'In questa giornata'} non c'è una finestra sopra la media: il momento meno peggio è alle <b class="num">${fT(o.at)}</b> (indice ${o.top}).</p><div class="acts"><button class="btn" data-act="week">Confronta i 7 giorni</button></div></section>`;
+  const s = o.s, at = o.at, fine = o.win.a + 15 * MIN, cnd = condAt(at, s) || {};
+  const sc = PE.scoreAt(at, s, { cond: condAt(at, s), model });
+  const species = PE.speciesNow(at, s, condAt(at, s), sc.buckets).slice(0, 2);
+  const sp1 = species[0] ? species[0].s : null;
+  let attr = '';
+  if (sp1) for (const t of sp1.tecniche) { const g = gearFor(t); if (g.canne.length) { attr = `${PE.TECNICHE[t]}: ${esc(g.canne[0].nome)}${g.mulinelli.length ? ' + ' + esc(g.mulinelli[0].nome) : ''}`; break; } }
+  if (!attr && sp1) attr = sp1.tecniche.map(t => PE.TECNICHE[t]).join(' o ');
+  const mia = sp1 ? escaDalDiario(sp1) : null;
+  const esca = sp1 ? (mia ? `<b>${esc(cap(mia[0]))}</b> <span class="muted">· ${mia[1]} ${mia[1] === 1 ? 'cattura' : 'catture'} nel tuo diario</span>` : esc(sp1.esche)) : '';
+  const w = Meteo.near(s) ? Meteo.at(at) : null, r = PE.tideRate(at, s);
+  const condTxt = [
+    `marea ${Math.abs(r) < 2.5 ? 'ferma' : (r > 0 ? 'montante' : 'calante')} (${cm(PE.tideAt(at, s))})`,
+    w && w.ws != null ? `vento ${Math.round(w.ws)} km/h${w.wd != null ? ' ' + windName(w.wd).split(' · ')[1].toLowerCase() : ''}${ventoCosta(w.wd, s) ? ', ' + ventoCosta(w.wd, s) : ''}` : '',
+    w && w.wh != null ? `onde ${f1(w.wh)} m${cnd.mare === 'scaduta' ? ' in scaduta' : ''}` : '',
+    cnd.acqua ? `acqua ${PE.COND.acqua[cnd.acqua].toLowerCase()}` : '',
+  ].filter(Boolean).join(' · ');
+  const warn = [];
+  if (acquaAltaNelGiorno(s, o.win.da - 3 * HOUR, fine + 3 * HOUR)) warn.push('acqua alta prevista: alle bocche di porto la corrente può fermarsi');
+  if (cnd.vento === 'forte') warn.push('vento forte');
+  if (cnd.mare === 'mosso') warn.push('mare mosso');
+  let rain = 0; for (let t = Math.ceil(o.win.da / HOUR) * HOUR; t <= fine; t += HOUR) { const x = Meteo.near(s) ? Meteo.at(t) : null; if (x && x.pr) rain += x.pr; }
+  if (rain >= 0.5) warn.push(`pioggia (${f1(rain)} mm)`);
+  const inCorso = isToday && o.win.da <= now;
+  const alt = opts.slice(1).filter(x => x.win).slice(0, 2);
+  const row = (k, v) => `<div class="prow"><span class="k">${k}</span><span class="v">${v}</span></div>`;
+  return `<section class="card">${head}
+    <div class="planhead">${ringHTML(o.top, 54)}<div style="min-width:0"><div class="wt num">${fT(o.win.da)} – ${fT(fine)}</div><div class="small muted" style="font-weight:600">${inCorso ? `finestra in corso, fino alle ${fT(fine)}` : isToday && o.win.da - 30 * MIN < now ? 'inizia tra poco: conviene essere già sul posto' : `sul posto per le <span class="num">${fT(o.win.da - 30 * MIN)}</span>, per montare con calma`}</div></div></div>
+    <div class="plan">
+      ${row('Dove', `<b>${esc(s.nome)}</b>${alt.length ? `<span class="palt">In alternativa: ${alt.map(x => `${esc(x.s.nome)} <b class="num">${x.top}</b>`).join(' · ')}</span>` : ''}`)}
+      ${species.length ? row('Cosa cercare', species.map(x => `<button class="linkbtn" data-act="species" data-id="${x.s.id}">${esc(x.s.nome)}</button>`).join(' · ')) : ''}
+      ${attr ? row('Con cosa', attr) : ''}
+      ${esca ? row('Esca', esca) : ''}
+      ${row('Condizioni', esc(condTxt))}
+    </div>
+    ${warn.length ? `<div class="warnbox">⚠ Attenzione: ${esc(warn.join('; '))}.</div>` : ''}
+    <div class="acts">${s.id !== sp.id && !s._def ? `<button class="btn pri" data-act="usespot" data-id="${esc(s.id)}">Passa a ${esc(s.nome)}</button>` : `<button class="btn pri" data-act="win" data-da="${o.win.da}" data-a="${o.win.a}" data-at="${at}">Tutti i dati della finestra</button>`}<button class="btn" data-act="week">Confronta i 7 giorni</button></div>
+  </section>`;
+}
+
+/* --- grafici ora per ora --- */
+const GTABS = { vento: 'Vento', onde: 'Onde', pressione: 'Pressione', temp: 'Temp.' };
+const GNOMI = { vento: 'vento', onde: 'onde', pressione: 'pressione', temp: 'temperatura' };
+const hh = k => (k === 24 ? '24:00' : pad(k) + ':00');
+function graphCard(d0, sp, isToday) {
+  if (!Meteo.near(sp) || !Meteo.h) return '';
+  const H = []; for (let k = 0; k <= 24; k++) H.push(Meteo.at(d0 + k * HOUR));
+  if (H.filter(Boolean).length < 6) return '';
+  const tab = GTABS[S.gTab] ? S.gTab : 'vento';
+  const x0 = 30, x1 = 352, yT = 14, yB = 124;
+  const X = k => x0 + k / 24 * (x1 - x0);
+  const vals = key => H.map(h => (h && h[key] != null ? h[key] : null));
+  const series = (arr, lo, hi) => { let d = '', pen = false; arr.forEach((v, k) => { if (v == null) { pen = false; return; } d += (pen ? 'L' : 'M') + X(k).toFixed(1) + ' ' + (yB - (v - lo) / (hi - lo) * (yB - yT)).toFixed(1); pen = true; }); return d; };
+  const area = (arr, lo, hi) => { const ks = arr.map((v, k) => (v == null ? -1 : k)).filter(k => k >= 0); if (ks.length < 2) return ''; return series(arr, lo, hi) + `L${X(ks[ks.length - 1]).toFixed(1)} ${yB}L${X(ks[0]).toFixed(1)} ${yB}Z`; };
+  const mm = arr => { const v = arr.filter(x => x != null); return v.length ? [Math.min(...v), Math.max(...v)] : null; };
+  const kMax = arr => { let b = -1; arr.forEach((v, k) => { if (v != null && (b < 0 || v > arr[b])) b = k; }); return b; };
+  let lo = 0, hi = 1, body = '', extra = '', legend = '', sum = '', unit = '';
+  const fmtY = v => (tab === 'onde' ? f1(v) : String(Math.round(v)));
+  if (tab === 'vento') {
+    const ws = vals('ws'), wg = vals('wg'), a = mm(ws), g = mm(wg);
+    if (!a) return '';
+    hi = Math.max(30, Math.ceil(Math.max(a[1], g ? g[1] : 0) / 10) * 10); unit = 'km/h';
+    body = `<path d="${area(ws, 0, hi)}" fill="var(--tide)" opacity=".14"/>${g ? `<path d="${series(wg, 0, hi)}" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="4 4" stroke-linecap="round"/>` : ''}<path d="${series(ws, 0, hi)}" fill="none" stroke="var(--tide)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+    if (hi >= 28) { const y = yB - 28 / hi * (yB - yT); body += `<path d="M${x0} ${y.toFixed(1)}H${x1}" stroke="var(--danger)" stroke-width="1" stroke-dasharray="2 4" opacity=".7"/><text x="${x1}" y="${(y - 3).toFixed(1)}" text-anchor="end" class="gl" fill="var(--danger)">forte</text>`; }
+    for (let k = 0; k <= 24; k += 3) { const h = H[k]; if (h && h.wd != null) extra += `<path d="M0 -5.5L4 4.5L0 2.2L-4 4.5Z" fill="var(--tide)" transform="translate(${X(k).toFixed(1)} 158) rotate(${Math.round(h.wd + 180)})"/>`; }
+    legend = `<span><i style="background:var(--tide)"></i>Vento</span><span><i style="background:none;border-top:2px dashed var(--muted);height:0;border-radius:0"></i>Raffiche</span><span>le frecce indicano dove soffia</span>`;
+    const kg = g ? kMax(wg) : -1;
+    sum = `Vento tra <b class="num">${Math.round(a[0])}</b> e <b class="num">${Math.round(a[1])} km/h</b>${kg >= 0 ? `, raffica massima <b class="num">${Math.round(wg[kg])}</b> verso le ${hh(kg)}` : ''}.`;
+  } else if (tab === 'onde') {
+    const wh = vals('wh'), a = mm(wh);
+    if (!a) return `<section class="card" id="gcard"><div class="card-h"><h2>Ora per ora</h2></div>${segG(tab)}<p class="hint">Onde non disponibili per questo giorno.</p></section>`;
+    hi = Math.max(1, Math.ceil(a[1] * 2) / 2); unit = 'm';
+    body = `<path d="${area(wh, 0, hi)}" fill="var(--tide)" opacity=".18"/><path d="${series(wh, 0, hi)}" fill="none" stroke="var(--tide)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+    for (let k = 0; k <= 24; k += 3) { const h = H[k]; if (h && h.wp != null) extra += `<text x="${X(k).toFixed(1)}" y="161" text-anchor="${k === 0 ? 'start' : k === 24 ? 'end' : 'middle'}" class="gl">${Math.round(h.wp)} s</text>`; }
+    legend = `<span><i style="background:var(--tide)"></i>Altezza delle onde</span><span>sotto: periodo in secondi</span>`;
+    const km = kMax(wh);
+    sum = `Onde tra <b class="num">${f1(a[0])}</b> e <b class="num">${f1(a[1])} m</b>, massimo verso le ${hh(km)}.`;
+  } else if (tab === 'pressione') {
+    const p = vals('p'), a = mm(p);
+    if (!a) return '';
+    lo = Math.floor(a[0] - 1); hi = Math.ceil(a[1] + 1); if (hi - lo < 6) { const m = (hi + lo) / 2; lo = Math.floor(m - 3); hi = Math.ceil(m + 3); } unit = 'hPa';
+    body = `<path d="${series(p, lo, hi)}" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+    legend = `<span><i style="background:var(--accent)"></i>Pressione al livello del mare</span>`;
+    const first = p.find(x => x != null), last = p.slice().reverse().find(x => x != null), dlt = last - first;
+    sum = `Da <b class="num">${Math.round(first)}</b> a <b class="num">${Math.round(last)} hPa</b>: ${Math.abs(dlt) < 1.5 ? 'stabile' : dlt < 0 ? 'in calo di ' + f1(Math.abs(dlt)) : 'in salita di ' + f1(dlt)} nella giornata.`;
+  } else {
+    const ta = vals('temp'), ts = vals('sst'), a = mm(ta), b = mm(ts);
+    if (!a) return '';
+    lo = Math.floor(Math.min(a[0], b ? b[0] : a[0]) - 1); hi = Math.ceil(Math.max(a[1], b ? b[1] : a[1]) + 1); unit = '°C';
+    body = `${b ? `<path d="${series(ts, lo, hi)}" fill="none" stroke="var(--tide)" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round"/>` : ''}<path d="${series(ta, lo, hi)}" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+    legend = `<span><i style="background:var(--accent)"></i>Aria</span>${b ? '<span><i style="background:none;border-top:2px dashed var(--tide);height:0;border-radius:0"></i>Mare</span>' : ''}`;
+    sum = `Aria tra <b class="num">${Math.round(a[0])}</b> e <b class="num">${Math.round(a[1])} °C</b>${b ? `, mare a <b class="num">${f1((b[0] + b[1]) / 2)} °C</b>` : ''}.`;
+  }
+  const da = PE.dayAstro(d0 + 12 * HOUR, sp.lat, sp.lon);
+  const xt = t => X(Math.max(0, Math.min(24, (t - d0) / HOUR)));
+  let bg = '';
+  if (da.sunrise && da.sunset) bg += `<rect x="${x0}" y="${yT - 6}" width="${(xt(da.sunrise) - x0).toFixed(1)}" height="${yB - yT + 6}" fill="var(--night)"/><rect x="${xt(da.sunset).toFixed(1)}" y="${yT - 6}" width="${(x1 - xt(da.sunset)).toFixed(1)}" height="${yB - yT + 6}" fill="var(--night)"/>`;
+  for (const w of PE.bestWindows(curve(d0, sp), 3)) bg += `<rect x="${xt(w.da).toFixed(1)}" y="${yT - 6}" width="${Math.max(2, xt(w.a + 15 * MIN) - xt(w.da)).toFixed(1)}" height="${yB - yT + 6}" fill="var(--accent)" opacity=".13" rx="3"/>`;
+  let grid = '';
+  for (const f of [0, 0.5, 1]) { const y = yB - f * (yB - yT), v = lo + f * (hi - lo); grid += `<path d="M${x0} ${y.toFixed(1)}H${x1}" stroke="var(--line)" stroke-width="1"/><text x="${x0 - 5}" y="${(y + 3).toFixed(1)}" text-anchor="end" class="gl">${fmtY(v)}</text>`; }
+  let xl = ''; for (let k = 0; k <= 24; k += 6) xl += `<text x="${X(k).toFixed(1)}" y="140" text-anchor="${k === 0 ? 'start' : k === 24 ? 'end' : 'middle'}" class="gl">${pad(k % 24)}</text>`;
+  const nowL = isToday ? `<path d="M${xt(Date.now()).toFixed(1)} ${yT - 6}V${yB}" stroke="var(--ink)" stroke-width="1.4" stroke-dasharray="3 3"/>` : '';
+  const hasExtra = !!extra;
+  return `<section class="card" id="gcard">
+    <div class="card-h"><h2>Ora per ora</h2><span class="eyebrow">${esc(fDay(d0))} · ${unit}</span></div>
+    ${segG(tab)}
+    <div class="gchart"><svg viewBox="0 0 360 ${hasExtra ? 168 : 146}" role="img" aria-label="Grafico di ${GNOMI[tab]} ora per ora">${bg}${grid}${body}${nowL}${xl}${extra}</svg></div>
+    <p class="small" style="margin:0;font-weight:600">${sum}</p>
+    <div class="legend">${legend}<span><i style="background:var(--accent);opacity:.3"></i>Finestre migliori</span></div>
+  </section>`;
+}
+function segG(tab) { return `<div class="seg" role="group" aria-label="Cosa mostrare">${Object.entries(GTABS).map(([k, l]) => `<button data-act="gtab" data-v="${k}" aria-pressed="${k === tab}">${l}</button>`).join('')}</div>`; }
+
+/* --- data, ora e posizione dalla foto (EXIF) --- */
+async function readExif(file) {
+  const out = { t: null, lat: null, lon: null };
+  try {
+    const v = new DataView(await file.slice(0, 262144).arrayBuffer());
+    if (v.getUint16(0) !== 0xFFD8) return out;
+    let o = 2, base = -1;
+    while (o + 10 < v.byteLength) {
+      const mk = v.getUint16(o), len = v.getUint16(o + 2);
+      if (mk === 0xFFE1 && v.getUint32(o + 4) === 0x45786966) { base = o + 10; break; }
+      if ((mk & 0xFF00) !== 0xFF00 || mk === 0xFFDA || len < 2) break;
+      o += 2 + len;
+    }
+    if (base < 0) return out;
+    const le = v.getUint16(base) === 0x4949;
+    const u16 = p => v.getUint16(base + p, le), u32 = p => v.getUint32(base + p, le);
+    const ifd = off => { const m = {}, n = u16(off); for (let i = 0; i < n; i++) { const e = off + 2 + i * 12; m[u16(e)] = { type: u16(e + 2), count: u32(e + 4), at: e + 8 }; } return m; };
+    const ascii = e => { if (!e) return ''; const p = e.count > 4 ? u32(e.at) : e.at; let s = ''; for (let i = 0; i < e.count; i++) { const ch = v.getUint8(base + p + i); if (!ch) break; s += String.fromCharCode(ch); } return s; };
+    const rats = e => { if (!e || e.type !== 5) return null; const p = u32(e.at), r = []; for (let i = 0; i < e.count; i++) { const d = u32(p + i * 8 + 4); r.push(d ? u32(p + i * 8) / d : 0); } return r; };
+    const i0 = ifd(u32(4));
+    const exif = i0[0x8769] ? ifd(u32(i0[0x8769].at)) : {};
+    const m = /^(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})/.exec(ascii(exif[0x9003]) || ascii(exif[0x9004]) || ascii(i0[0x0132]));
+    if (m) { const t = new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]).getTime(); if (isFinite(t) && +m[1] > 1990) out.t = t; }
+    if (i0[0x8825]) {
+      const g = ifd(u32(i0[0x8825].at)), la = rats(g[2]), lo = rats(g[4]);
+      if (la && lo && la.length >= 3 && lo.length >= 3) {
+        const lat = (la[0] + la[1] / 60 + la[2] / 3600) * (ascii(g[1]) === 'S' ? -1 : 1), lon = (lo[0] + lo[1] / 60 + lo[2] / 3600) * (ascii(g[3]) === 'W' ? -1 : 1);
+        if (isFinite(lat) && isFinite(lon) && (lat || lon) && Math.abs(lat) <= 90 && Math.abs(lon) <= 180) { out.lat = lat; out.lon = lon; }
+      }
+    }
+  } catch (e) { /* foto senza dati leggibili: si compila a mano */ }
+  return out;
+}
+
+/* --- cattura rapida --- */
+function catchAuto(t, sp) {
+  const s0 = PE.scoreAt(t, sp, {}), sc = PE.scoreAt(t, sp, { cond: condAt(t, sp), model: getModel() });
+  const w = Meteo.near(sp) ? Meteo.at(t) : null;
+  return { s0, sc, w, h: Math.round(PE.tideAt(t, sp)), da: PE.dayAstro(t, sp.lat, sp.lon) };
+}
+function openQuickCatch() {
+  if (S.qcPending) { Photos.del(S.qcPending).catch(() => {}); S.qcPending = null; }
+  const spots = spotsSorted(), rodOpts = rods(), terms = mieiTerminali(), cur = currentSpot();
+  const st = { foto: [], lat: null, lon: null, busy: 0 };
+  const nowD = new Date();
+  sheet(top('Nuova cattura') + `
+    <form id="qcf" style="display:grid;gap:12px">
+      ${S.canPhoto ? `<div class="qphoto"><label class="btn pri block" for="q-foto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Scatta o scegli la foto</label><input id="q-foto" class="vh" type="file" accept="image/*"><div id="q-prev"></div><span class="hint" id="q-fst">Dalla foto prendo ora e posizione, e aggancio marea, luna e meteo. Puoi anche salvare senza foto.</span></div>` : ''}
+      <div class="row2">
+        <div class="field"><label for="q-data">Data</label><input id="q-data" type="date" required value="${isoDay(Date.now())}"></div>
+        <div class="field"><label for="q-ora">Ora</label><input id="q-ora" type="time" required value="${pad(nowD.getHours())}:${pad(nowD.getMinutes())}"></div>
+      </div>
+      <div class="field"><label for="q-spot">Spot</label><select id="q-spot">${spots.map(s => `<option value="${esc(s.id)}" ${!cur._def && cur.id === s.id ? 'selected' : ''}>${esc(s.nome)}</option>`).join('')}<option value="" ${cur._def ? 'selected' : ''}>${spots.length ? 'Altro posto' : 'Sottomarina (predefinito)'}</option></select></div>
+      <div class="qauto" id="q-auto"></div>
+      <div class="row2">
+        <div class="field"><label for="q-sp">Specie</label><select id="q-sp">${GUIDE.slice().sort((a, b) => a.nome.localeCompare(b.nome)).map(s => `<option value="${s.id}"${s.id === 'orata' ? ' selected' : ''}>${esc(s.nome)}</option>`).join('')}<option value="_altro">Altra specie…</option></select></div>
+        <div class="field"><label for="q-cm">Misura (cm)</label><input id="q-cm" type="number" inputmode="decimal" min="0" step="0.5"></div>
+      </div>
+      <div class="field" id="q-altro-w" hidden><label for="q-altro">Nome della specie</label><input id="q-altro" maxlength="40" placeholder="Es. Pagello"></div>
+      <div id="q-min"></div>
+      <div class="row2">
+        <div class="field"><label for="q-g">Peso (g)</label><input id="q-g" type="number" inputmode="numeric" min="0" step="10"></div>
+        <div class="field"><label for="q-esca">Esca</label><input id="q-esca" maxlength="60" list="q-esche" placeholder="Es. cannolicchio"><datalist id="q-esche">${escheList().map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="q-canna">Canna</label><select id="q-canna"><option value="">—</option>${rodOpts.map(r => `<option>${esc(r.nome)}</option>`).join('')}</select></div>
+        <div class="field"><label for="q-term">Terminale</label>${terms.length ? `<select id="q-term"><option value="">—</option>${terms.map(x => `<option>${esc(x)}</option>`).join('')}</select>` : `<input id="q-term" maxlength="60" placeholder="Es. long arm">`}</div>
+      </div>
+      <label class="check"><input id="q-ril" type="checkbox"> Rilasciato</label>
+      <button class="btn pri block" type="submit" id="q-save">Salva cattura</button>
+    </form>`, el => {
+    const spotOf = () => S.spots.find(s => s.id === $('#q-spot', el).value) || DEFAULT_SPOT;
+    const timeOf = () => parseLocal($('#q-data', el).value || isoDay(Date.now()), $('#q-ora', el).value || '12:00');
+    const refresh = () => {
+      const t = timeOf(), sp = spotOf();
+      if (!isFinite(t)) { $('#q-auto', el).innerHTML = ''; return; }
+      const a = catchAuto(t, sp), b = a.s0.buckets;
+      const luce = { alba: 'alba', tramonto: 'tramonto', notte: 'notte', giorno: 'giorno pieno' }[b.luce];
+      const bits = [`marea <b class="num">${cm(a.h)}</b> ${b.marea === 'stanca' ? 'ferma' : b.marea}`, luce, PE.moonPhaseName(a.da.phase).toLowerCase(), b.solunare !== 'fuori' ? 'periodo ' + b.solunare : ''];
+      if (a.w) bits.push(a.w.ws != null ? `vento <b class="num">${Math.round(a.w.ws)}</b> km/h${a.w.wd != null ? ' ' + windName(a.w.wd).split(' · ')[0] : ''}` : '', a.w.wh != null ? `onde <b class="num">${f1(a.w.wh)}</b> m` : '', a.w.sst != null ? `acqua <b class="num">${f1(a.w.sst)}</b> °C` : '');
+      $('#q-auto', el).innerHTML = `<span class="flabel">Agganciato in automatico</span><span>${bits.filter(Boolean).join(' · ')}${a.w ? '' : ' · <span class="muted">meteo non disponibile per quella data</span>'}</span>`;
+    };
+    const minInfo = () => {
+      const g = GUIDE_BY_ID[$('#q-sp', el).value], n = Number($('#q-cm', el).value);
+      $('#q-min', el).innerHTML = g && g.min && n > 0 ? `<div class="${n >= g.min ? 'okbox' : 'warnbox'}">${n >= g.min ? `Sopra misura: il minimo per ${esc(g.nome.toLowerCase())} è ${g.min} cm.` : `Sotto misura: il minimo per ${esc(g.nome.toLowerCase())} è ${g.min} cm. Va rilasciato.`}</div>` : '';
+    };
+    for (const id of ['#q-data', '#q-ora', '#q-spot']) $(id, el).addEventListener('change', refresh);
+    $('#q-sp', el).addEventListener('change', e => { $('#q-altro-w', el).hidden = e.target.value !== '_altro'; minInfo(); });
+    $('#q-cm', el).addEventListener('input', minInfo);
+    refresh();
+    const fin = $('#q-foto', el);
+    if (fin) fin.addEventListener('change', async () => {
+      const f = fin.files[0]; if (!f) return;
+      const msg = $('#q-fst', el);
+      st.busy++; msg.textContent = 'Leggo la foto…';
+      try {
+        const ex = await readExif(f);
+        const blob = await shrink(f), id = await Photos.put(blob);
+        for (const old of st.foto) Photos.del(old).catch(() => {});
+        st.foto = [id]; S.qcPending = id;
+        $('#q-prev', el).innerHTML = `<img class="qimg" data-foto="${esc(id)}" alt="Foto della cattura">`; hydrate(el);
+        const note = [];
+        if (ex.t) { const d = new Date(ex.t); $('#q-data', el).value = isoDay(ex.t); $('#q-ora', el).value = pad(d.getHours()) + ':' + pad(d.getMinutes()); note.push(`scattata ${fDay(ex.t)} alle ${fT(ex.t)}`); }
+        else note.push('la foto non riporta data e ora: controllale tu');
+        if (ex.lat != null) {
+          st.lat = +ex.lat.toFixed(5); st.lon = +ex.lon.toFixed(5);
+          const near = S.spots.map(x => ({ x, d: distM(ex.lat, ex.lon, x.lat, x.lon) })).sort((a, b) => a.d - b.d)[0];
+          if (near && near.d < 3000) { $('#q-spot', el).value = near.x.id; note.push(`a ${fmtDist(near.d)} da ${near.x.nome}`); }
+          else note.push('posizione lontana dai tuoi spot: scegli tu lo spot');
+        } else { st.lat = st.lon = null; note.push('senza posizione: ho lasciato lo spot in uso'); }
+        msg.textContent = cap(note.join(' · ')) + '.';
+        refresh();
+      } catch (err) { msg.textContent = err && err.name === 'QuotaExceededError' ? 'Memoria del telefono piena: la foto non è stata salvata.' : 'Foto non leggibile: riprova o salva senza foto.'; }
+      finally { st.busy--; fin.value = ''; }
+    });
+    $('#qcf', el).addEventListener('submit', async e => {
+      e.preventDefault();
+      if (st.busy) { toast('Aspetta che finisca il caricamento della foto'); return; }
+      const data = $('#q-data', el).value || isoDay(Date.now()), ora = $('#q-ora', el).value || '12:00';
+      const t = parseLocal(data, ora), sp = spotOf(), a = catchAuto(t, sp), b = a.s0.buckets;
+      const spv = $('#q-sp', el).value, g = GUIDE_BY_ID[spv];
+      const nome = spv === '_altro' ? ($('#q-altro', el).value.trim() || 'Altra specie') : g.nome;
+      const c = {
+        id: uid(), specie: spv === '_altro' ? '' : spv, nome, ora, cm: $('#q-cm', el).value ? Number($('#q-cm', el).value) : null, g: $('#q-g', el).value ? Number($('#q-g', el).value) : null,
+        esca: $('#q-esca', el).value.trim(), terminale: $('#q-term', el).value.trim(), canna: $('#q-canna', el).value, rilasciato: $('#q-ril', el).checked, foto: st.foto.slice(),
+        t, h: a.h, marea: b.marea, luce: b.luce, luna: b.luna, solunare: b.solunare, indice: a.sc.v,
+        meteo: a.w ? { ws: a.w.ws, wd: a.w.wd, wg: a.w.wg, wh: a.w.wh, sst: a.w.sst, p: a.w.p, temp: a.w.temp } : null, rapida: true,
+      };
+      if (st.lat != null) { c.lat = st.lat; c.lon = st.lon; }
+      const sid = sp._def ? '' : sp.id;
+      const hit = S.uscite.find(u => (u.spotId || '') === sid && (() => { const [x, y] = tripRange(u); return t >= x - 4 * HOUR && t <= y + 4 * HOUR; })());
+      const btn = $('#q-save', el); btn.disabled = true;
+      try {
+        if (hit) {
+          const doc = JSON.parse(JSON.stringify(Store.local.uscite[hit.id]));
+          const [x, y] = tripRange(hit);
+          doc.catture = (doc.catture || []).concat([c]);
+          if (t > y && isoDay(t) === doc.data) doc.fine = ora;
+          if (t < x && isoDay(t) === doc.data) { doc.inizio = ora; doc.t0 = t; }
+          doc.agg = Date.now();
+          await Store.saveDoc('uscite', hit.id, doc);
+        } else {
+          await Store.saveDoc('uscite', uid(), {
+            data, inizio: ora, fine: ora, t0: t, spotId: sid, spotNome: sp.nome, cond: condAt(t, sp) || {}, note: '', catture: [c],
+            auto: { h: a.h, marea: b.marea, luce: b.luce, lunaNome: PE.moonPhaseName(a.da.phase), indice: a.sc.v, meteo: a.w ? { ws: a.w.ws, wd: a.w.wd, wh: a.w.wh, sst: a.w.sst, p: a.w.p } : null },
+            creato: Date.now(), agg: Date.now(), rapida: true,
+          });
+        }
+        S.qcPending = null; closeSheet();
+        toast(g && g.min && c.cm && c.cm < g.min ? `Salvata. Sotto misura: minimo ${g.min} cm` : hit ? `Cattura aggiunta all'uscita di ${fDay(hit.t0)}` : 'Cattura salvata nel diario');
+      } catch (err) { btn.disabled = false; toast(errMsg(err)); }
+    });
+  });
+}
+
+/* --- statistiche del diario --- */
+function statsCard() {
+  const all = allCatches(), trips = S.uscite;
+  if (!all.length) return '';
+  const tOf = c => c.t || (c._u && c._u.t0) || 0;
+  const bar = (label, n, max, extra) => `<div class="row"><span title="${esc(label)}">${esc(label)}</span><span class="track"><i style="width:${Math.round(n / max * 100)}%"></i></span><span class="num small" style="text-align:right;font-weight:800">${extra != null ? extra : n}</span></div>`;
+  const count = fn => { const m = {}; for (const c of all) { const k = fn(c); if (k) m[k] = (m[k] || 0) + 1; } return Object.entries(m).sort((a, b) => b[1] - a[1]); };
+  // record per specie
+  const rec = {};
+  for (const c of all) { const k = c.nome || 'Altro'; const r = rec[k] = rec[k] || { n: 0, cm: null, g: null }; r.n++; if (c.cm && (!r.cm || c.cm > r.cm.cm)) r.cm = c; if (c.g && (!r.g || c.g > r.g.g)) r.g = c; }
+  const recHTML = Object.entries(rec).sort((a, b) => b[1].n - a[1].n).map(([k, r]) => `<div class="recrow"><span><b>${esc(k)}</b><small>${r.n} ${r.n === 1 ? 'cattura' : 'catture'}${r.cm ? ` · ${esc(fDay(tOf(r.cm)))}${r.cm._u && r.cm._u.spotNome ? ', ' + esc(r.cm._u.spotNome) : ''}` : ''}</small></span><span class="num">${r.cm ? `<b>${fmtCm(r.cm.cm)} cm</b>` : '<span class="muted">—</span>'}${r.g ? `<small>${Math.round(r.g.g)} g</small>` : ''}</span></div>`).join('');
+  const esche = count(c => (c.esca || '').trim().toLowerCase()).slice(0, 6);
+  const canne = count(c => c.canna || '').slice(0, 5);
+  const perSpot = {};
+  for (const u of trips) { const k = u.spotNome || 'Altro posto'; const r = perSpot[k] = perSpot[k] || { u: 0, c: 0 }; r.u++; r.c += (u.catture || []).length; }
+  const spotRows = Object.entries(perSpot).sort((a, b) => b[1].c - a[1].c);
+  const mesi = new Array(12).fill(0); for (const c of all) { const t = tOf(c); if (t) mesi[new Date(t).getMonth()]++; }
+  const mMax = Math.max(1, ...mesi), vuote = trips.filter(u => !(u.catture || []).length).length;
+  const sec = (tit, html) => (html ? `<div class="lift wide"><span class="flabel">${tit}</span>${html}</div>` : '');
+  return `<section class="card">
+    <h2>Statistiche</h2>
+    <div class="stats"><div class="stat"><b class="num">${f1(all.length / Math.max(1, trips.length))}</b><span>catture a uscita</span></div><div class="stat"><b class="num">${vuote}</b><span>${vuote === 1 ? 'uscita a vuoto' : 'uscite a vuoto'} su ${trips.length}</span></div><div class="stat"><b class="num">${all.filter(c => c.rilasciato).length}</b><span>pesci rilasciati</span></div></div>
+    <div class="cgroup"><span class="flabel">I tuoi record</span><div class="recs">${recHTML}</div></div>
+    ${sec('Esche che hanno preso', esche.length ? esche.map(([k, n]) => bar(cap(k), n, esche[0][1])).join('') : '')}
+    ${sec('Spot', spotRows.map(([k, r]) => bar(k, r.c, Math.max(1, spotRows[0][1].c), `${r.c}/${r.u}`)).join(''))}
+    ${spotRows.length ? '<p class="hint">Per ogni spot: catture / uscite.</p>' : ''}
+    ${sec('Canne', canne.length ? canne.map(([k, n]) => bar(k, n, canne[0][1])).join('') : '')}
+    <div class="cgroup"><span class="flabel">Mesi</span><div class="mbars" role="img" aria-label="Catture per mese">${mesi.map((n, i) => `<span><b class="num">${n || ''}</b><i style="height:${Math.round(n / mMax * 100)}%" class="${n ? '' : 'z'}"></i><u>${MESI[i]}</u></span>`).join('')}</div></div>
+  </section>`;
+}
+
+/* --- catture accanto agli spot e sulla mappa --- */
+function catchesOfSpot(s) {
+  const out = [];
+  for (const u of S.uscite) if (u.spotId === s.id) for (const c of (u.catture || [])) out.push(Object.assign({ _u: u }, c));
+  return out.sort((a, b) => (b.t || b._u.t0 || 0) - (a.t || a._u.t0 || 0));
+}
+function spotCatchesHTML(s) {
+  const cs = catchesOfSpot(s).slice(0, 4);
+  if (!cs.length) return '';
+  return `<div class="mcs">${cs.map(c => `<button class="mc" data-act="opentrip" data-id="${esc(c._u.id)}">${(c.foto || []).length ? `<img data-foto="${esc(c.foto[0])}" alt="">` : `<span class="mcph">${FISH_IC}</span>`}<span><b>${esc(c.nome)}${c.cm ? ' ' + fmtCm(c.cm) + ' cm' : ''}</b><small>${esc(fDay(c.t || c._u.t0))}${c.esca ? ' · ' + esc(c.esca) : ''}</small></span></button>`).join('')}</div>`;
+}
+const FISH_IC = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12c3-5 8-6 12-4l5-3v14l-5-3c-4 2-9 1-12-4z"/><circle cx="8.5" cy="11" r=".8"/></svg>';
+let catchLayer = null;
+function drawCatches() {
+  if (!lmap) return;
+  if (!catchLayer) catchLayer = L.layerGroup().addTo(lmap);
+  catchLayer.clearLayers();
+  if (mapPref().catture === false) return;
+  for (const u of S.uscite) for (const c of (u.catture || [])) {
+    if (c.lat == null || c.lon == null) continue;
+    L.circleMarker([c.lat, c.lon], { radius: 7, color: '#FFFFFF', weight: 2.5, fillColor: '#F2552C', fillOpacity: 1 })
+      .bindTooltip(`${c.nome}${c.cm ? ' ' + fmtCm(c.cm) + ' cm' : ''} · ${fDay(c.t || u.t0)}`, { direction: 'top', offset: [0, -6] })
+      .on('click', () => { if (!S.mapAdd) openTrip(u.id); }).addTo(catchLayer);
+  }
+}
 /* ---------- navigazione e azioni ---------- */
 function render() {
   for (const a of document.querySelectorAll('nav.tabs a')) {
@@ -2525,6 +3000,11 @@ document.addEventListener('click', async e => {
     case 'showspot': { const sp = S.spots.find(x => x.id === el.dataset.id); if (sp && lmap) { lmap.setView([sp.lat, sp.lon], Math.max(lmap.getZoom(), 15)); $('#mapbox').scrollIntoView({ behavior: 'smooth', block: 'center' }); } break; }
     case 'guide': openGuide(el.dataset.id); break;
     case 'win': openWindow(+el.dataset.da, +el.dataset.a, +el.dataset.at); break;
+    case 'week': openWeek(); break;
+    case 'weekday': S.dayOffset = +el.dataset.i; if (S.tab !== 'oggi') location.hash = 'oggi'; else render(); window.scrollTo(0, 0); break;
+    case 'quickcatch': openQuickCatch(); break;
+    case 'gtab': S.gTab = el.dataset.v; render(); break;
+    case 'mapcatch': { const p = mapPref(); p.catture = p.catture === false; setMapPref(p); render(); break; }
     case 'cond': {
       const c = Object.assign({}, condToday()); const g = el.dataset.g, v = el.dataset.v;
       c[g] = c[g] === v ? '' : v;
