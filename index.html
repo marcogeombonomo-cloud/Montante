@@ -428,6 +428,50 @@ nav.tabs a { font-size: .64rem; }
 /* 1.4 */
 .dotlive.old { background: var(--muted); box-shadow: none; }
 .warnbox b { font-weight: 800; }
+/* 1.5: dettaglio delle finestre migliori */
+button.win { border: 0; width: 100%; text-align: left; color: var(--ink); font: inherit; grid-template-columns: 46px 1fr auto; cursor: pointer; }
+button.win .wt, button.win .wr { display: block; }
+button.win .go { color: var(--muted); display: grid; }
+button.win:active { background: var(--line); }
+.whead { display: grid; grid-template-columns: 68px 1fr; gap: 14px; align-items: center; }
+.whead .ring b { font-size: 1.35rem; }
+.wlab { font-family: var(--f-display); font-weight: 700; font-size: 1.25rem; letter-spacing: -.02em; line-height: 1.15; }
+.wchips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.wchip { font-size: .72rem; font-weight: 800; border-radius: 999px; padding: 4px 9px; background: var(--surface-2); white-space: nowrap; }
+.wchip.hot { background: var(--accent); color: var(--accent-ink); }
+.wsum { margin: 0; padding: 11px 14px; border-radius: 14px; background: var(--surface-2); font-size: .88rem; font-weight: 600; line-height: 1.45; }
+.wsum b { font-weight: 800; }
+.wtabwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.wtab { width: 100%; border-collapse: collapse; font-size: .88rem; font-weight: 700; }
+.wtab th { font-size: .6rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 800; text-align: right; padding: 2px 5px 7px; white-space: nowrap; }
+.wtab th small { text-transform: none; letter-spacing: 0; font-weight: 700; }
+.wtab td { padding: 9px 5px; text-align: right; border-top: 1px solid var(--line); white-space: nowrap; }
+.wtab th:first-child, .wtab td:first-child { text-align: left; }
+.wtab tr.pk td { background: var(--accent-soft); border-top-color: transparent; }
+.wtab tr.pk + tr td { border-top-color: transparent; }
+.wtab tr.pk td:first-child { border-radius: 10px 0 0 10px; }
+.wtab tr.pk td:last-child { border-radius: 0 10px 10px 0; }
+.wtab .tarr { color: var(--tide); display: inline-grid; vertical-align: -1px; font-size: .6rem; }
+.wtab .arr { vertical-align: -1px; }
+.tides.two { grid-template-columns: 1fr 1fr; }
+.kv .v2 { font-size: .9rem; font-weight: 600; line-height: 1.4; }
+.kv .v2 b { font-weight: 800; }
+.sheet .sols .sol { flex-direction: column; align-items: flex-start; gap: 1px; }
+.sheet .sols .sol span { font-size: .74rem; font-weight: 600; }
+.brk { display: grid; gap: 10px; }
+.brow { display: grid; gap: 5px; }
+.btop { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: .88rem; font-weight: 800; }
+.btop small { color: var(--muted); font-weight: 600; font-size: .78rem; }
+.bar { height: 7px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 99px; }
+.mods { display: grid; margin-top: 4px; border-radius: 14px; background: var(--surface-2); padding: 4px 13px; }
+.mod { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font-size: .88rem; font-weight: 700; }
+.mod:first-child { border-top: 0; }
+.mod small { display: block; color: var(--muted); font-weight: 600; font-size: .76rem; }
+.mod small b { font-weight: 800; color: var(--ink); }
+.mod > b { font-weight: 800; font-size: 1rem; white-space: nowrap; }
+.mod.tot { font-weight: 800; }
+.mod.tot > b { font-family: var(--f-display); font-size: 1.25rem; }
 
 </style>
 </head>
@@ -848,7 +892,7 @@ if (!window.PE || !window.Astronomy) {
   return;
 }
 const { MIN, HOUR, DAY } = PE;
-const APP_VERSION = '1.4';
+const APP_VERSION = '1.5';
 
 /* ---------- formattazione ---------- */
 const TZ = { hour: '2-digit', minute: '2-digit' };
@@ -1556,7 +1600,7 @@ function renderOggi() {
 
   const winsHTML = wins.length ? wins.map(w => {
     const s = PE.scoreAt(w.at, sp, { cond: condAt(w.at, sp), model });
-    return `<div class="win">${ringHTML(w.top)}<div style="min-width:0"><div class="wt num">${fT(w.da)} – ${fT(w.a + 15 * MIN)}</div><div class="wr">${reasons(s).slice(0, 3).map(esc).join(' · ')}</div></div></div>`;
+    return `<button class="win" data-act="win" data-da="${w.da}" data-a="${w.a}" data-at="${w.at}" aria-label="Finestra dalle ${fT(w.da)} alle ${fT(w.a + 15 * MIN)}, indice ${w.top}: apri i dettagli">${ringHTML(w.top)}<span style="min-width:0"><span class="wt num">${fT(w.da)} – ${fT(w.a + 15 * MIN)}</span><span class="wr">${reasons(s).slice(0, 3).map(esc).join(' · ')}</span></span><span class="go">${CHEV}</span></button>`;
   }).join('') : '<p class="muted small" style="margin:0">Nessuna finestra sopra la media in questa giornata.</p>';
 
   const tidesHTML = ext.map(e => `<div class="tide"><span class="k">${e.alta ? UP + 'Alta' : DOWN + 'Bassa'}</span><span class="t num">${fT(e.t)}</span><span class="h num">${cm(e.h)}</span></div>`).join('');
@@ -1590,7 +1634,7 @@ function renderOggi() {
     : sp._def && S.spotsLoaded ? `<div class="banner">Sto usando Sottomarina come posizione predefinita. <button class="linkbtn" data-act="go" data-tab="spot">Aggiungi i tuoi spot</button></div>` : ''}
 
   <section class="card">
-    <div class="card-h"><h2>Finestre migliori</h2><span class="eyebrow">${esc(fDay(d0))}</span></div>
+    <div class="card-h"><h2>Finestre migliori</h2><span class="eyebrow">${wins.length ? 'tocca per i dettagli' : esc(fDay(d0))}</span></div>
     <div class="wins">${winsHTML}</div>
   </section>
 
@@ -2296,6 +2340,131 @@ function openSettings(focus) {
   });
 }
 
+/* ---------- foglio: dettaglio di una finestra migliore ---------- */
+function openWindow(da, a, at) {
+  const sp = currentSpot(), model = getModel(), now = Date.now();
+  const fine = a + 15 * MIN; // la curva ha un punto ogni 15 minuti: l'ultimo vale fino al quarto d'ora dopo
+  const sc = t => PE.scoreAt(t, sp, { cond: condAt(t, sp), model });
+  const pk = sc(at), near = Meteo.near(sp);
+  const W = t => (near ? Meteo.at(t) : null);
+  const h = W(at), cPk = condAt(at, sp) || {};
+  const sgn = n => (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(n);
+
+  /* ora per ora */
+  const L = fine - da, step = L <= 2 * HOUR ? 15 * MIN : L <= 5 * HOUR ? 30 * MIN : HOUR;
+  const set = new Set([at, fine]); for (let t = da; t < fine; t += step) set.add(t);
+  const times = [...set].sort((x, y) => x - y);
+  const rowsW = times.map(W);
+  const hasW = rowsW.some(Boolean), hasOnde = rowsW.some(w => w && w.wh != null), hasRain = rowsW.some(w => w && w.pr != null && w.pr >= 0.1);
+  const tideCell = t => { const r = PE.tideRate(t, sp); const v = Math.round(PE.tideAt(t, sp)); return `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v)} <span class="tarr">${Math.abs(r) < 2.5 ? '●' : r > 0 ? UP : DOWN}</span>`; };
+  const rows = times.map((t, i) => {
+    const s = t === at ? pk : sc(t), w = rowsW[i];
+    return `<tr class="${t === at ? 'pk' : ''}"><td>${fT(t)}</td><td><b style="color:${qCol(s.v)}">${s.v}</b></td><td>${tideCell(t)}</td>` +
+      (hasW ? `<td>${w && w.ws != null ? `${w.wd != null ? `<span class="arr">${arrowSVG(w.wd, 11)}</span> ` : ''}${Math.round(w.ws)}` : '–'}</td><td>${w && w.wg != null ? Math.round(w.wg) : '–'}</td>` : '') +
+      (hasOnde ? `<td>${w && w.wh != null ? f1(w.wh) : '–'}</td>` : '') + (hasRain ? `<td>${w && w.pr != null ? f1(w.pr) : '–'}</td>` : '') + '</tr>';
+  }).join('');
+  const table = `<div class="wtabwrap"><table class="wtab num"><thead><tr><th>Ora</th><th>Indice</th><th>Marea <small>cm</small></th>${hasW ? '<th>Vento <small>km/h</small></th><th>Raffiche</th>' : ''}${hasOnde ? '<th>Onde <small>m</small></th>' : ''}${hasRain ? '<th>Pioggia <small>mm</small></th>' : ''}</tr></thead><tbody>${rows}</tbody></table></div>`;
+
+  /* riassunto dell'intervallo, dai valori orari delle previsioni */
+  const hrs = []; for (let t = Math.floor(da / HOUR) * HOUR; t <= fine + 30 * MIN; t += HOUR) { const w = W(t); if (w && t >= da - 30 * MIN) hrs.push(w); }
+  const rng = (k, f) => { const v = hrs.map(w => w[k]).filter(x => x != null); if (!v.length) return null; const lo = f(Math.min(...v)), hi = f(Math.max(...v)); return lo === hi ? lo : lo + '–' + hi; };
+  const gmax = Math.max(...hrs.map(w => (w.wg != null ? w.wg : -1)), -1);
+  const rain = hrs.reduce((n, w) => n + (w.pr || 0), 0);
+  const sumBits = [];
+  if (rng('ws', Math.round)) sumBits.push(`vento <b>${rng('ws', Math.round)} km/h</b>${gmax >= 0 ? `, raffiche fino a <b>${Math.round(gmax)}</b>` : ''}`);
+  if (rng('wh', f1)) sumBits.push(`onde <b>${rng('wh', f1)} m</b>`);
+  if (rng('temp', Math.round)) sumBits.push(`aria <b>${rng('temp', Math.round)} °C</b>`);
+  if (hrs.length) sumBits.push(rain >= 0.1 ? `pioggia <b>${f1(rain)} mm</b>` : 'niente pioggia');
+
+  /* meteo e mare al picco */
+  let meteo = '';
+  if (h) {
+    const c = Meteo.cond[Meteo.idx(at)] || {}, dp = Meteo.dp3(at);
+    const tile = (ic, k, v, s) => `<div class="mt"><span class="k">${ic}${k}</span><span class="v num">${v}</span><span class="s">${s}</span></div>`;
+    const manAcqua = isoDay(at) === isoDay(now) && condToday().acqua;
+    meteo = `<div class="wx">${wxIcon(h.wc, isNight(at, sp), 30)}<span>Alle ${fT(at)} <b class="num">${h.temp != null ? Math.round(h.temp) + ' °C' : ''}</b> · ${esc(wxName(h.wc))}${h.pr != null && h.pr >= 0.1 ? ` · pioggia ${f1(h.pr)} mm/h` : ''}</span></div>
+    <div class="meteo">` +
+      tile(h.wd != null ? `<span class="arr">${arrowSVG(h.wd, 13)}</span>` : '', 'Vento', h.ws != null ? `${Math.round(h.ws)} <small>km/h</small>` : '—', h.wd != null ? `${windName(h.wd)}${h.wg != null ? ' · raffiche ' + Math.round(h.wg) : ''}${ventoCosta(h.wd, sp) ? ' · ' + ventoCosta(h.wd, sp) : ''}` : '') +
+      tile(h.wdir != null ? `<span class="arr">${arrowSVG(h.wdir, 13)}</span>` : '', 'Onde', h.wh != null ? `${f1(h.wh)} <small>m</small>` : '—', h.wh != null ? `${PE.COND.mare[c.mare] || ''}${h.wp != null ? ' · periodo ' + Math.round(h.wp) + ' s' : ''}${h.wdir != null ? ' · da ' + windName(h.wdir).split(' · ')[0] : ''}` : 'non disponibile') +
+      tile('', 'Temperatura del mare', h.sst != null ? `${f1(h.sst)} <small>°C</small>` : '—', 'in superficie') +
+      tile('', 'Pressione', h.p != null ? `${Math.round(h.p)} <small>hPa</small>` : '—', c.pressione ? `${PE.COND.pressione[c.pressione].toLowerCase()}${dp != null ? ` (${dp >= 0 ? '+' : '−'}${f1(Math.abs(dp))} in 3 h)` : ''}` : '') +
+      tile('', 'Pioggia', rain >= 0.1 ? `${f1(rain)} <small>mm</small>` : 'Nessuna', 'in tutta la finestra') +
+      tile('', 'Limpidezza', cPk.acqua ? PE.COND.acqua[cPk.acqua] : '—', cPk.acqua ? (manAcqua ? 'segnata da te' : 'stima dalla portata del Brenta') : 'la vedi solo sul posto') +
+      '</div>';
+    const fi = Meteo.fiume ? Meteo.fiume.at(at) : null;
+    if (fi && fi.ratio >= 1.4) meteo += `<div class="notebox"><b>Brenta ${fi.calo ? 'in calo dopo la piena' : fi.ratio >= 2 ? 'in piena' : 'sopra il normale'}</b>: ${Math.round(fi.q)} m³/s, contro i ${Math.round(Meteo.fiume.med)} tipici degli ultimi due mesi.</div>`;
+  } else {
+    meteo = `<p class="hint">${near ? 'Per questo intervallo le previsioni meteo non ci sono ancora' : 'Previsioni meteo non scaricate per questo spot'}: qui l'indice usa solo marea, luce, luna e stagione.</p>`;
+  }
+
+  /* marea */
+  const ext = PE.tideExtremes(at - 13 * HOUR, at + 13 * HOUR, sp);
+  const prev = ext.filter(e => e.t <= at).pop(), next = ext.find(e => e.t > at);
+  const rPk = PE.tideRate(at, sp), hDa = PE.tideAt(da, sp), hA = PE.tideAt(fine, sp);
+  const tideBox = (e, q) => (e ? `<div class="tide"><span class="k">${e.alta ? UP + 'Alta' : DOWN + 'Bassa'} ${q}</span><span class="t num">${fT(e.t)}</span><span class="h num">${cm(e.h)}</span></div>` : '');
+  const uffOn = !!Uff.surge && Uff.fine() > at;
+  const surge = uffOn ? Math.round(PE.tideAt(at, sp) - PE.tideAstro(at, sp)) : 0;
+  const marea = `<div class="tidenow">${Math.abs(rPk) < 2.5 ? '<span style="color:var(--tide)">●</span>' : `<span style="color:var(--tide)">${rPk > 0 ? UP : DOWN}</span>`}<span>Da <b class="num">${cm(hDa)}</b> a <b class="num">${cm(hA)}</b> · ${Math.abs(rPk) < 2.5 ? 'ferma al picco' : (rPk > 0 ? 'cresce' : 'cala') + ' di ' + Math.abs(Math.round(rPk)) + ' cm/h al picco'}</span></div>
+    <div class="tides two">${tideBox(prev, 'prima')}${tideBox(next, 'dopo')}</div>
+    ${acquaAltaHTML(sp, da - 3 * HOUR, fine + 3 * HOUR)}
+    <p class="hint">${uffOn ? `Previsione ufficiale del Centro Maree${surge ? `: vento e pressione spostano il livello di <b class="num">${sgn(surge)} cm</b> rispetto alla marea astronomica` : ''}.` : 'Marea astronomica: vento e pressione possono spostarla.'} Valori in cm sullo zero di Punta della Salute.</p>`;
+
+  /* luce e luna */
+  const dA = PE.dayAstro(at, sp.lat, sp.lon);
+  const sols = [...dA.maggiori.map(p => Object.assign({ k: 'maggiore' }, p)), ...dA.minori.map(p => Object.assign({ k: 'minore' }, p))].filter(p => p.a > da && p.da < fine).sort((x, y) => x.da - y.da);
+  const solTxt = p => (p.k === 'maggiore' ? (p.tipo === 'sup' ? 'luna al punto più alto' : 'luna al punto più basso') : (p.tipo === 'sorge' ? 'sorge la luna' : 'tramonta la luna')) + ' alle ' + fT(p.centro);
+  const kv = (k, v) => `<div class="kv"><span class="k">${k}</span><span class="v2">${v}</span></div>`;
+  const luce = { alba: 'Alba', tramonto: 'Tramonto', notte: 'Notte', giorno: 'Giorno pieno' }[pk.buckets.luce];
+  const cielo = `<div class="kvs">` +
+    kv('Luce al picco', `<b>${luce}</b>`) +
+    kv('Sole', `sorge <b class="num">${dA.sunrise ? fT(dA.sunrise) : '—'}</b> · tramonta <b class="num">${dA.sunset ? fT(dA.sunset) : '—'}</b>`) +
+    kv('Chiaro e buio', `prima luce <b class="num">${dA.dawn ? fT(dA.dawn) : '—'}</b> · buio dalle <b class="num">${dA.dusk ? fT(dA.dusk) : '—'}</b>`) +
+    kv('Luna', `<b>${PE.moonPhaseName(dA.phase)}</b>, ${Math.round(dA.fraction * 100)}% · sorge <span class="num">${dA.moonrise ? fT(dA.moonrise) : '—'}</span> · tramonta <span class="num">${dA.moonset ? fT(dA.moonset) : '—'}</span>`) +
+    `</div>
+    <div class="sols">${sols.map(p => `<span class="sol ${p.k === 'maggiore' ? '' : 'm'} num">${fT(p.da)}–${fT(p.a)}<span>${p.k} · ${solTxt(p)}</span></span>`).join('') || '<span class="muted small">Nessun periodo solunare in questa finestra.</span>'}</div>`;
+
+  /* da dove viene il punteggio */
+  const mv = { montante: 'montante', calante: 'calante', stanca: 'ferma' }[pk.buckets.marea];
+  const voci = [
+    ['marea', 'Movimento della marea', `${mv}${Math.abs(rPk) >= 2.5 ? ', ' + Math.abs(Math.round(rPk)) + ' cm/h' : ''}`],
+    ['solunare', 'Periodo solunare', pk.buckets.solunare === 'fuori' ? 'fuori periodo' : 'periodo ' + pk.buckets.solunare],
+    ['luce', 'Luce', luce.toLowerCase()],
+    ['stagione', 'Stagione', new Date(at).toLocaleDateString('it-IT', { month: 'long' })],
+    ['luna', 'Fase lunare', PE.moonPhaseName(dA.phase).toLowerCase()],
+  ];
+  const bars = voci.map(([k, nome, txt]) => `<div class="brow"><div class="btop"><span>${nome} <small>${esc(txt)}</small></span><span class="num"><small>peso ${Math.round(PE.W[k] * 100)}%</small></span></div><div class="bar"><i style="width:${Math.round(pk.parts[k] * 100)}%;background:${qCol(Math.round(pk.parts[k] * 100))}"></i></div></div>`).join('');
+  const base = Math.round((pk.base - 12) * 1.18);
+  const condBits = ['mare', 'acqua', 'vento', 'pressione'].filter(k => cPk[k]).map(k => `${k} ${PE.COND[k][cPk[k]].toLowerCase()} <b class="num">${sgn(PE.condModifier({ [k]: cPk[k] }))}</b>`);
+  const mods = [];
+  mods.push(`<div class="mod"><span>Marea, luna, luce e stagione</span><b class="num">${base}</b></div>`);
+  if (hasCond(cPk)) mods.push(`<div class="mod"><span>Meteo e mare<small>${condBits.join(' · ')}</small></span><b class="num">${sgn(pk.mCond)}</b></div>`);
+  if (pk.mSpot) mods.push(`<div class="mod"><span>Tipo di spot<small>${esc(sp.nome)}</small></span><b class="num">${sgn(pk.mSpot)}</b></div>`);
+  if (Math.round(pk.mPers)) mods.push(`<div class="mod"><span>Il tuo diario<small>${model.n} catture registrate</small></span><b class="num">${sgn(Math.round(pk.mPers))}</b></div>`);
+  const somma = base + pk.mCond + pk.mSpot + Math.round(pk.mPers);
+  mods.push(`<div class="mod tot"><span>Indice al picco${somma > 100 ? '<small>il massimo è 100</small>' : ''}</span><b class="num" style="color:${qCol(pk.v)}">${pk.v}</b></div>`);
+
+  /* specie */
+  const species = PE.speciesNow(at, sp, condAt(at, sp), pk.buckets).slice(0, 3);
+  const specie = species.map(({ s, v }) => {
+    const tec = s.tecniche.map(t => { const g = gearFor(t); return g.canne.length ? g.canne.map(c => c.nome.replace(/^(Trabucco|Shimano|Daiwa) /, '')).join(', ') : PE.TECNICHE[t]; }).join(' · ');
+    return `<button class="sprow" data-act="species" data-id="${s.id}">${ringHTML(v)}<span style="min-width:0"><span class="nm">${esc(s.nome)}</span><span class="ds">${esc(tec)}</span></span><span class="go">${CHEV}</span></button>`;
+  }).join('') || '<p class="muted small" style="margin:0">Nessuna specie in stagione.</p>';
+
+  const stato = fine < now ? 'già passata' : da <= now ? 'in corso' : '';
+  const chips = reasons(pk).map(r => `<span class="wchip">${esc(r)}</span>`).join('') + (pk.mCond ? `<span class="wchip hot">Meteo-mare ${sgn(pk.mCond)}</span>` : '');
+  sheet(top(`${fT(da)} – ${fT(fine)}`) + `
+    <p class="muted small" style="margin:-10px 0 0;font-weight:600">${esc(fDayLong(da))} · ${esc(sp.nome)}${stato ? ' · ' + stato : ''}</p>
+    <div class="whead">${ringHTML(pk.v, 68)}<div style="min-width:0"><div class="wlab" style="color:${qCol(pk.v)}">${PE.label(pk.v)}</div><div class="small" style="font-weight:700">Picco alle <span class="num">${fT(at)}</span></div><div class="wchips">${chips}</div></div></div>
+    ${sumBits.length ? `<p class="wsum">Nella finestra: ${sumBits.join(' · ')}.</p>` : ''}
+    <div class="cgroup"><span class="flabel">Ora per ora</span>${table}</div>
+    <div class="cgroup"><span class="flabel">Meteo e mare al picco</span>${meteo}</div>
+    <div class="cgroup"><span class="flabel">Marea</span>${marea}</div>
+    <div class="cgroup"><span class="flabel">Luce e luna</span>${cielo}</div>
+    <div class="cgroup"><span class="flabel">Da dove viene il punteggio</span><div class="brk">${bars}</div><div class="mods">${mods.join('')}</div></div>
+    <div class="cgroup"><span class="flabel">Specie più probabili</span><div class="splist">${specie}</div></div>
+    <p class="hint">${h ? `Meteo: ${esc(NOMI_MODELLO[h.mod] || 'Open-Meteo')}${h.modOnde ? ` · onde: ${esc(NOMI_MODELLO[h.modOnde] || '')}` : ''} · previsioni aggiornate ${esc(fDay(Meteo.d.at))} alle ${fT(Meteo.d.at)}. ` : ''}Sono previsioni: più la finestra è lontana, più possono cambiare.</p>
+  `);
+}
 /* ---------- navigazione e azioni ---------- */
 function render() {
   for (const a of document.querySelectorAll('nav.tabs a')) {
@@ -2355,6 +2524,7 @@ document.addEventListener('click', async e => {
     case 'mapsea': { const p = mapPref(); p.nautica = !p.nautica; setMapPref(p); applyMapPref(); render(); break; }
     case 'showspot': { const sp = S.spots.find(x => x.id === el.dataset.id); if (sp && lmap) { lmap.setView([sp.lat, sp.lon], Math.max(lmap.getZoom(), 15)); $('#mapbox').scrollIntoView({ behavior: 'smooth', block: 'center' }); } break; }
     case 'guide': openGuide(el.dataset.id); break;
+    case 'win': openWindow(+el.dataset.da, +el.dataset.a, +el.dataset.at); break;
     case 'cond': {
       const c = Object.assign({}, condToday()); const g = el.dataset.g, v = el.dataset.v;
       c[g] = c[g] === v ? '' : v;
